@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Nutritionist.Data.Nutritionist.Data.Entities;
+using Nutritionist.Data.Entities;
 
 #nullable disable
 
-namespace Nutritionist.Data.Nutritionist.Data.Entities.DbContexts
+namespace Nutritionist.Data.Entities.DbContexts
 {
     public partial class NutritionistDBContext : DbContext
     {
@@ -38,8 +38,6 @@ namespace Nutritionist.Data.Nutritionist.Data.Entities.DbContexts
 
             modelBuilder.Entity<Article>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Body).IsRequired();
 
                 entity.Property(e => e.CreateDate)
@@ -71,8 +69,6 @@ namespace Nutritionist.Data.Nutritionist.Data.Entities.DbContexts
             {
                 entity.ToTable("Comment");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.CommentContent).IsRequired();
 
                 entity.Property(e => e.CreateDate)
@@ -102,21 +98,13 @@ namespace Nutritionist.Data.Nutritionist.Data.Entities.DbContexts
 
             modelBuilder.Entity<Nutritionist>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Address).IsRequired();
 
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.Departman).IsRequired();
 
                 entity.Property(e => e.Introduce).IsRequired();
-
-                entity.Property(e => e.IsActive)
-                    .IsRequired()
-                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(11);
 
@@ -128,17 +116,9 @@ namespace Nutritionist.Data.Nutritionist.Data.Entities.DbContexts
                     .IsRequired()
                     .HasMaxLength(150);
 
-                entity.Property(e => e.UpdateDate)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
+                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
 
                 entity.Property(e => e.WorkingHours).IsRequired();
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Nutritionists)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("UserID_FK");
             });
 
             modelBuilder.Entity<User>(entity =>

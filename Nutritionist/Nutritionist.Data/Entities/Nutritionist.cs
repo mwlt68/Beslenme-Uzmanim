@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Nutritionist.Data.Nutritionist.Data.Entities
+namespace Nutritionist.Data.Entities
 {
     public partial class Nutritionist
     {
@@ -27,11 +27,10 @@ namespace Nutritionist.Data.Nutritionist.Data.Entities
         public string FacebookLink { get; set; }
         public string InstagramLink { get; set; }
         public bool DidDelete { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 
-        public virtual User User { get; set; }
         public virtual ICollection<Article> Articles { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }

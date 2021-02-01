@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Nutritionist.Data.Nutritionist.Data.Entities
+namespace Nutritionist.Data.Entities
 {
     public partial class User
     {
         public User()
         {
             Comments = new HashSet<Comment>();
-            Nutritionists = new HashSet<Nutritionist>();
         }
 
         public int Id { get; set; }
@@ -24,6 +23,5 @@ namespace Nutritionist.Data.Nutritionist.Data.Entities
         public DateTime UpdateDate { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Nutritionist> Nutritionists { get; set; }
     }
 }

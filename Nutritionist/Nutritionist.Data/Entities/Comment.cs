@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Nutritionist.Data.Nutritionist.Data.Entities
+namespace Nutritionist.Data.Entities
 {
     public partial class Comment
     {
