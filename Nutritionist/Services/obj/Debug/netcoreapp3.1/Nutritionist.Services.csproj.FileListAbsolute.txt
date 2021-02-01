@@ -1,0 +1,8 @@
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Services.deps.json
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Services.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Services.pdb
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.AssemblyInfoInputs.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.AssemblyInfo.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.csproj.CoreCompileInputs.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.pdb

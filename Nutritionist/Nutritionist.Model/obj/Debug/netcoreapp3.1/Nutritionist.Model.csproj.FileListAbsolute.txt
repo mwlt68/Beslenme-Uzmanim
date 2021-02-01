@@ -1,0 +1,9 @@
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\bin\Debug\netcoreapp3.1\Nutritionist.Model.deps.json
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\bin\Debug\netcoreapp3.1\Nutritionist.Model.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\bin\Debug\netcoreapp3.1\Nutritionist.Model.pdb
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\obj\Debug\netcoreapp3.1\Nutritionist.Model.csprojAssemblyReference.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\obj\Debug\netcoreapp3.1\Nutritionist.Model.AssemblyInfoInputs.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\obj\Debug\netcoreapp3.1\Nutritionist.Model.AssemblyInfo.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\obj\Debug\netcoreapp3.1\Nutritionist.Model.csproj.CoreCompileInputs.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\obj\Debug\netcoreapp3.1\Nutritionist.Model.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Model\obj\Debug\netcoreapp3.1\Nutritionist.Model.pdb
