@@ -4,4 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nutritionist.Data\Nutritionist.Data.csproj" />
+    <ProjectReference Include="..\Nutritionist.Model\Nutritionist.Core.csproj" />
+  </ItemGroup>
+
 </Project>

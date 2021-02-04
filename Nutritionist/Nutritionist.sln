@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutritionist.API", "Nutriti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutritionist.Data", "Nutritionist.Data\Nutritionist.Data.csproj", "{A6EA176B-B98F-4669-8EE8-4CED915D7228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutritionist.Model", "Nutritionist.Model\Nutritionist.Model.csproj", "{293EA12F-519D-4FF5-96C7-F31665D4288A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutritionist.Core", "Nutritionist.Model\Nutritionist.Core.csproj", "{293EA12F-519D-4FF5-96C7-F31665D4288A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nutritionist.Services", "Services\Nutritionist.Services.csproj", "{873E2EAB-0E1A-443F-9118-1C3B5E9CE8D4}"
 EndProject

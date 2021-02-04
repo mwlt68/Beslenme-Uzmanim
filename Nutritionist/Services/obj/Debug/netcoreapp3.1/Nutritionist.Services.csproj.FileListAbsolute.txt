@@ -3,6 +3,12 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\ne
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Services.pdb
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.AssemblyInfoInputs.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.AssemblyInfo.cs
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.csproj.CoreCompileInputs.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.pdb
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.csprojAssemblyReference.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Core.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Data.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Data.pdb
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\bin\Debug\netcoreapp3.1\Nutritionist.Core.pdb
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.csproj.CopyComplete
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Services\obj\Debug\netcoreapp3.1\Nutritionist.Services.csproj.CoreCompileInputs.cache

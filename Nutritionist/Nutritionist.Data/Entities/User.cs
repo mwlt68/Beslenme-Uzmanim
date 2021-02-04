@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Nutritionist.Data.Entities
 {
-    public partial class User
+    public partial class User : IEntity
     {
         public User()
         {
@@ -18,7 +18,7 @@ namespace Nutritionist.Data.Entities
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public bool DidDelete { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
 

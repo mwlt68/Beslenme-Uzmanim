@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\Nutritionist.Model.csproj",
-      "projectName": "Nutritionist.Model",
-      "projectPath": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\Nutritionist.Model.csproj",
+      "projectUniqueName": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\Nutritionist.Core.csproj",
+      "projectName": "Nutritionist.Core",
+      "projectPath": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\Nutritionist.Core.csproj",
       "packagesPath": "C:\\Users\\VodviL\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\obj\\",
       "projectStyle": "PackageReference",

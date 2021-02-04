@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Nutritionist.Data.Entities
 {
-    public partial class Nutritionist
+    public partial class Nutritionist : IEntity
     {
         public Nutritionist()
         {

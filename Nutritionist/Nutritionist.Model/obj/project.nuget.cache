@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oeYEyZiexKy+x+nObzxCeagZxRoXjdqxU/1N6i4je5bHqdUv6D9oGZY8SVeSWpy4qAG7o9c3mchIOvpNLw1IkA==",
+  "dgSpecHash": "TZKmEiD6/hq3Yru2YJ3yNdg5wmvCU51s7JgYEbMRG0MnxryskeAsiRNCdkybi0t2d6aJOfC/Eyx7H20HxmFdsA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\Nutritionist.Model.csproj",
+  "projectFilePath": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.Model\\Nutritionist.Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Nutritionist.Services;
+using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 
 namespace Nutritionist.API.Controllers
 {
@@ -11,6 +13,7 @@ namespace Nutritionist.API.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        UserService userService = new UserService();
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -34,6 +37,20 @@ namespace Nutritionist.API.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpGet("SaveUser")]
+        public bool SaveUser()
+        {
+            try
+            {
+                UserInsertModel userInsertModel = new UserInsertModel() {FirstName="amehmet",SecondName="aahmet",Username="aahmet123",Password= "aasda", ConfirmPassword="aasda" };
+                userService.UserRegister(userInsertModel);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
