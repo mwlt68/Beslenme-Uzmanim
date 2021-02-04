@@ -39,11 +39,11 @@ namespace Nutritionist.API.Controllers
             .ToArray();
         }
         [HttpGet("SaveUser")]
-        public bool SaveUser()
+        public bool SaveUser([FromQuery]UserInsertModel userInsertModel)
         {
             try
             {
-                UserInsertModel userInsertModel = new UserInsertModel() {FirstName="amehmet",SecondName="aahmet",Username="aahmet123",Password= "aasda", ConfirmPassword="aasda" };
+           //     UserInsertModel userInsertModel = new UserInsertModel() {FirstName="amehmet",SecondName="aahmet",Username="aahmet123",Password= "aasda", ConfirmPassword="aasda" };
                 userService.UserRegister(userInsertModel);
                 return true;
             }
