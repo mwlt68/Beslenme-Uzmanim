@@ -72,3 +72,5 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.API\bin\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.API\obj\Debug\netcoreapp3.1\Nutritionist.API.csproj.CoreCompileInputs.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.API\obj\Debug\netcoreapp3.1\Nutritionist.API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.API\obj\Debug\netcoreapp3.1\Nutritionist.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.API\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.API\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
