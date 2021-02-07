@@ -13,6 +13,8 @@ namespace Nutritionist.Data.Entities
 
         public int NutritionstId { get; set; }
         public int UserId { get; set; }
+        [Required(ErrorMessage = "Content is required")]
+
         public string CommentContent { get; set; }
         [Required(ErrorMessage = "DidDelete is required")]
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UserInsertModel= Nutritionist.Core.Models.User.Insert;
+using UserListModel= Nutritionist.Core.Models.User.List;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 
@@ -13,7 +14,7 @@ namespace Nutritionist.Services
 {
     public class UserService:BaseServices
     {
-        UserRepository userRepository = new UserRepository();
+        private UserRepository userRepository = new UserRepository();
 
         public bool UserRegister(UserInsertModel userInsertModel)
         {
@@ -36,6 +37,22 @@ namespace Nutritionist.Services
             var user = userRepository.UserLogin(userLoginModel.Username,hashedPasword);
             var userDetail= mapper.Map<Data.Entities.User, UserDetailModel>(user);
             return userDetail;
+        }
+        public UserListModel GetUserListModel(int userId)
+        {
+            var user = userRepository.GetById(userId);
+            var userDetail = mapper.Map<Data.Entities.User, UserListModel>(user);
+            return userDetail;
+        }
+        public UserDetailModel GetUserDetailModel(int userId)
+        {
+            var user = userRepository.GetById(userId);
+            var userDetail = mapper.Map<Data.Entities.User, UserDetailModel>(user);
+            return userDetail;
+        }
+        public int GetUserCount()
+        {
+            return userRepository.GetCount();
         }
 
     }
