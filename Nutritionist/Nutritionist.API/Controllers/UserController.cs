@@ -24,7 +24,7 @@ namespace Nutritionist.API.Controllers
 
         [ValidateModelState]
         [HttpPost("Login")]
-        public UserDetailModel Login([FromQuery] UserLoginModel userLoginModel)
+        public UserDetailModel PostLogin([FromBody] UserLoginModel userLoginModel)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace Nutritionist.API.Controllers
 
         [ValidateModelState]
         [HttpPost("Register")]
-        public bool Register([FromQuery] UserInsertModel userInsertModel)
+        public bool PostRegister([FromBody] UserInsertModel userInsertModel)
         {
             try
             {

@@ -1,20 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
-namespace Nutritionist.Core.Models.Nutritionist
+#nullable disable
+
+namespace Nutritionist.Data.Entities
 {
-    public class Insert
+    public partial class Nutritionist : IEntity
     {
+        public Nutritionist()
+        {
+            Articles = new HashSet<Article>();
+            Comments = new HashSet<Comment>();
+
+        }
+        [Key]
+        public int Id { get; set; }
         public int UserId { get; set; }
         [Required(ErrorMessage = "Departman is required")]
 
         public string Departman { get; set; }
         [Required(ErrorMessage = "Profile Image is required")]
 
-        public IFormFile ProfileImage { get; set; }
+        public byte[] ProfileImage { get; set; }
 
         [Required(ErrorMessage = "ShortIntroduce is required")]
 
@@ -35,5 +43,17 @@ namespace Nutritionist.Core.Models.Nutritionist
         public string YoutubeLink { get; set; }
         public string FacebookLink { get; set; }
         public string InstagramLink { get; set; }
+
+
+        public bool DidDelete { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreateDate  { get; set; }
+
+        public DateTime UpdateDate { get; set; }
+
+        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

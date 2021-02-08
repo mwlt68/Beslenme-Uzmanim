@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nutritionist.Services;
 using Nutritionist.Core.Models.Other;
+using Nutritionist.Core.Models.ResponseModels;
 
 namespace Nutritionist.API.Controllers
 {
@@ -23,14 +24,22 @@ namespace Nutritionist.API.Controllers
             nutritionistService = new NutritionistService();
         }
 
-        [HttpGet]
-        public SiteDatasCount GetSiteDatasCount()
+        [HttpGet("SiteDatasCount")]
+        public ActionResult<BaseResponseModel> GetSiteDatasCount()
         {
-            SiteDatasCount siteDatasCount = new SiteDatasCount();
-            siteDatasCount.userCount = userService.GetUserCount();
-            siteDatasCount.articleCount = articleService.GetArticleCount();
-            siteDatasCount.nutritionistCount = nutritionistService.GetNutritionistCount();
-            return siteDatasCount;
+            try
+            {
+                SiteDatasCount siteDatasCount = new SiteDatasCount();
+                siteDatasCount.userCount = userService.GetUserCount();
+                siteDatasCount.articleCount = articleService.GetArticleCount();
+                siteDatasCount.nutritionistCount = nutritionistService.GetNutritionistCount();
+                return Ok(new SuccessResponseModel<SiteDatasCount>(siteDatasCount));
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel(ex.Message);
+            }
+
         }
     }
 }

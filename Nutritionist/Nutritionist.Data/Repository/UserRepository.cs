@@ -14,7 +14,7 @@ namespace Nutritionist.Data.Repository
 
             using (var context = new NutritionistDBContext())
             {
-                User user =  context.Users.Where(x => x.Username == username && x.Password == hashedPassword && !x.DidDelete && x.IsActive).FirstOrDefault();
+                User user =  context.Users.Where(x => x.Username == username && x.Password == hashedPassword && !x.DidDelete && x.IsActive.Value).FirstOrDefault();
                 return user;
             }
         }

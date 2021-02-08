@@ -19,5 +19,18 @@ namespace Nutritionist.Services
             });
             mapper = mapperConfig.CreateMapper();
         }
+        public List<TDestination> ArrayMap<TSource,TDestination>(List<TSource> sources)
+        {
+            List<TDestination> destinations = new List<TDestination>();
+            foreach (var item in sources)
+            {
+                var destination = mapper.Map<TSource, TDestination>(item);
+                if (destination != null)
+                {
+                    destinations.Add(destination);
+                }
+            }
+            return destinations;
+        }
     }
 }

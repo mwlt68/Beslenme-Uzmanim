@@ -18,7 +18,7 @@ namespace Nutritionist.Services
 
         public bool NutritionistRegister(NutritionistInsertModel nutritionistInsertModel)
         {
-            var nutritionist = mapper.Map<NutritionistInsertModel, Data.Entities.Nutritionist>(nutritionistInsertModel);
+            var nutritionist = mapper.Map<NutritionistInsertModel, NutritionistEntity>(nutritionistInsertModel);
             nutritionistRepository.Add(nutritionist);
             return true;
         }

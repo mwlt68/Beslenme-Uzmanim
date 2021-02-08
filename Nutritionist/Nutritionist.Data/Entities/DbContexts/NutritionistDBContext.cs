@@ -100,11 +100,17 @@ namespace Nutritionist.Data.Entities.DbContexts
             {
                 entity.Property(e => e.Address).IsRequired();
 
-                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Departman).IsRequired();
 
                 entity.Property(e => e.Introduce).IsRequired();
+
+                entity.Property(e => e.IsActive)
+                    .IsRequired()
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(11);
 
@@ -116,7 +122,9 @@ namespace Nutritionist.Data.Entities.DbContexts
                     .IsRequired()
                     .HasMaxLength(150);
 
-                entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+                entity.Property(e => e.UpdateDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.WorkingHours).IsRequired();
             });

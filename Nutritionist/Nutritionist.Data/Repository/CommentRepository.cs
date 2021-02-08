@@ -9,11 +9,11 @@ namespace Nutritionist.Data.Repository
 {
     public class CommentRepository : Repository<Comment, NutritionistDBContext>
     {
-        public IEnumerable<Comment> GetNutritionistAllComments(int nutritionistId)
+        public List<Comment> GetNutritionistAllComments(int nutritionistId)
         {
             using (var context =new NutritionistDBContext())
             {
-                return context.Comments.Where(x => !x.DidDelete && x.IsActive && x.NutritionstId == nutritionistId).ToList();
+                return context.Comments.Where(x => !x.DidDelete && x.IsActive.Value && x.NutritionstId == nutritionistId).ToList();
             }
         }
     }

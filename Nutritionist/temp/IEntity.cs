@@ -8,7 +8,7 @@ namespace Nutritionist.Data.Entities
     {
         public int Id { get; set; }
         public bool DidDelete { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
     }

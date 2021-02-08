@@ -11,21 +11,21 @@ namespace Nutritionist.Data.Repository
         {
             using (var context=new NutritionistDBContext())
             {
-                return context.Articles.Where(x => !x.DidDelete && x.IsActive).OrderBy(u => u.Id).Take(count);
+                return context.Articles.Where(x => !x.DidDelete && x.IsActive.Value).OrderBy(u => u.Id).Take(count);
             }
         }
         public IEnumerable<Article> GetArticlesFromNutritionistId(int nutritionistId)
         {
             using (var context = new NutritionistDBContext())
             {
-                return context.Articles.Where(x => !x.DidDelete && x.IsActive && x.NutritionistId == nutritionistId).ToList();
+                return context.Articles.Where(x => !x.DidDelete && x.IsActive.Value && x.NutritionistId == nutritionistId).ToList();
             }
         }
         public int TakeArticlesCount(int nutritionistId)
         {
             using (var context = new NutritionistDBContext())
             {
-                return context.Articles.Where(x => !x.DidDelete && x.IsActive && x.NutritionistId == nutritionistId).Count();
+                return context.Articles.Where(x => !x.DidDelete && x.IsActive.Value && x.NutritionistId == nutritionistId).Count();
             }
         }
     }

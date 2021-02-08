@@ -4,7 +4,6 @@ using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserListModel = Nutritionist.Core.Models.User.List;
 using ArticleListModel = Nutritionist.Core.Models.Article.List;
-using Article = Nutritionist.Data.Entities.Article;
 using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
 using ArticleDetailModel = Nutritionist.Core.Models.Article.Detail;
 using CommentInsertModel = Nutritionist.Core.Models.Comment.Insert;
@@ -13,7 +12,12 @@ using NutritionistInsertModel = Nutritionist.Core.Models.Nutritionist.Insert;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
 using NutritionistDetailModel = Nutritionist.Core.Models.Nutritionist.Detail;
 using NutritionistEntity = Nutritionist.Data.Entities.Nutritionist;
-
+using ArticleEntity = Nutritionist.Data.Entities.Article;
+using UserEntity = Nutritionist.Data.Entities.User;
+using CommentEntity = Nutritionist.Data.Entities.Comment;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace Nutritionist.Services.Mapper
 {
@@ -21,24 +25,41 @@ namespace Nutritionist.Services.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<UserInsertModel, Data.Entities.User>();
-            CreateMap< Data.Entities.User, UserListModel>();
-            CreateMap< Data.Entities.User, UserDetailModel>();
-            CreateMap<NutritionistInsertModel, Data.Entities.Nutritionist>();
-            CreateMap<IEnumerable<Article>, IEnumerable<ArticleListModel>>();
-            CreateMap<Article, ArticleListModel>();
-            CreateMap<Article, ArticleDetailModel>();
-            CreateMap<ArticleInsertModel, Article>();
-            CreateMap<CommentInsertModel, Data.Entities.Comment>();
-            CreateMap<IEnumerable<Data.Entities.Comment>, IEnumerable<CommentListModel>>();
-            CreateMap<Data.Entities.Nutritionist, NutritionistListModel>();
-            CreateMap<Nutritionist.Data.Entities.Nutritionist, NutritionistListModel>();
-            CreateMap<Data.Entities.Nutritionist, NutritionistDetailModel>();
-            CreateMap<Data.Entities.User, UserDetailModel>();
-            CreateMap<Data.Entities.User, UserListModel>();
-            CreateMap<Data.Entities.Nutritionist, NutritionistListModel>();
-            CreateMap <IEnumerable<NutritionistEntity>, IEnumerable < NutritionistListModel >  > ();
+            CreateMap<UserEntity, UserListModel>().ReverseMap();
+            CreateMap<UserEntity, UserDetailModel>().ReverseMap();
+            CreateMap<UserEntity, UserInsertModel>().ReverseMap();
+            CreateMap<ArticleEntity, ArticleDetailModel>().ReverseMap();
+            CreateMap<ArticleEntity, ArticleInsertModel>().ReverseMap();
+            CreateMap<ArticleEntity, ArticleListModel>().ReverseMap();
+            CreateMap<CommentEntity, CommentInsertModel>().ReverseMap();
+            CreateMap<CommentEntity, CommentListModel>().ReverseMap();
+            CreateMap<NutritionistEntity, NutritionistInsertModel>()
+                .ForMember(s => s.ProfileImage, opt => opt.MapFrom(d=> GetFileFromBytes(d.ProfileImage)));
+            CreateMap<NutritionistInsertModel,NutritionistEntity>()
+                .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => GetBytesFromFile(src.ProfileImage)));
+            CreateMap<NutritionistEntity, NutritionistDetailModel>().ReverseMap();
+            CreateMap<NutritionistEntity, NutritionistListModel>().ReverseMap();
 
+            CreateMap<List<ArticleEntity>, List<ArticleListModel>>();
+            CreateMap<List<CommentEntity>, List<CommentListModel>>();
+            CreateMap <List<NutritionistEntity>, List< NutritionistListModel >  > ();
+
+        }
+
+        public  byte[] GetBytesFromFile(IFormFile formFile)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                formFile.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
+            }
+        }
+        // Todo: this method not checked
+        public IFormFile GetFileFromBytes(byte[] byteArray)
+        {
+            var stream = new MemoryStream(byteArray);
+            IFormFile file = new FormFile(stream, 0, byteArray.Length, "name", "profileImage");
+            return file;
         }
     }
 }
