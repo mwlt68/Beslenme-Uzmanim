@@ -7,14 +7,14 @@ namespace Nutritionist.Data.Repository
 {
     public class ArticleRepository : Repository<Article, NutritionistDBContext>
     {
-        public IEnumerable<Article> TakeArticles(int count)
+        public List<Article> TakeArticles(int count)
         {
             using (var context=new NutritionistDBContext())
             {
-                return context.Articles.Where(x => !x.DidDelete && x.IsActive.Value).OrderBy(u => u.Id).Take(count);
+                return context.Articles.Where(x => !x.DidDelete && x.IsActive.Value).OrderBy(u => u.Id).Take(count).ToList();
             }
         }
-        public IEnumerable<Article> GetArticlesFromNutritionistId(int nutritionistId)
+        public List<Article> GetArticlesFromNutritionistId(int nutritionistId)
         {
             using (var context = new NutritionistDBContext())
             {
@@ -29,4 +29,5 @@ namespace Nutritionist.Data.Repository
             }
         }
     }
+
 }

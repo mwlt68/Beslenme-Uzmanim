@@ -15,6 +15,7 @@ namespace Nutritionist.Services
     public class UserService:BaseServices
     {
         private UserRepository userRepository = new UserRepository();
+        private NutritionistService nutritionistService = new NutritionistService();
 
         public bool UserRegister(UserInsertModel userInsertModel)
         {
@@ -54,6 +55,20 @@ namespace Nutritionist.Services
         {
             return userRepository.GetCount();
         }
-
+        public bool RemoveUser(int userId)
+        {
+            var user = userRepository.GetById(userId); 
+            if (userRepository != null)
+            {
+                userRepository.Remove(user, false); // not save changes
+                var nutritionist = nutritionistService.GetNutritionistFromUserId(user.Id);
+                if (nutritionist != null)
+                {
+                    return nutritionistService.RemoveNutritionist(nutritionist.Id); // save changes
+                }
+                else return false;
+            }
+            else return false;
+        }
     }
 }

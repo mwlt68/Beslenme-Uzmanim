@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "Nutritionist.API/1.0.0": {
         "dependencies": {
+          "Microsoft.Net.Compilers": "3.1.1",
           "Nutritionist.Services": "1.0.0",
           "Swashbuckle.AspNetCore": "5.6.3",
           "Swashbuckle.AspNetCore.Annotations": "5.6.3",
@@ -854,6 +855,7 @@
           "lib/netstandard2.0/Microsoft.IdentityModel.Tokens.dll": {}
         }
       },
+      "Microsoft.Net.Compilers/3.1.1": {},
       "Microsoft.Net.Http.Headers/2.2.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "5.0.0",
@@ -3640,6 +3642,13 @@
       "sha512": "sha512-C3OqR3QfBQ7wcC7yAsdMQqay87OsV6yWPYG/Ai3n7dvmWIGkouQhXoVxRP0xz3cAFL4hxZBXyw4aLTC421PaMg==",
       "path": "microsoft.identitymodel.tokens/5.6.0",
       "hashPath": "microsoft.identitymodel.tokens.5.6.0.nupkg.sha512"
+    },
+    "Microsoft.Net.Compilers/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BmOUKYu3VlzZxgAjMCXLEnM8s36ycJO34WfnCp/l74m+LNamTes/Gz2R+nBKVMJ2MVarhKRV5HthB41OhmzzgA==",
+      "path": "microsoft.net.compilers/3.1.1",
+      "hashPath": "microsoft.net.compilers.3.1.1.nupkg.sha512"
     },
     "Microsoft.Net.Http.Headers/2.2.0": {
       "type": "package",

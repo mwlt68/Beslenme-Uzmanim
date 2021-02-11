@@ -15,16 +15,16 @@ namespace Nutritionist.Data.Repository
         {
             using (var context= new TContext())
             {
-                var findResult= context.Set<TEntity>().Find(id);
+                var findResult= context.Set<TEntity>().Where(x => !x.DidDelete && x.IsActive.Value && x.Id== id).FirstOrDefault();
                 return findResult;
             }
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public List<TEntity> GetAll()
         {
             using (var context = new TContext())
             {
-                var getAllResult = context.Set<TEntity>().ToList();
+                var getAllResult = context.Set<TEntity>().Where(x=> !x.DidDelete && x.IsActive.Value).ToList();
                 return getAllResult;
             }
         }
@@ -32,57 +32,72 @@ namespace Nutritionist.Data.Repository
         {
             using (var context = new TContext())
             {
-                var getCountResult = context.Set<TEntity>().Count();
+                var getCountResult = context.Set<TEntity>().Where(x => !x.DidDelete && x.IsActive.Value).Count();
                 return getCountResult;
             }
         }
-        public void Add(TEntity entity)
+        public void Add(TEntity entity, bool doesSaveChanges = true)
         {
             using (var context = new TContext())
             {
                 context.Set<TEntity>().Add(entity);
-                context.SaveChanges();
+                if (doesSaveChanges)
+                {
+                    context.SaveChanges();
+                }
             }
         }
 
-        public void AddRange(IEnumerable<TEntity> entitys)
+        public void AddRange(IEnumerable<TEntity> entitys,bool doesSaveChanges=true)
         {
             using (var context = new TContext())
             {
                 context.Set<TEntity>().AddRange(entitys);
-                context.SaveChanges();
+                if (doesSaveChanges)
+                {
+                    context.SaveChanges();
+                }
             }
         }
 
-        public void Update(TEntity entity)
+        public void Update(TEntity entity, bool doesSaveChanges = true)
         {
             using (var context = new TContext())
             {
                 context.Set<TEntity>().Update(entity);
                 entity.UpdateDate = DateTime.Now;
-                context.SaveChanges();
+                if (doesSaveChanges)
+                {
+                    context.SaveChanges();
+                }
             }
         }
 
-        public void Remove(TEntity entity)
+        public void Remove(TEntity entity, bool doesSaveChanges = true)
         {
             using (var context = new TContext())
             {
                 entity.DidDelete = true;
                 entity.UpdateDate = DateTime.Now;
-                context.Set<TEntity>().Remove(entity);
-                context.SaveChanges();
+                context.Set<TEntity>().Update(entity);
+                if (doesSaveChanges)
+                {
+                    context.SaveChanges();
+                }
             }
         }
 
-        public void SetActive(TEntity entity,bool IsActive)
+        public void SetActive(TEntity entity,bool IsActive,bool doesSaveChanges = true)
         {
             using (var context = new TContext())
             {
                 entity.IsActive = IsActive;
                 entity.UpdateDate = DateTime.Now;
                 context.Set<TEntity>().Update(entity);
-                context.SaveChanges();
+                if (doesSaveChanges)
+                {
+                    context.SaveChanges();
+                }
             }
         }
     }

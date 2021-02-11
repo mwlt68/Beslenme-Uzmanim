@@ -22,7 +22,22 @@ namespace Nutritionist.API.Controllers
             articleService = new ArticleService();
         }
 
-        [HttpGet]
+        [HttpPost("AddArticle")]
+        public ActionResult<BaseResponseModel> AddArticle([FromForm] ArticleInsertModel articleInsertModel)
+        {
+            try
+            {
+                articleService.AddArticle(articleInsertModel);
+                return Ok(new SuccessResponseModel<bool>(true));
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+
+        [HttpGet("ArticleDetail")]
         public ActionResult<BaseResponseModel> GetArticleDetail(int id)
         {
             try
@@ -36,26 +51,12 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpPost]
-        public ActionResult<BaseResponseModel> AddArticle([FromBody] ArticleInsertModel articleInsertModel)
+        [HttpGet("GetArticles")]
+        public ActionResult<BaseResponseModel> GetArticles()
         {
             try
             {
-                articleService.AddArticle(articleInsertModel);
-                return Ok(new SuccessResponseModel<bool>(true));
-            }
-            catch (Exception ex)
-            {
-
-                return new BaseResponseModel(ex.Message);
-            }
-        }
-        [HttpPost]
-        public ActionResult<BaseResponseModel> TakeFewArticles([FromBody] int count)
-        {
-            try
-            {
-                List<ArticleListModel> articles =articleService.GetArticles(true,count).ToList();
+                List<ArticleListModel> articles = articleService.GetArticles().ToList();
                 return Ok(new SuccessResponseModel<List<ArticleListModel>>(articles));
             }
             catch (Exception ex)
@@ -64,5 +65,42 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
+        [HttpGet("TakeFewArticles")]
+        public ActionResult<BaseResponseModel> TakeFewArticles(int count)
+        {
+            try
+            {
+                List<ArticleListModel> articles = articleService.GetArticles(true, count).ToList();
+                return Ok(new SuccessResponseModel<List<ArticleListModel>>(articles));
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteArticle")]
+        public ActionResult<BaseResponseModel> DeleteArticle(int articleId)
+        {
+            try
+            {
+                bool res = articleService.SoftDeleteArticle(articleId);
+                if (res)
+                {
+                    return Ok(new SuccessResponseModel<bool>(res));
+                }
+                else
+                {
+                    return new BaseResponseModel("Article cannot found !");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+
+
     }
 }

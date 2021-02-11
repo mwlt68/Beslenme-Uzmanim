@@ -28,21 +28,20 @@ namespace Nutritionist.Services.Mapper
             CreateMap<UserEntity, UserListModel>().ReverseMap();
             CreateMap<UserEntity, UserDetailModel>().ReverseMap();
             CreateMap<UserEntity, UserInsertModel>().ReverseMap();
-            CreateMap<ArticleEntity, ArticleDetailModel>().ReverseMap();
-            CreateMap<ArticleEntity, ArticleInsertModel>().ReverseMap();
+            CreateMap<ArticleEntity, ArticleDetailModel>();
+            CreateMap<ArticleEntity, ArticleInsertModel>()
+                .ForMember(s => s.Image, opt => opt.MapFrom(d => GetFileFromBytes(d.Image)))
+                .ReverseMap()
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => GetBytesFromFile(src.Image)));
             CreateMap<ArticleEntity, ArticleListModel>().ReverseMap();
             CreateMap<CommentEntity, CommentInsertModel>().ReverseMap();
             CreateMap<CommentEntity, CommentListModel>().ReverseMap();
             CreateMap<NutritionistEntity, NutritionistInsertModel>()
-                .ForMember(s => s.ProfileImage, opt => opt.MapFrom(d=> GetFileFromBytes(d.ProfileImage)));
-            CreateMap<NutritionistInsertModel,NutritionistEntity>()
+                .ForMember(s => s.ProfileImage, opt => opt.MapFrom(d=> GetFileFromBytes(d.ProfileImage)))
+                .ReverseMap()
                 .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => GetBytesFromFile(src.ProfileImage)));
             CreateMap<NutritionistEntity, NutritionistDetailModel>().ReverseMap();
             CreateMap<NutritionistEntity, NutritionistListModel>().ReverseMap();
-
-            CreateMap<List<ArticleEntity>, List<ArticleListModel>>();
-            CreateMap<List<CommentEntity>, List<CommentListModel>>();
-            CreateMap <List<NutritionistEntity>, List< NutritionistListModel >  > ();
 
         }
 

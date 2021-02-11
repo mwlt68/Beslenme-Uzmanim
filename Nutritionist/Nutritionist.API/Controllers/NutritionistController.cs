@@ -17,7 +17,7 @@ namespace Nutritionist.API.Controllers
 
 
         [ValidateModelState]
-        [HttpPost("Register")]
+        [HttpPost("NutRegister")]
         public bool PostRegister([FromForm] NutritionistInsertModel nutritionistInsertModel)
         {
             try

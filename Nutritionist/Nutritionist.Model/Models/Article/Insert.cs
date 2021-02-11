@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -19,6 +20,6 @@ namespace Nutritionist.Core.Models.Article
         public string Body { get; set; }
         [Required(ErrorMessage = "Image is required")]
 
-        public byte[] Image { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

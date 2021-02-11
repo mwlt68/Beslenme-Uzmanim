@@ -7,7 +7,7 @@ using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 
 namespace Nutritionist.Services
 {
-    public class BaseServices
+    public  class BaseServices
     {
         public IMapper mapper;
         private MapperConfiguration mapperConfig;
@@ -19,7 +19,7 @@ namespace Nutritionist.Services
             });
             mapper = mapperConfig.CreateMapper();
         }
-        public List<TDestination> ArrayMap<TSource,TDestination>(List<TSource> sources)
+        public  List<TDestination> ArrayMap<TSource,TDestination>( List<TSource> sources)
         {
             List<TDestination> destinations = new List<TDestination>();
             foreach (var item in sources)
