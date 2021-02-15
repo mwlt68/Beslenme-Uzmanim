@@ -21,4 +21,30 @@ namespace Nutritionist.Core.StaticDatas
         public static readonly String UsersNotFound = "Users do not found !";
         #endregion
     }
+    public enum Controllers
+    {
+        Home,
+        User,
+        Nutritionist,
+        Article,
+        Comment
+    }
+    public enum Methods
+    {
+        SiteDatasCount,
+        Login,
+        Register,
+        NutRegister,
+        NutDetail,
+        NutList,
+        NutDelete,
+        AddArticle,
+        ArticleDetail,
+        ArticleList,
+        TakeFewArticles,
+        DeleteArticle,
+        AddComment,
+        CommentList,
+        DeleteComment,
+    }
 }
