@@ -8,6 +8,8 @@ using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Services;
 using CommentListModel = Nutritionist.Core.Models.Comment.List;
 using CommentInsertModel = Nutritionist.Core.Models.Comment.Insert;
+using Nutritionist.Core.StaticDatas;
+using Nutritionist.Core.ActionFilters;
 
 namespace Nutritionist.API.Controllers
 {
@@ -16,18 +18,23 @@ namespace Nutritionist.API.Controllers
     public class CommentController : ControllerBase
     {
         private CommentService commentService;
+        private UserService userService;
+        private NutritionistService nutritionistService;
         public CommentController()
         {
            commentService = new CommentService();
+            userService = new UserService();
+            nutritionistService = new NutritionistService();
         }
 
+        [ValidateModelState]
         [HttpPost("AddComment")]
-        public ActionResult<BaseResponseModel> AddComment([FromBody] CommentInsertModel commentInsertModel)
+        public ActionResult<BaseResponseModel> PostAddComment([FromBody] CommentInsertModel commentInsertModel)
         {
             try
             {
                 commentService.AddComment(commentInsertModel);
-                return Ok(new SuccessResponseModel<bool>(true));
+                return new SuccessResponseModel<bool>(true);
             }
             catch (Exception ex)
             {
@@ -35,13 +42,57 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("GetComments")]
-        public ActionResult<BaseResponseModel> GetComments(int nutritionistId)
+        [HttpGet("CommentList")]
+        public ActionResult<BaseResponseModel> GetCommentsList(int nutritionistId)
         {
             try
             {
-                List<CommentListModel> lists= commentService.GetNutritionistAllCommentLists(nutritionistId);
-                return Ok(new SuccessResponseModel<List<CommentListModel>>(lists));
+                List<CommentListModel> commentsListModel= commentService.GetNutritionistAllCommentLists(nutritionistId);
+                if (commentsListModel != null)
+                {
+                    foreach (var commentListModel in commentsListModel)
+                    {
+                        var commentNutritionist = nutritionistService.GetNutritionistListModel(commentListModel.NutritionstId);
+                        if (commentNutritionist != null)
+                        {
+                            commentListModel.Nutritionist = commentNutritionist;
+                            var nutUser = userService.GetUserListModel(commentNutritionist.UserId);
+                            if (nutUser != null)
+                            {
+                                commentListModel.Nutritionist.User = nutUser;
+                            }
+                        }
+                        var commentUser = userService.GetUserListModel(commentListModel.UserId);
+                        if (commentUser != null)
+                        {
+                            commentListModel.User = commentUser;
+                        }
+                    }
+                    return  new SuccessResponseModel<List<CommentListModel>>(commentsListModel);
+                }
+                else return new BaseResponseModel(ReadOnlyValues.CommentsNotFound);
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+
+        [HttpDelete("DeleteComment")]
+        public ActionResult<BaseResponseModel> DeleteComment(int commentId,int userId)
+        {
+            try
+            {
+                bool res = commentService.RemoveComment(commentId, userId);
+                if (res)
+                {
+                    return new SuccessResponseModel<bool>(res);
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.CommentNotFound);
+                }
             }
             catch (Exception ex)
             {

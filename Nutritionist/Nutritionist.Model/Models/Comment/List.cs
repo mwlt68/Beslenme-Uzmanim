@@ -18,5 +18,6 @@ namespace Nutritionist.Core.Models.Comment
         public DateTime UpdateDate { get; set; }
 
         public virtual UserListModel User { get; set; }
+        public virtual NutritionistListModel Nutritionist{ get; set; }
     }
 }

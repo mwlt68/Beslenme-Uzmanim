@@ -11,31 +11,9 @@ namespace Nutritionist.Data.Repository
         where TEntity : class, IEntity
         where TContext : DbContext ,new ()
     {
-        public TEntity GetById(int id)
-        {
-            using (var context= new TContext())
-            {
-                var findResult= context.Set<TEntity>().Where(x => !x.DidDelete && x.IsActive.Value && x.Id== id).FirstOrDefault();
-                return findResult;
-            }
-        }
 
-        public List<TEntity> GetAll()
-        {
-            using (var context = new TContext())
-            {
-                var getAllResult = context.Set<TEntity>().Where(x=> !x.DidDelete && x.IsActive.Value).ToList();
-                return getAllResult;
-            }
-        }
-        public int GetCount()
-        {
-            using (var context = new TContext())
-            {
-                var getCountResult = context.Set<TEntity>().Where(x => !x.DidDelete && x.IsActive.Value).Count();
-                return getCountResult;
-            }
-        }
+
+
         public void Add(TEntity entity, bool doesSaveChanges = true)
         {
             using (var context = new TContext())

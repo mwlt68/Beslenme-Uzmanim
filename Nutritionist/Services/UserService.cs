@@ -15,7 +15,9 @@ namespace Nutritionist.Services
     public class UserService:BaseServices
     {
         private UserRepository userRepository = new UserRepository();
-        private NutritionistService nutritionistService = new NutritionistService();
+        private NutritionistRepository nutritionistRepository = new NutritionistRepository();
+        private CommentRepository commentRepository = new CommentRepository();
+        private ArticleRepository articleRepository = new ArticleRepository();
 
         public bool UserRegister(UserInsertModel userInsertModel)
         {
@@ -42,8 +44,8 @@ namespace Nutritionist.Services
         public UserListModel GetUserListModel(int userId)
         {
             var user = userRepository.GetById(userId);
-            var userDetail = mapper.Map<Data.Entities.User, UserListModel>(user);
-            return userDetail;
+            var userListModel = mapper.Map<Data.Entities.User, UserListModel>(user);
+            return userListModel;
         }
         public UserDetailModel GetUserDetailModel(int userId)
         {
@@ -53,22 +55,19 @@ namespace Nutritionist.Services
         }
         public int GetUserCount()
         {
-            return userRepository.GetCount();
+            return userRepository.GetUsersCount();
         }
+        
         public bool RemoveUser(int userId)
         {
-            var user = userRepository.GetById(userId); 
-            if (userRepository != null)
+            var userEntity=userRepository.GetById(userId);
+            if (userEntity != null)
             {
-                userRepository.Remove(user, false); // not save changes
-                var nutritionist = nutritionistService.GetNutritionistFromUserId(user.Id);
-                if (nutritionist != null)
-                {
-                    return nutritionistService.RemoveNutritionist(nutritionist.Id); // save changes
-                }
-                else return false;
+                userRepository.Remove(userEntity);
+                return true;
             }
             else return false;
         }
+        
     }
 }

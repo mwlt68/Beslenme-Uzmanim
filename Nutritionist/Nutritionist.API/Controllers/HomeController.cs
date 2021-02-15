@@ -23,7 +23,7 @@ namespace Nutritionist.API.Controllers
             userService = new UserService();
             nutritionistService = new NutritionistService();
         }
-
+        
         [HttpGet("SiteDatasCount")]
         public ActionResult<BaseResponseModel> GetSiteDatasCount()
         {
@@ -33,7 +33,7 @@ namespace Nutritionist.API.Controllers
                 siteDatasCount.userCount = userService.GetUserCount();
                 siteDatasCount.articleCount = articleService.GetArticleCount();
                 siteDatasCount.nutritionistCount = nutritionistService.GetNutritionistCount();
-                return Ok(new SuccessResponseModel<SiteDatasCount>(siteDatasCount));
+                return new SuccessResponseModel<SiteDatasCount>(siteDatasCount);
             }
             catch (Exception ex)
             {

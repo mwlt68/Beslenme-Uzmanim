@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
+using ArticleListModel = Nutritionist.Core.Models.Article.List;
+using CommentListModel = Nutritionist.Core.Models.Comment.List;
 
 namespace Nutritionist.Core.Models.Nutritionist
 {

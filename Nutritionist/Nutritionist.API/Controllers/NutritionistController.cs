@@ -5,29 +5,101 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nutritionist.Core.ActionFilters;
+using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Services;
 using NutritionistInsertModel = Nutritionist.Core.Models.Nutritionist.Insert;
+using NutritionistDetailModel = Nutritionist.Core.Models.Nutritionist.Detail;
+using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
+using Nutritionist.Core.StaticDatas;
+
 namespace Nutritionist.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class NutritionistController : ControllerBase
     {
-        NutritionistService nutritionistService = new NutritionistService();
-
+        private NutritionistService nutritionistService;
+        private UserService userService;
+        public NutritionistController()
+        {
+            nutritionistService = new NutritionistService();
+            userService = new UserService();
+        }
 
         [ValidateModelState]
         [HttpPost("NutRegister")]
-        public bool PostRegister([FromForm] NutritionistInsertModel nutritionistInsertModel)
+        public BaseResponseModel PostRegister([FromForm] NutritionistInsertModel nutritionistInsertModel)
         {
             try
             {
                 var result = nutritionistService.NutritionistRegister(nutritionistInsertModel);
-                return result;
+                return new SuccessResponseModel<bool>(result);
             }
             catch (Exception ex)
             {
-                return false;
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [HttpGet("NutDetail")]
+        public BaseResponseModel GetNutritionistDetail(int id)
+        {
+            try
+            {
+                var nutritionistDetail = nutritionistService.GetNutritionistDetailModel(id);
+                if (nutritionistDetail != null)
+                {
+                    var userDetailModel = userService.GetUserDetailModel(nutritionistDetail.UserId);
+                    if (userDetailModel != null)
+                    {
+                        nutritionistDetail.User = userDetailModel;
+                        return new SuccessResponseModel<NutritionistDetailModel>(nutritionistDetail);
+                    }
+
+                }
+                return new BaseResponseModel(ReadOnlyValues.NutritionistNotFound);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [HttpGet("NutList")]
+        public BaseResponseModel GetNutritionistsList( )
+        {
+            try
+            {
+                var nutritionistsListModel = nutritionistService.GetNutritionistListModels();
+                if (nutritionistsListModel != null )
+                {
+                    foreach (var nutList in nutritionistsListModel)
+                    {
+                        var userListModel = userService.GetUserListModel(nutList.UserId);
+                        if (userListModel != null)
+                        {
+                            nutList.User = userListModel; 
+                        }
+                    }
+                    return new SuccessResponseModel<List<NutritionistListModel>>(nutritionistsListModel);
+                }
+                else return new BaseResponseModel(ReadOnlyValues.NutritionistsNotFound);
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [HttpDelete("NutDelete")]
+        public BaseResponseModel DeleteNutritionist(int id)
+        {
+            try
+            {
+                var result = nutritionistService.RemoveNutritionist(id);
+                return new SuccessResponseModel<bool>(result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel(ex.Message);
             }
         }
     }

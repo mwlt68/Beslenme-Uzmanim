@@ -13,7 +13,7 @@ namespace Nutritionist.Services
     public class ArticleService:BaseServices
     {
         private ArticleRepository articleRepository = new ArticleRepository();
-        private NutritionistService nutritionistService = new NutritionistService();
+        private NutritionistRepository nutritionistRepository = new NutritionistRepository();
 
         // TODO: Maybe this get methods can convert to pagination structure.
 
@@ -22,7 +22,7 @@ namespace Nutritionist.Services
             Article article = mapper.Map<ArticleInsertModel, Article>(articleInsertModel);
             articleRepository.Add(article);
         }
-        public bool SoftDeleteArticle(int articleId)
+        public bool RemoveArticle(int articleId)
         {
             Article article=articleRepository.GetById(articleId);
             if (article != null)
@@ -32,13 +32,19 @@ namespace Nutritionist.Services
             }
             return false;
         }
-
-        // If fewAticles is true, the method returns as many articles as requested(count). Else returns the number of all articles.
-        public List<ArticleListModel> GetArticles(bool fewAticles=false,int count=0)
+        // This method will return any article detail.
+        public ArticleDetailModel GetArticleDetail(int articleId)
         {
-            List<ArticleListModel> articleModels;
+            var article = articleRepository.GetById(articleId);
+            ArticleDetailModel articleDetailModel = mapper.Map<Article, ArticleDetailModel>(article);
+            return articleDetailModel;
+        }
+        // If fewAticles is true, the method returns as many articles as requested(count). Else returns the number of all articles.
+        public List<ArticleListModel> GetArticlesList(bool fewAticles = false, int count = 0)
+        {
+            List<ArticleListModel> articleListModels;
             List<Article> articles;
-            if (fewAticles && count>0)
+            if (fewAticles && count > 0)
             {
                 articles = articleRepository.TakeArticles(count);
             }
@@ -46,8 +52,29 @@ namespace Nutritionist.Services
             {
                 articles = articleRepository.GetAll();
             }
-            articleModels =ArrayMap<Article, ArticleListModel>(articles);
-            return GetArticlesNutritionist(articleModels);
+            articleListModels = ArrayMap<Article, ArticleListModel>(articles);
+            return articleListModels;
+        }
+        public int GetArticleCount()
+        {
+            return articleRepository.GetArticlesCount();
+        }
+        /*
+                private List<ArticleListModel> GetArticlesNutritionist(List<ArticleListModel> articleListModels)
+        {
+            List<ArticleListModel> articlesResult = new List<ArticleListModel>();
+            foreach (var articleModel in articleListModels)
+            {
+                var nutritionistEntity = nutritionistRepository.GetById(articleModel.NutritionistId);
+                if (nutritionistEntity != null)
+                {
+                    NutritionistListModel nutritionistListModel = mapper.Map<Data.Entities.Nutritionist, NutritionistListModel>(nutritionistEntity);
+                    ArticleListModel articleListModel = articleModel;
+                    articleListModel.Nutritionist = nutritionistListModel;
+                    articlesResult.Add(articleListModel);
+                }
+            }
+            return articleListModels;
         }
 
         // This method will return nutritionist articles.
@@ -57,20 +84,8 @@ namespace Nutritionist.Services
             List<ArticleListModel> articleModels = ArrayMap<Article, ArticleListModel>(articles);
             return GetArticlesNutritionist(articleModels);
         }
+        
 
-        // This method will return any article detail.
-        public ArticleDetailModel GetArticleDetail(int articleId)
-        {
-            var article = articleRepository.GetById(articleId);
-            ArticleDetailModel articleModel = mapper.Map<Article, ArticleDetailModel>(article);
-            var nutritionistListModel = nutritionistService.GetNutritionistListModel(articleModel.NutritionistId);
-            if (nutritionistListModel != null)
-            {
-                articleModel.Nutritionist = nutritionistListModel;
-                return articleModel;
-            }
-            return null;
-        }
 
         //If forNutritionist is true method will return count of   nutritionist`s articles.Else return all articles count.
         public int GetArticlesCount(bool forNutritionist,int nutritionistId=-1)
@@ -85,21 +100,7 @@ namespace Nutritionist.Services
             }
         }
 
-        private List<ArticleListModel> GetArticlesNutritionist(List <ArticleListModel> articleListModels)
-        {
-            List<ArticleListModel> articlesResult = new List<ArticleListModel>();
-            foreach (var articleModel in articleListModels)
-            {
-                var nutritionistListModel = nutritionistService.GetNutritionistListModel(articleModel.NutritionistId);
-                if (nutritionistListModel != null)
-                {
-                    ArticleListModel articleListModel = articleModel;
-                    articleListModel.Nutritionist = nutritionistListModel;
-                    articlesResult.Add(articleListModel);
-                }
-            }
-            return articleListModels;
-        }
+
         public int GetArticleCount()
         {
             return articleRepository.GetCount();
@@ -113,6 +114,6 @@ namespace Nutritionist.Services
                 return true;
             }
             else return false;
-        }
+        }*/
     }
 }

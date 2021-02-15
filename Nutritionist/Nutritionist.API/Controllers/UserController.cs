@@ -9,6 +9,7 @@ using Nutritionist.Services;
 using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
+using Nutritionist.Core.Models.ResponseModels;
 
 namespace Nutritionist.API.Controllers
 {
@@ -21,34 +22,34 @@ namespace Nutritionist.API.Controllers
         {
             userService = new UserService();
         }
-
         [ValidateModelState]
         [HttpPost("Login")]
-        public UserDetailModel PostUserLogin([FromBody] UserLoginModel userLoginModel)
+        public BaseResponseModel PostUserLogin([FromBody] UserLoginModel userLoginModel)
         {
             try
             {
                 var result = userService.UserLogin(userLoginModel);
-                return result;
+                return new SuccessResponseModel<UserDetailModel>(result);
             }
             catch (Exception ex)
             {
-                return null;
+                return new BaseResponseModel(ex.Message);
             }
         }
 
         [ValidateModelState]
         [HttpPost("Register")]
-        public bool PostUserRegister([FromBody] UserInsertModel userInsertModel)
+        public BaseResponseModel PostUserRegister([FromBody] UserInsertModel userInsertModel)
         {
             try
             {
                 var result = userService.UserRegister(userInsertModel);
-                return result;
+                return new SuccessResponseModel<bool>(result);
             }
             catch (Exception ex)
             {
-                return false;
+                return new BaseResponseModel(ex.Message);
+
             }
         }
     }

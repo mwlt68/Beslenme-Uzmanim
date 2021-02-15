@@ -9,6 +9,8 @@ using Nutritionist.Services;
 using ArticleListModel = Nutritionist.Core.Models.Article.List;
 using ArticleDetailModel = Nutritionist.Core.Models.Article.Detail;
 using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
+using Nutritionist.Core.StaticDatas;
+using Nutritionist.Core.ActionFilters;
 
 namespace Nutritionist.API.Controllers
 {
@@ -17,18 +19,22 @@ namespace Nutritionist.API.Controllers
     public class ArticleController : ControllerBase
     {
         ArticleService articleService;
+        NutritionistService nutritionistService;
+        UserService userService;
         public ArticleController()
         {
             articleService = new ArticleService();
+            nutritionistService = new NutritionistService();
+            userService = new UserService();
         }
-
+        [ValidateModelState]
         [HttpPost("AddArticle")]
-        public ActionResult<BaseResponseModel> AddArticle([FromForm] ArticleInsertModel articleInsertModel)
+        public ActionResult<BaseResponseModel> PostAddArticle([FromForm] ArticleInsertModel articleInsertModel)
         {
             try
             {
                 articleService.AddArticle(articleInsertModel);
-                return Ok(new SuccessResponseModel<bool>(true));
+                return new SuccessResponseModel<bool>(true);
             }
             catch (Exception ex)
             {
@@ -36,14 +42,25 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-
+       
         [HttpGet("ArticleDetail")]
         public ActionResult<BaseResponseModel> GetArticleDetail(int id)
         {
             try
             {
-                var articleDetail= articleService.GetArticleDetail(id);
-                return Ok(new SuccessResponseModel<ArticleDetailModel>(articleDetail));
+                ArticleDetailModel articleDetail = articleService.GetArticleDetail(id);
+                if (articleDetail != null)
+                {
+                    var nutritionistListModel=nutritionistService.GetNutritionistListModel(articleDetail.NutritionistId);
+                    if (nutritionistListModel != null)
+                    {
+                        nutritionistListModel.User= userService.GetUserListModel(nutritionistListModel.UserId);
+                        articleDetail.Nutritionist = nutritionistListModel;
+                        return new SuccessResponseModel<ArticleDetailModel>(articleDetail);
+                    }
+                }
+                return new BaseResponseModel(ReadOnlyValues.ArticleNotFound);
+
             }
             catch (Exception ex)
             {
@@ -51,47 +68,55 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("GetArticles")]
-        public ActionResult<BaseResponseModel> GetArticles()
-        {
-            try
-            {
-                List<ArticleListModel> articles = articleService.GetArticles().ToList();
-                return Ok(new SuccessResponseModel<List<ArticleListModel>>(articles));
-            }
-            catch (Exception ex)
-            {
+       
+       [HttpGet("ArticleList")]
+       public ActionResult<BaseResponseModel> GetArticlesList()
+       {
+           try
+           {
+               List<ArticleListModel> articlesListModel = articleService.GetArticlesList();
+                if (articlesListModel != null)
+                {
+                    foreach (var article in articlesListModel)
+                    {
+                        var nutListModel = nutritionistService.GetNutritionistListModel(article.NutritionistId);
+                        if (nutListModel != null)
+                        {
+                            var nutUserModel = userService.GetUserListModel(nutListModel.UserId);
+                            if (nutListModel != null )
+                            {
+                                nutListModel.User = nutUserModel;
+                                article.Nutritionist = nutListModel;
+                                
 
-                return new BaseResponseModel(ex.Message);
-            }
-        }
-        [HttpGet("TakeFewArticles")]
-        public ActionResult<BaseResponseModel> TakeFewArticles(int count)
-        {
-            try
-            {
-                List<ArticleListModel> articles = articleService.GetArticles(true, count).ToList();
-                return Ok(new SuccessResponseModel<List<ArticleListModel>>(articles));
-            }
-            catch (Exception ex)
-            {
+                            }
 
-                return new BaseResponseModel(ex.Message);
+                        }
+                    }
+                    return new SuccessResponseModel<List<ArticleListModel>>(articlesListModel);
+                }
+                return new BaseResponseModel(ReadOnlyValues.ArticlesNotFound);
             }
-        }
-        [HttpDelete("DeleteArticle")]
+           catch (Exception ex)
+           {
+
+               return new BaseResponseModel(ex.Message);
+           }
+       }
+
+       [HttpDelete("DeleteArticle")]
         public ActionResult<BaseResponseModel> DeleteArticle(int articleId)
         {
             try
             {
-                bool res = articleService.SoftDeleteArticle(articleId);
+                bool res = articleService.RemoveArticle(articleId);
                 if (res)
                 {
-                    return Ok(new SuccessResponseModel<bool>(res));
+                    return new SuccessResponseModel<bool>(res);
                 }
                 else
                 {
-                    return new BaseResponseModel("Article cannot found !");
+                    return new BaseResponseModel(ReadOnlyValues.ArticleNotFound);
                 }
             }
             catch (Exception ex)
@@ -100,6 +125,42 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
+        
+      [HttpGet("TakeFewArticles")]
+      public ActionResult<BaseResponseModel> TakeFewArticles(int count)
+      {
+          try
+          {
+                List<ArticleListModel> articlesListModel = articleService.GetArticlesList(true,count);
+                if (articlesListModel != null)
+                {
+                    foreach (var article in articlesListModel)
+                    {
+                        var nutListModel = nutritionistService.GetNutritionistListModel(article.NutritionistId);
+                        if (nutListModel != null)
+                        {
+                            var nutUserModel = userService.GetUserListModel(nutListModel.UserId);
+                            if (nutListModel != null)
+                            {
+                                nutListModel.User = nutUserModel;
+                                article.Nutritionist = nutListModel;
+
+
+                            }
+
+                        }
+                    }
+                    return new SuccessResponseModel<List<ArticleListModel>>(articlesListModel);
+                }
+                return new BaseResponseModel(ReadOnlyValues.ArticleNotFound);
+            }
+          catch (Exception ex)
+          {
+
+              return new BaseResponseModel(ex.Message);
+          }
+      }
+
 
 
     }
