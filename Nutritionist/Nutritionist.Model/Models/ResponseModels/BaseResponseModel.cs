@@ -33,7 +33,10 @@ namespace Nutritionist.Core.Models.ResponseModels
         public TResponseObj responseObj { get; set; }
 
         // This constructor  will create a successfully response.
+        public SuccessResponseModel()
+        {
 
+        }
         public SuccessResponseModel(TResponseObj responseObj)
         {
             this.responseObj = responseObj;

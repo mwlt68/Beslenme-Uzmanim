@@ -10,6 +10,7 @@ using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
 using Nutritionist.Core.Models.ResponseModels;
+using Nutritionist.Core.StaticDatas;
 
 namespace Nutritionist.API.Controllers
 {
@@ -50,6 +51,28 @@ namespace Nutritionist.API.Controllers
             {
                 return new BaseResponseModel(ex.Message);
 
+            }
+        }
+
+        [HttpDelete("DeleteUser/{userId}")]
+        public ActionResult<BaseResponseModel> DeleteUser(int userId)
+        {
+            try
+            {
+                bool res = userService.RemoveUser(userId);
+                if (res)
+                {
+                    return new SuccessResponseModel<bool>(res);
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.UserNotFound);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponseModel(ex.Message);
             }
         }
     }

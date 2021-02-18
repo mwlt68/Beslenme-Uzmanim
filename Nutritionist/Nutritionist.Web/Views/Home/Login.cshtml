@@ -1,0 +1,44 @@
+﻿@model Nutritionist.Core.Models.User.Login
+@{
+    Layout = "~/Views/Shared/_SimpleLayout.cshtml";
+}
+    <section class="form4 cid-smbjN7rjhW mbr-fullscreen" id="form4-m">
+
+        <div class="container">
+            <div class="row content-wrapper justify-content-center">
+                <div class="col-lg-3 offset-lg-1 mbr-form" data-form-type="formoid">
+                    <form asp-controller="Home" asp-action="Login" method="post" class="mbr-form form-with-styler">
+
+                        <div class="dragArea row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <h1 class="mbr-section-title mb-4 display-2">
+                                    <strong>Giriş Yap</strong>
+                                </h1>
+                            </div>
+                            @*
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="mbr-text mbr-fonts-style mb-4 display-7">
+                                    Fill this form and we'll get back to you soon.
+                                </p>
+                            </div>
+                            *@
+                            <div class="col-lg-12 col-md col-12 form-group">
+                                <input type="text" name="username" placeholder="Kullanıcı Adı" class="form-control" value="" asp-for="Username" id="name-form4-m">
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="col-lg-12 col-md col-12 form-group">
+                                <input type="password" name="password" placeholder="Şifre" class="form-control" value="" asp-for="Password" id="password-form4-m">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-auto mbr-section-btn"><button type="submit" class="btn btn-secondary display-4">Giriş</button></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-7 offset-lg-1 col-12">
+                    <div class="image-wrapper">
+                        <img class="w-100" src="~/assets/images/sq3.jpg" alt="Mobirise" style="width:600px;height:500px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

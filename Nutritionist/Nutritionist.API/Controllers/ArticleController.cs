@@ -43,7 +43,7 @@ namespace Nutritionist.API.Controllers
             }
         }
        
-        [HttpGet("ArticleDetail")]
+        [HttpGet("ArticleDetail/{id}")]
         public ActionResult<BaseResponseModel> GetArticleDetail(int id)
         {
             try
@@ -104,7 +104,7 @@ namespace Nutritionist.API.Controllers
            }
        }
 
-       [HttpDelete("DeleteArticle")]
+       [HttpDelete("DeleteArticle/{articleId}")]
         public ActionResult<BaseResponseModel> DeleteArticle(int articleId)
         {
             try
@@ -126,7 +126,7 @@ namespace Nutritionist.API.Controllers
             }
         }
         
-      [HttpGet("TakeFewArticles")]
+      [HttpGet("TakeFewArticles/{count}")]
       public ActionResult<BaseResponseModel> TakeFewArticles(int count)
       {
           try

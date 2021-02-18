@@ -40,7 +40,7 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("NutDetail")]
+        [HttpGet("NutDetail/{id}")]
         public BaseResponseModel GetNutritionistDetail(int id)
         {
             try
@@ -89,12 +89,12 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpDelete("NutDelete")]
-        public BaseResponseModel DeleteNutritionist(int id)
+        [HttpDelete("NutDelete/{nutritionistId}")]
+        public BaseResponseModel DeleteNutritionist(int nutritionistId)
         {
             try
             {
-                var result = nutritionistService.RemoveNutritionist(id);
+                var result = nutritionistService.RemoveNutritionist(nutritionistId);
                 return new SuccessResponseModel<bool>(result);
             }
             catch (Exception ex)

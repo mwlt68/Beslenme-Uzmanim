@@ -42,7 +42,7 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("CommentList")]
+        [HttpGet("CommentList/{nutritionistId}")]
         public ActionResult<BaseResponseModel> GetCommentsList(int nutritionistId)
         {
             try
@@ -78,8 +78,9 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
+        // UserId for security
 
-        [HttpDelete("DeleteComment")]
+        [HttpDelete("DeleteComment/{commentId}/{userId}")]
         public ActionResult<BaseResponseModel> DeleteComment(int commentId,int userId)
         {
             try
