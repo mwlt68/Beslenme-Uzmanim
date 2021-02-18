@@ -44,6 +44,26 @@ namespace Nutritionist.Web.Controllers
             }
             else return Error();
         }
+        public IActionResult UserRegister()
+        {
+            return View();
+
+        }
+        [HttpPost]
+        public IActionResult UserRegister(UserInsertModel userInsertModel)
+        {
+            var response = Post<bool>(new MyApiRequestModel(Core.Models.Controllers.User, Methods.Register), userInsertModel);
+
+            if (response != null && response is SuccessResponseModel<bool>)
+            {
+                if ((response as SuccessResponseModel<bool>).responseObj == true)
+                {
+                    RedirectToAction("Login");
+                }
+            }
+            return View();
+
+        }
         public IActionResult Login()
         {
             return View();

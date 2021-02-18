@@ -118,3 +118,4 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Login.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_SimpleLayout.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\UserRegister.cshtml.g.cs
