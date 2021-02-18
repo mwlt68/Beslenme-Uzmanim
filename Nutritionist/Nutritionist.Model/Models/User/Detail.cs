@@ -11,5 +11,11 @@ namespace Nutritionist.Core.Models.User
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string SecondName { get; set; }
+
+        public override string ToString()
+        {
+
+            return FirstName+" "+SecondName;
+        }
     }
 }

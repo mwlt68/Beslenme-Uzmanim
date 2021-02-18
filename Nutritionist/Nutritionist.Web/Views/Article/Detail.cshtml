@@ -1,0 +1,59 @@
+﻿@model Nutritionist.Core.Models.Article.Detail
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="image1 cid-snKxmdOxCx" id="image1-1a">
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-6">
+                <div class="image-wrapper">
+                    @if (Model.Image != null)
+                    {
+                        <img src="data:image/jpg;base64, @Convert.ToBase64String(Model.Image)">
+                    }
+                    <p class="mbr-description mbr-fonts-style pt-2 align-center display-4"></p>
+                </div>
+            </div>
+            <div class="col-12 col-lg">
+                <div class="text-wrapper">
+                    <h3 class="mbr-section-title mbr-fonts-style mb-3 display-5">
+                        <strong>@Model.Title</strong>
+                    </h3>
+
+                    <div class="row pt-1">
+
+                        <div class="container">
+                            <i>@Model.UpdateDate.ToString("MM/dd/yyyy")</i> 
+                        </div>
+                        <div class="container pt-3">
+                            <a class="beautyLink" href="asdasd">
+                                @Model.Nutritionist.User.ToString()
+                            </a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content5 cid-snKxuM5n0n" id="content5-1b">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+
+                <h4 class="mbr-section-subtitle mbr-fonts-style mb-4 display-5"></h4>
+                <p class="mbr-text mbr-fonts-style display-7">
+                    @Model.Body
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
