@@ -9,6 +9,7 @@ namespace Nutritionist.Core.StaticDatas
         #region ResponseModel
         public static readonly String SuccessMessage = "Request worked successfully.";
         public static readonly String ErrorMessage = "Request not worked successfully.";
+        public static readonly String UnexpectedErrorMessage = "Beklenmedik bir hata meydana geldi.";
         #endregion
         #region ResponseMessage
         public static readonly String NutritionistNotFound = "Nutritionist detail does not found !";

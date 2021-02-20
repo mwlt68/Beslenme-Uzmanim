@@ -4,51 +4,34 @@ using System.Text;
 
 namespace Nutritionist.Core.Models
 {
-    public enum Controllers
-    {
-        Home,
-        User,
-        Nutritionist,
-        Article,
-        Comment
-    }
-    public enum Methods
-    {
-        // Get SiteDatasCount
-        SiteDatasCount,
-        Login,
-        Register,
-        DeleteUser,
-        NutRegister,
-        // Get NutDetail/{id}
-        NutDetail,
-        // Get NutList
-        NutList,
-        // Delete NutDelete
-        NutDelete,
-        AddArticle,
-        // Get ArticleDetail/{id}
-        ArticleDetail,
-        // Get ArticleList
-        ArticleList,
-        // GEt TakeFewArticles/{count}
-        TakeFewArticles,
-        DeleteArticle,
-        AddComment,
-        // Get CommentList/{nutritionistId}
-        CommentList,
-        // Delete DeleteComment
-        DeleteComment,
-    }
     public class MyApiRequestModel
     {
-        public Controllers controller;
-        public Methods method;
+        public String controller;
+        public String method;
 
-        public MyApiRequestModel(Controllers controller, Methods method)
+        public MyApiRequestModel(String controller, String method)
         {
             this.controller = controller;
             this.method = method;
         }
+
+        public static MyApiRequestModel GetSiteDatasCount => new MyApiRequestModel("Home", "SiteDatasCount");
+        public static MyApiRequestModel PostUserLogin => new MyApiRequestModel("User", "Login");
+        public static MyApiRequestModel PostUserRegister => new MyApiRequestModel("User", "Register");
+        public static MyApiRequestModel DeleteUser => new MyApiRequestModel("User", "DeleteUser");
+        public static MyApiRequestModel PostNutritionist => new MyApiRequestModel("Nutritionist", "NutRegister");
+        public static MyApiRequestModel GetNutritionistDetail => new MyApiRequestModel("Nutritionist", "NutDetail");
+        public static MyApiRequestModel GetNutritionistsList => new MyApiRequestModel("Nutritionist", "NutList");
+        public static MyApiRequestModel DeleteNutritionist => new MyApiRequestModel("Nutritionist", "NutDelete");
+        public static MyApiRequestModel PostArticleAdd => new MyApiRequestModel("Article", "AddArticle");
+        public static MyApiRequestModel GetArticleDetail => new MyApiRequestModel("Article", "ArticleDetail");
+        public static MyApiRequestModel GetArticlesList => new MyApiRequestModel("Article", "ArticleList");
+        public static MyApiRequestModel DeleteArticle => new MyApiRequestModel("Article", "DeleteArticle");
+        public static MyApiRequestModel GetTakeFewArticles => new MyApiRequestModel("Article", "TakeFewArticles");
+        public static MyApiRequestModel PostAddComment => new MyApiRequestModel("Comment", "AddComment");
+        public static MyApiRequestModel GetCommentList => new MyApiRequestModel("Comment", "CommentList");
+        public static MyApiRequestModel DeleteComment => new MyApiRequestModel("Comment", "DeleteComment");
+
+ //       public static MyApiRequestModel x => new MyApiRequestModel("","");
     }
 }

@@ -18,6 +18,7 @@ using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using Nutritionist.Core.Models;
 using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Web.Models.ApiModelsCombines;
+using Nutritionist.Web.Models;
 
 namespace Nutritionist.Web.Controllers
 {
@@ -25,20 +26,29 @@ namespace Nutritionist.Web.Controllers
     {
         public IActionResult Detail(int id)
         {
-            var nutDetailBaseModels = Get<NutritionistDetailModel>(new MyApiRequestModel(Core.Models.Controllers.Nutritionist, Methods.NutDetail),id.ToString());
-            if (nutDetailBaseModels != null && nutDetailBaseModels is SuccessResponseModel<NutritionistDetailModel> )
+            var nutDetailBaseModels = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail,id.ToString());
+            var checkNutBaseResponseError=CheckBaseControllerError(nutDetailBaseModels);
+            if (checkNutBaseResponseError == null)
             {
-                var nutDetailModel = (nutDetailBaseModels as SuccessResponseModel<NutritionistDetailModel>).responseObj;
-                var commentListsBaseModel = Get<List<CommentListModel>>(new MyApiRequestModel(Core.Models.Controllers.Comment, Methods.CommentList),nutDetailModel.Id.ToString());
-                if (commentListsBaseModel != null && commentListsBaseModel is SuccessResponseModel<List<CommentListModel>> )
+                var commentListBaseModels = Get<List<CommentListModel>>(MyApiRequestModel.GetCommentList, nutDetailBaseModels.tobject.Id.ToString());
+                var checkCommentBaseResponseError = CheckBaseControllerError(nutDetailBaseModels);
+                if (checkCommentBaseResponseError == null)
                 {
-                    var commentListsModel = (commentListsBaseModel as SuccessResponseModel<List<CommentListModel>>).responseObj;
-                    NutritionistContDetailModel nutritionistContDetailModel = new NutritionistContDetailModel(commentListsModel, nutDetailModel);
+                    NutritionistContDetailModel nutritionistContDetailModel = new NutritionistContDetailModel(commentListBaseModels.tobject,nutDetailBaseModels.tobject);
                     return View(nutritionistContDetailModel);
                 }
-                    
+                else
+                {
+                    return Error(checkCommentBaseResponseError);
+                }
+
             }
-            return View();
+            else
+            {
+                return Error(checkNutBaseResponseError);
+            }
+
+
         }
     }
 }

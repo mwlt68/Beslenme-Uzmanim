@@ -45,12 +45,19 @@ namespace Nutritionist.API.Controllers
             try
             {
                 var result = userService.UserRegister(userInsertModel);
-                return new SuccessResponseModel<bool>(result);
+                if (result)
+                {
+                    return new SuccessResponseModel<bool>(result);
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.UnexpectedErrorMessage);
+                }
+
             }
             catch (Exception ex)
             {
                 return new BaseResponseModel(ex.Message);
-
             }
         }
 

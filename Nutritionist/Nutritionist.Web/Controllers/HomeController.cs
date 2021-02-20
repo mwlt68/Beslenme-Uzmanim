@@ -32,49 +32,63 @@ namespace Nutritionist.Web.Controllers
 
         public IActionResult Index()
         {
-            var articleListBaseModels = Get<List<ArticleListModel>>(new MyApiRequestModel(Core.Models.Controllers.Article, Methods.TakeFewArticles), homeArticleCount.ToString());
-            var siteDataCountsBaseModel = Get<SiteDatasCount>(new MyApiRequestModel(Core.Models.Controllers.Home, Methods.SiteDatasCount));
-            if (articleListBaseModels != null && articleListBaseModels is SuccessResponseModel<List<ArticleListModel>> &&
-                siteDataCountsBaseModel != null && siteDataCountsBaseModel is SuccessResponseModel<SiteDatasCount>)
+            var siteDataCountsBaseModel = Get<SiteDatasCount>(MyApiRequestModel.GetSiteDatasCount);
+            var checkSiteDatasBaseResponseError = CheckBaseControllerError(siteDataCountsBaseModel);
+            if (checkSiteDatasBaseResponseError == null)
             {
-                var articleListModels = (articleListBaseModels as SuccessResponseModel<List<ArticleListModel>>).responseObj;
-                var siteDataCounts = (siteDataCountsBaseModel as SuccessResponseModel<SiteDatasCount>).responseObj;
-                HomeContIndexModel homeContIndexModel = new HomeContIndexModel(articleListModels, siteDataCounts);
-                return View(homeContIndexModel);
+                var articleListBaseModel = Get<List<ArticleListModel>>(MyApiRequestModel.GetTakeFewArticles, homeArticleCount.ToString());
+                var checkArticleListBaseResponseError = CheckBaseControllerError(articleListBaseModel);
+
+                if (checkArticleListBaseResponseError == null)
+                {
+                    HomeContIndexModel homeContIndexModel = new HomeContIndexModel(articleListBaseModel.tobject, siteDataCountsBaseModel.tobject);
+                    return View("~/Views/Home/Index.cshtml",homeContIndexModel);
+                }
+                else
+                {
+                    return Error(checkArticleListBaseResponseError);
+                }
+
             }
-            else return Error();
+            else
+            {
+                return Error(checkSiteDatasBaseResponseError);
+            }
+            
         }
         public IActionResult UserRegister()
         {
-            return View();
+            return View("~/Views/Home/UserRegister.cshtml");
 
         }
         [HttpPost]
         public IActionResult UserRegister(UserInsertModel userInsertModel)
         {
-            var response = Post<bool>(new MyApiRequestModel(Core.Models.Controllers.User, Methods.Register), userInsertModel);
+            
+            var userRegister = Post<bool>(MyApiRequestModel.PostUserRegister, userInsertModel);
+            var checkUserBaseResponseError = CheckBaseControllerError(userRegister);
 
-            if (response != null && response is SuccessResponseModel<bool>)
+            if (checkUserBaseResponseError == null )
             {
-                if ((response as SuccessResponseModel<bool>).responseObj == true)
-                {
-                    RedirectToAction("Login");
-                }
+                return Login();
             }
-            return View();
-
+            else
+            {
+                return Error(checkUserBaseResponseError);
+            }
         }
         public IActionResult Login()
         {
-            return View();
+            return View("~/Views/Home/Login.cshtml");
 
         }
         [HttpPost]
         public IActionResult Login(UserLoginModel userLoginModel)
         {
-            var response = Post<UserDetailModel>(new MyApiRequestModel(Core.Models.Controllers.User, Methods.Login),userLoginModel);
+            var userDetailModel = Post<UserDetailModel>(MyApiRequestModel.PostUserLogin,userLoginModel);
+            var checkUserDetailBaseResponseError = CheckBaseControllerError(userDetailModel);
 
-            if (response != null && response is SuccessResponseModel<UserDetailModel>)
+            if (checkUserDetailBaseResponseError == null)
             {
                 return Index();
             }
@@ -86,11 +100,7 @@ namespace Nutritionist.Web.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
     }
 }
 
