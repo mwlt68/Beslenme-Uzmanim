@@ -47,6 +47,10 @@ namespace Nutritionist.Services.Mapper
 
         public  byte[] GetBytesFromFile(IFormFile formFile)
         {
+            if (formFile == null )
+            {
+                return null;
+            }
             using (var memoryStream = new MemoryStream())
             {
                 formFile.CopyToAsync(memoryStream);
@@ -56,6 +60,10 @@ namespace Nutritionist.Services.Mapper
         // Todo: this method not checked
         public IFormFile GetFileFromBytes(byte[] byteArray)
         {
+            if (byteArray == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream(byteArray);
             IFormFile file = new FormFile(stream, 0, byteArray.Length, "name", "profileImage");
             return file;

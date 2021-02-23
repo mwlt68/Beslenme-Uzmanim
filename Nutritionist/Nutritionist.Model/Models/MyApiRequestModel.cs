@@ -26,6 +26,7 @@ namespace Nutritionist.Core.Models
         public static MyApiRequestModel PostArticleAdd => new MyApiRequestModel("Article", "AddArticle");
         public static MyApiRequestModel GetArticleDetail => new MyApiRequestModel("Article", "ArticleDetail");
         public static MyApiRequestModel GetArticlesList => new MyApiRequestModel("Article", "ArticleList");
+        public static MyApiRequestModel GetNutritionistArticlesList => new MyApiRequestModel("Article", "NutArticleList");
         public static MyApiRequestModel DeleteArticle => new MyApiRequestModel("Article", "DeleteArticle");
         public static MyApiRequestModel GetTakeFewArticles => new MyApiRequestModel("Article", "TakeFewArticles");
         public static MyApiRequestModel PostAddComment => new MyApiRequestModel("Comment", "AddComment");

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nutritionist.Core.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -14,8 +15,7 @@ namespace Nutritionist.Core.Models.User
 
         public override string ToString()
         {
-
-            return FirstName + " " + SecondName;
+            return StaticMethods.DefaultUpperCase(FirstName) + " " + StaticMethods.DefaultUpperCase(SecondName);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Nutritionist.Core.StaticDatas
         public static readonly String NutritionistsNotFound = "Nutritionists do not found !";
         public static readonly String ArticleNotFound = "Article does not found !";
         public static readonly String ArticlesNotFound = "Articles do not found !";
+        public static readonly String ArticleNotAdd = "Article do not add !";
         public static readonly String CommentNotFound = "Comment does not found !";
         public static readonly String CommentsNotFound = "Comments do not found !";
         public static readonly String UserNotFound = "User does not found !";

@@ -17,10 +17,11 @@ namespace Nutritionist.Services
 
         // TODO: Maybe this get methods can convert to pagination structure.
 
-        public void AddArticle(ArticleInsertModel articleInsertModel)
+        public bool AddArticle(ArticleInsertModel articleInsertModel)
         {
             Article article = mapper.Map<ArticleInsertModel, Article>(articleInsertModel);
             articleRepository.Add(article);
+            return true;
         }
         public bool RemoveArticle(int articleId)
         {
@@ -58,6 +59,13 @@ namespace Nutritionist.Services
         public int GetArticleCount()
         {
             return articleRepository.GetArticlesCount();
+        }
+        // This method will return nutritionist articles.
+        public List<ArticleListModel> GetNutritionistArticles(int nutritionistId)
+        {
+            var articles = articleRepository.GetArticlesFromNutritionistId(nutritionistId);
+            List<ArticleListModel> articleModels = ArrayMap<Article, ArticleListModel>(articles);
+            return articleModels;
         }
         /*
                 private List<ArticleListModel> GetArticlesNutritionist(List<ArticleListModel> articleListModels)

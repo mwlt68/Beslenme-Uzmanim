@@ -11,6 +11,8 @@ using System.IO;
 using System.Net;
 using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Web.Models;
+using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace Nutritionist.Web.Infrastructure
 {
@@ -18,9 +20,17 @@ namespace Nutritionist.Web.Infrastructure
     {
         public readonly string BaseUrl = "https://localhost:44304/api/";
      
-        public IActionResult Error(ErrorViewModel errorViewModel)
+        public IActionResult Error(params ErrorViewModel[] errorViewModels)
         {
-            return View("~/Views/Shared/Error.cshtml", errorViewModel);
+            foreach (var error in errorViewModels)
+            {
+                if (error != null )
+                {
+                    return View("~/Views/Shared/Error.cshtml", error);
+                }
+
+            }
+            return View("~/Views/Shared/Error.cshtml", ErrorViewModel.GetDefaultException);
         }
 
         // If there is an error method will return errorviewmodel else return null.
@@ -49,11 +59,22 @@ namespace Nutritionist.Web.Infrastructure
                 return CheckResponse<T>(response);
             }
         }
-        public BaseControllerResponseModel<T> Post<T>(MyApiRequestModel apiRequestModel, object data)
+        public BaseControllerResponseModel<T> PostMultipartForm<T>(MyApiRequestModel apiRequestModel, object data)
+        {
+            String uri = GetRequestUri(apiRequestModel);
+            HttpClient httpClient = new HttpClient();
+            MultipartFormDataContent form = ObjectToMultipartFormDataContent(data);
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = client.PostAsync(uri, form).Result;
+                return CheckResponse<T>(response);
+            }
+        }
+        public BaseControllerResponseModel<T> Post<T>(MyApiRequestModel apiRequestModel, object data, String mediaType = "application/json")
         {
             String uri = GetRequestUri(apiRequestModel);
             var requestData = JsonConvert.SerializeObject(data);
-            var content = new StringContent(requestData, Encoding.UTF8, "application/json");
+            var content = new StringContent(requestData, Encoding.UTF8, mediaType);
             using (var client = new HttpClient())
             {
                 HttpResponseMessage response = client.PostAsync(uri, content).Result;
@@ -113,6 +134,57 @@ namespace Nutritionist.Web.Infrastructure
                 }
             }
             return uriResult;
+        }
+        
+        private MultipartFormDataContent ObjectToMultipartFormDataContent<T>(T item)
+        where T : class
+        {
+            Type myObjectType = item.GetType();
+            PropertyInfo[] properties = myObjectType.GetProperties();
+            MultipartFormDataContent form = new MultipartFormDataContent();
+            foreach (var info in properties)
+            {
+                var value = info.GetValue(item);
+                if (value is IFormFile)
+                {
+                    IFormFile file = value as IFormFile;
+                    var fileBytes = GetBytesFromFile(file);
+                    form.Add(new ByteArrayContent(fileBytes, 0, fileBytes.Length), info.Name, file.FileName);
+                }
+                else if (value is String)
+                {
+                    form.Add(new StringContent(value as String), info.Name);
+                }
+                else if (value is Int32)
+                {
+                    form.Add(new StringContent(value.ToString()), info.Name);
+                }
+            }
+            return form;
+            /*
+                if (value is IFormFile)
+                {
+                    IFormFile file = value as IFormFile;
+                    var fileBytes = GetBytesFromFile(file);
+                    form.Add(new ByteArrayContent(fileBytes,0,fileBytes.Length),info.Name,file.FileName);
+                }
+                else if(value is String)
+                {
+                    form.Add(new StringContent(value as String),info.Name);
+                }
+                else if(value is Int32)
+                {
+                    form.Add(new StringContent(value.ToString()), info.Name);
+                }
+             */
+        }
+        private byte[] GetBytesFromFile(IFormFile formFile)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                formFile.CopyToAsync(memoryStream);
+                return memoryStream.ToArray();
+            }
         }
     }
 }

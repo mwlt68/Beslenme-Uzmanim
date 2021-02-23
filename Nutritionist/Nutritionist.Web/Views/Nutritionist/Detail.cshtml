@@ -18,11 +18,11 @@
     <div class="container">
 
         <div class="row align-items-center">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="image-wrapper">
                     @if (@Model.nutritionist.ProfileImage != null)
                     {
-                        <img src="data:image/jpg;base64, @ArrayToBase64(Model.nutritionist.ProfileImage)">
+                        <img src="data:image/jpg;base64, @ArrayToBase64(Model.nutritionist.ProfileImage)" style="width:300px;height:300px">
                     }
                 </div>
             </div>
@@ -45,11 +45,13 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-10">
+            <div class="col-md-12">
                 <hr class="line">
-                <p class="mbr-text align-center mbr-fonts-style my-4 display-5">
-                    <em>@Model.nutritionist.Introduce</em>
-                </p>
+                <pre class="mbr-text align-center mbr-fonts-style my-4 display-7" style="white-space:pre-wrap" >
+                    <em>
+                        @Html.Raw(Model.nutritionist.Introduce)
+                    </em>
+                </pre>
                 <hr class="line">
             </div>
         </div>
@@ -137,10 +139,6 @@
 
 <section class="share3 cid-smblC300qn" id="share3-y">
 
-
-
-
-
     <div class="container">
         <div class="media-container-row">
             <div class="col-12">
@@ -169,6 +167,20 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<section class="gallery3 cid-smamM4w0M4" id="gallery3-9">
+
+
+    <div class="container-fluid">
+        <div class="mbr-section-head">
+            <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Yayımladığı Makaleler</strong></h4>
+
+        </div>
+
+        @Html.Partial("~/Views/Shared/ArticleListPartial.cshtml", Model.articles);
+
     </div>
 </section>
 

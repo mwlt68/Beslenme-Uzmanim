@@ -33,8 +33,15 @@ namespace Nutritionist.API.Controllers
         {
             try
             {
-                articleService.AddArticle(articleInsertModel);
-                return new SuccessResponseModel<bool>(true);
+                var result = articleService.AddArticle(articleInsertModel);
+                if (result)
+                {
+                    return new SuccessResponseModel<bool>(true);
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.ArticleNotAdd);
+                }
             }
             catch (Exception ex)
             {
@@ -103,8 +110,41 @@ namespace Nutritionist.API.Controllers
                return new BaseResponseModel(ex.Message);
            }
        }
+        [HttpGet("NutArticleList/{nutritionistId}")]
+        public ActionResult<BaseResponseModel> GetNutritionistArticlesList(int nutritionistId)
+        {
+            try
+            {
+                List<ArticleListModel> articlesListModel = articleService.GetNutritionistArticles(nutritionistId);
+                if (articlesListModel != null)
+                {
+                    foreach (var article in articlesListModel)
+                    {
+                        var nutListModel = nutritionistService.GetNutritionistListModel(article.NutritionistId);
+                        if (nutListModel != null)
+                        {
+                            var nutUserModel = userService.GetUserListModel(nutListModel.UserId);
+                            if (nutListModel != null)
+                            {
+                                nutListModel.User = nutUserModel;
+                                article.Nutritionist = nutListModel;
 
-       [HttpDelete("DeleteArticle/{articleId}")]
+
+                            }
+
+                        }
+                    }
+                    return new SuccessResponseModel<List<ArticleListModel>>(articlesListModel);
+                }
+                return new BaseResponseModel(ReadOnlyValues.ArticlesNotFound);
+            }
+            catch (Exception ex)
+            {
+
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [HttpDelete("DeleteArticle/{articleId}")]
         public ActionResult<BaseResponseModel> DeleteArticle(int articleId)
         {
             try

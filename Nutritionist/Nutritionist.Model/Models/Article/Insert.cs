@@ -18,7 +18,6 @@ namespace Nutritionist.Core.Models.Article
         [Required(ErrorMessage = "Body is required")]
 
         public string Body { get; set; }
-        [Required(ErrorMessage = "Image is required")]
 
         public IFormFile Image { get; set; }
     }

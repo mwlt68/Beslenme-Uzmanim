@@ -24,6 +24,20 @@ namespace Nutritionist.Web.Controllers
 {
     public class NutritionistController : BaseController
     {
+        public IActionResult List()
+        {
+            var nutritionistListModels = Get<List<NutritionistListModel>>(MyApiRequestModel.GetNutritionistsList);
+            var checkNutBaseResponseError = CheckBaseControllerError(nutritionistListModels);
+
+            if (checkNutBaseResponseError == null)
+            {
+                return View("~/Views/Nutritionist/List.cshtml",nutritionistListModels.tobject);
+            }
+            else
+            {
+            }
+                return Error(checkNutBaseResponseError);
+        }
         public IActionResult Detail(int id)
         {
             var nutDetailBaseModels = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail,id.ToString());
@@ -32,14 +46,17 @@ namespace Nutritionist.Web.Controllers
             {
                 var commentListBaseModels = Get<List<CommentListModel>>(MyApiRequestModel.GetCommentList, nutDetailBaseModels.tobject.Id.ToString());
                 var checkCommentBaseResponseError = CheckBaseControllerError(nutDetailBaseModels);
-                if (checkCommentBaseResponseError == null)
+                var articleListBaseModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetNutritionistArticlesList, nutDetailBaseModels.tobject.Id.ToString());
+                var checkArticleBaseResponseError = CheckBaseControllerError(articleListBaseModels);
+                if (checkCommentBaseResponseError == null && checkArticleBaseResponseError == null)
                 {
-                    NutritionistContDetailModel nutritionistContDetailModel = new NutritionistContDetailModel(commentListBaseModels.tobject,nutDetailBaseModels.tobject);
-                    return View(nutritionistContDetailModel);
+                    NutritionistContDetailModel nutritionistContDetailModel = 
+                        new NutritionistContDetailModel(commentListBaseModels.tobject,articleListBaseModels.tobject,nutDetailBaseModels.tobject);
+                    return View("~/Views/Nutritionist/Detail.cshtml", nutritionistContDetailModel);
                 }
                 else
                 {
-                    return Error(checkCommentBaseResponseError);
+                    return Error(checkCommentBaseResponseError, checkArticleBaseResponseError);
                 }
 
             }
@@ -47,8 +64,30 @@ namespace Nutritionist.Web.Controllers
             {
                 return Error(checkNutBaseResponseError);
             }
+        }
+        public IActionResult AddArticle()
+        {
+            return View("~/Views/Nutritionist/AddArticle.cshtml");
+        }
+        [HttpPost]
+        public IActionResult AddArticle(ArticleInsertModel articleInsertModel)
+        {
+            articleInsertModel.NutritionistId = 2;
+            var articleInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostArticleAdd,articleInsertModel);
+            var checkArticleInsertBaseResponseError = CheckBaseControllerError(articleInsertModels);
 
-
+            if (checkArticleInsertBaseResponseError == null)
+            {
+                return Detail(articleInsertModel.NutritionistId);
+            }
+            else if (!ModelState.IsValid)
+            {
+                return AddArticle();
+            }
+            else
+            {
+                return Error(checkArticleInsertBaseResponseError);
+            }
         }
     }
 }
