@@ -19,7 +19,7 @@ namespace Nutritionist.Core.Models
         public static MyApiRequestModel PostUserLogin => new MyApiRequestModel("User", "Login");
         public static MyApiRequestModel PostUserRegister => new MyApiRequestModel("User", "Register");
         public static MyApiRequestModel DeleteUser => new MyApiRequestModel("User", "DeleteUser");
-        public static MyApiRequestModel PostNutritionist => new MyApiRequestModel("Nutritionist", "NutRegister");
+        public static MyApiRequestModel PostNutritionistRegister => new MyApiRequestModel("Nutritionist", "NutRegister");
         public static MyApiRequestModel GetNutritionistDetail => new MyApiRequestModel("Nutritionist", "NutDetail");
         public static MyApiRequestModel GetNutritionistsList => new MyApiRequestModel("Nutritionist", "NutList");
         public static MyApiRequestModel DeleteNutritionist => new MyApiRequestModel("Nutritionist", "NutDelete");

@@ -27,15 +27,15 @@
                 </div>
             </div>
             <div class="col-12 col-md">
-                <div class="text-wrapper">
-                    <p class="mbr-text mbr-fonts-style mb-4 display-7">@Model.nutritionist.ShortIntroduce</p>
-                    <p class="name mbr-fonts-style mb-1 display-4">
+                <center class="text-wrapper">
+                    <p class="name mbr-fonts-style mb-1 display-2" style="color:green">
                         <strong>@Model.nutritionist.User.ToString()</strong>
                     </p>
-                    <p class="position mbr-fonts-style display-4">
+                    <p class="position mbr-fonts-style display-5 pt-4">
                         <strong>@Model.nutritionist.Departman</strong>
                     </p>
-                </div>
+                    <p class="mbr-text mbr-fonts-style mb-4 display-7">@Model.nutritionist.ShortIntroduce</p>
+                </center>
             </div>
         </div>
     </div>
@@ -47,8 +47,8 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <hr class="line">
-                <pre class="mbr-text align-center mbr-fonts-style my-4 display-7" style="white-space:pre-wrap" >
-                    <em>
+                <pre class="mbr-text align-center mbr-fonts-style my-4 display-7" style="white-space:pre-wrap">
+                <em>
                         @Html.Raw(Model.nutritionist.Introduce)
                     </em>
                 </pre>
@@ -137,83 +137,137 @@
     </div>
 </section>
 
-<section class="share3 cid-smblC300qn" id="share3-y">
+@if (Model.nutritionist.InstagramLink != null || Model.nutritionist.YoutubeLink != null || Model.nutritionist.FacebookLink != null)
+{
+    <section class="share3 cid-smblC300qn" id="share3-y">
 
-    <div class="container">
-        <div class="media-container-row">
-            <div class="col-12">
-                <h3 class="mbr-section-title align-center mb-3 mbr-fonts-style display-2">
-                    <strong>Takipte Kal!</strong>
-                </h3>
-                <div class="social-list align-center">
-                    @if (Model.nutritionist.InstagramLink != null)
-                    {
-                        <a class="iconfont-wrapper bg-instagram m-2 " target="_blank" href=@Model.nutritionist.InstagramLink>
-                            <span class="socicon-instagram socicon"></span>
-                        </a>
-                    }
-                    @if (Model.nutritionist.FacebookLink != null)
-                    {
-                        <a class="iconfont-wrapper bg-facebook m-2 " target="_blank" href=@Model.nutritionist.FacebookLink>
-                            <span class="socicon-facebook socicon"></span>
-                        </a>
-                    }
-                    @if (Model.nutritionist.YoutubeLink != null)
-                    {
-                        <a class="iconfont-wrapper bg-youtube m-1 " target="_blank" href=@Model.nutritionist.YoutubeLink>
-                            <span class="socicon-youtube socicon"></span>
-                        </a>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="gallery3 cid-smamM4w0M4" id="gallery3-9">
-
-
-    <div class="container-fluid">
-        <div class="mbr-section-head">
-            <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Yayımladığı Makaleler</strong></h4>
-
-        </div>
-
-        @Html.Partial("~/Views/Shared/ArticleListPartial.cshtml", Model.articles);
-
-    </div>
-</section>
-
-<section class="features9 cid-smbnLOvdds" id="features10-13">
-    <!---->
-
-
-    <div class="container">
-        <div class="mbr-section-head">
-            <h3 class="mbr-section-title mbr-fonts-style mb-0 display-2">
-                <strong>Yorumlar</strong>
-            </h3>
-
-        </div>
-        @foreach (var comment in Model.comments)
-        {
-            <div class="row mt-4">
-                <div class="card col-12">
-                    <div class="card-wrapper">
-                        <div class="top-line row">
-                            <div class="col">
-                                <h4 class="card-title mbr-fonts-style display-5"><strong>@comment.User.ToString()</strong></h4>
-                            </div>
-
-                        </div>
-                        <div class="bottom-line">
-                            <p class="mbr-text mbr-fonts-style display-7">
-                                @comment.CommentContent
-                            </p>
-                        </div>
+        <div class="container">
+            <div class="media-container-row">
+                <div class="col-12">
+                    <h3 class="mbr-section-title align-center mb-3 mbr-fonts-style display-2">
+                        <strong>Takipte Kal!</strong>
+                    </h3>
+                    <div class="social-list align-center">
+                        @if (Model.nutritionist.InstagramLink != null)
+                        {
+                            <a class="iconfont-wrapper bg-instagram m-2 " target="_blank" href=@Model.nutritionist.InstagramLink>
+                                <span class="socicon-instagram socicon"></span>
+                            </a>
+                        }
+                        @if (Model.nutritionist.FacebookLink != null)
+                        {
+                            <a class="iconfont-wrapper bg-facebook m-2 " target="_blank" href=@Model.nutritionist.FacebookLink>
+                                <span class="socicon-facebook socicon"></span>
+                            </a>
+                        }
+                        @if (Model.nutritionist.YoutubeLink != null)
+                        {
+                            <a class="iconfont-wrapper bg-youtube m-1 " target="_blank" href=@Model.nutritionist.YoutubeLink>
+                                <span class="socicon-youtube socicon"></span>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    </section>
+}
+
+@if (Model.articles != null && Model.articles.Count > 0)
+{
+    <section class="gallery3 cid-smamM4w0M4" id="gallery3-9">
+
+
+        <div class="container-fluid">
+            <div class="mbr-section-head">
+                <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Yayımladığı Makaleler</strong></h4>
+
+            </div>
+
+            @Html.Partial("~/Views/Shared/ArticleListPartial.cshtml", Model.articles);
+
+        </div>
+    </section>
+}
+
+<section class="form5 cid-smbjZuFWDN" id="form5-q">
+
+
+    <div class="container" style="background-color: rgb(240, 240, 240);">
+        <div class="mbr-section-head  pb-4" >
+            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                <strong>Yorumunuz Ekleyin</strong>
+            </h3>
+
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 mx-auto mbr-form">
+                <form asp-controller="Nutritionist" asp-action="AddComment" method="POST" class="mbr-form form-with-styler mx-auto" asp-route-nutritionistId=@Model.nutritionist.Id.ToString()>
+                    <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
+                        Uyğunsuz bir yorumdan dolayı doğacak olan tüm sorumluklar size aittir.
+                    </p>
+                    <div class="col-12 form-group">
+                        <textarea name="commentContent"  id="commentContent" placeholder="Message" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="col-auto mbr-section-btn align-center pb-4 submit_btn_show_hide">
+                        <button type="submit" class="btn btn-primary display-4">Gönder</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </section>
+
+
+
+@if (Model.comments != null && Model.comments.Count > 0)
+{
+    <section class="features9 cid-smbnLOvdds" id="features10-13">
+        <!---->
+
+
+        <div class="container">
+            <div class="mbr-section-head">
+                <h3 class="mbr-section-title mbr-fonts-style mb-0 display-2">
+                    <strong>Yorumlar</strong>
+                </h3>
+
+            </div>
+            @foreach (var comment in Model.comments)
+            {
+                <div class="row mt-4">
+                    <div class="card col-12">
+                        <div class="card-wrapper">
+                            <div class="top-line row">
+                                <div class="col">
+                                    <h4 class="card-title mbr-fonts-style display-5"><strong>@comment.User.ToString()</strong></h4>
+                                </div>
+
+                            </div>
+                            <div class="bottom-line">
+                                <p class="mbr-text mbr-fonts-style display-7">
+                                    @comment.CommentContent
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </section>
+}
+<script src="~/assets/web/assets/jquery/jquery.min.js"></script>
+<script>
+    $('#commentContent').keyup(function () {
+
+        // If value is not empty
+        if ($(this).val().length == 0) {
+            // Hide the element
+            $('.submit_btn_show_hide').hide();
+        } else {
+            // Otherwise show it
+            $('.submit_btn_show_hide').show();
+        }
+    }).keyup();
+
+</script>

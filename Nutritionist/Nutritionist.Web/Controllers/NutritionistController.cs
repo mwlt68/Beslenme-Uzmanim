@@ -7,6 +7,7 @@ using Nutritionist.Web.Infrastructure;
 using NutritionistDetailModel = Nutritionist.Core.Models.Nutritionist.Detail;
 using ArticleDetailModel = Nutritionist.Core.Models.Article.Detail;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
+using NutritionistInsertModel = Nutritionist.Core.Models.Nutritionist.Insert;
 using CommentListModel = Nutritionist.Core.Models.Comment.List;
 using CommentInsertModel = Nutritionist.Core.Models.Comment.Insert;
 using ArticleListModel = Nutritionist.Core.Models.Article.List;
@@ -22,8 +23,37 @@ using Nutritionist.Web.Models;
 
 namespace Nutritionist.Web.Controllers
 {
+    // <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     public class NutritionistController : BaseController
     {
+        public IActionResult Add()
+        {
+            return View("~/Views/Nutritionist/Add.cshtml");
+        }
+        [HttpPost]
+        public IActionResult Add(NutritionistInsertModel nutritionistInsertModel)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return Add();
+            }
+            else
+            {
+                nutritionistInsertModel.UserId = 11;
+                var nutritionistInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostNutritionistRegister, nutritionistInsertModel);
+                var checkNutritionistInsertBaseResponseError = CheckBaseControllerError(nutritionistInsertModels);
+                if (checkNutritionistInsertBaseResponseError == null)
+                {
+                    return View("~/Views/Home/Login.cshtml");
+                }
+                else
+                {
+                    return Error(checkNutritionistInsertBaseResponseError);
+                }
+            }
+
+        }
         public IActionResult List()
         {
             var nutritionistListModels = Get<List<NutritionistListModel>>(MyApiRequestModel.GetNutritionistsList);
@@ -87,6 +117,35 @@ namespace Nutritionist.Web.Controllers
             else
             {
                 return Error(checkArticleInsertBaseResponseError);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AddComment(String commentContent, String nutritionistId)
+        {
+            int userId = 12;
+            int nutritionistIdInt = Int32.Parse(nutritionistId);
+            if (String.IsNullOrEmpty(commentContent)|| nutritionistIdInt < 0 || commentContent.Trim().Length <= 0)
+            {
+                return Detail(nutritionistIdInt);
+            }
+            else
+            {
+                CommentInsertModel comment = new CommentInsertModel() {
+                    CommentContent = commentContent,
+                    NutritionstId = nutritionistIdInt,
+                    UserId = userId,
+                };
+                var commentInsertModels = Post<bool>(MyApiRequestModel.PostAddComment, comment);
+                var checkCommentInsertBaseResponseError = CheckBaseControllerError(commentInsertModels);
+                if (checkCommentInsertBaseResponseError == null)
+                {
+                    return Detail(nutritionistIdInt);
+                }
+                else
+                {
+                    return Error(checkCommentInsertBaseResponseError);
+                }
             }
         }
     }

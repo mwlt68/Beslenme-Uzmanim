@@ -125,3 +125,4 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Article\List.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Nutritionist\AddArticle.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ArticleListPartial.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Nutritionist\Add.cshtml.g.cs

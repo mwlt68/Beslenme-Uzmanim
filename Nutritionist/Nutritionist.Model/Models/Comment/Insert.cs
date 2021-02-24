@@ -7,6 +7,8 @@ namespace Nutritionist.Core.Models.Comment
 {
     public class Insert
     {
+
+
         [Required(ErrorMessage = "Nutritions is required")]
         public int NutritionstId { get; set; }
         [Required(ErrorMessage = "User is required")]

@@ -24,7 +24,7 @@
                                     @if (nutritionist.ProfileImage != null || nutritionist.ProfileImage.Length ==0)
                                     {
                                         <div class="image-wrap">
-                                            <img src="data:image/jpg;base64, @Convert.ToBase64String(nutritionist.ProfileImage)">
+                                            <img src="data:image/jpg;base64, @Convert.ToBase64String(nutritionist.ProfileImage)" height="350px">
                                         </div>
                                     }
                                     <div class="content-wrap">
