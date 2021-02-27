@@ -9,6 +9,7 @@ using Nutritionist.Services;
 using ArticleListModel = Nutritionist.Core.Models.Article.List;
 using ArticleDetailModel = Nutritionist.Core.Models.Article.Detail;
 using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
+using ArticleUpdateModel = Nutritionist.Core.Models.Article.Update;
 using Nutritionist.Core.StaticDatas;
 using Nutritionist.Core.ActionFilters;
 
@@ -49,7 +50,30 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-       
+
+        [ValidateModelState]
+        [HttpPost("Edit")]
+        public BaseResponseModel PostEdit([FromForm] ArticleUpdateModel articleUpdateModel)
+        {
+            try
+            {
+                var result = articleService.EditArticle(articleUpdateModel);
+                if (result)
+                {
+                    return new SuccessResponseModel<bool>(result);
+
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.ArticleNotFound);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+
         [HttpGet("ArticleDetail/{id}")]
         public ActionResult<BaseResponseModel> GetArticleDetail(int id)
         {
@@ -94,8 +118,6 @@ namespace Nutritionist.API.Controllers
                             {
                                 nutListModel.User = nutUserModel;
                                 article.Nutritionist = nutListModel;
-                                
-
                             }
 
                         }

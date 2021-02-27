@@ -1,0 +1,103 @@
+﻿@model Nutritionist.Core.Models.Nutritionist.Update
+@{
+    ViewData["Title"] = "Kliniğik Güncelleme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    byte[] profileImage = Nutritionist.Web.Infrastructure.StaticFunctions.GetBytesFromFile(Model.ProfileImage);
+
+}
+
+<section class="form5 cid-smbjZuFWDN" id="form5-q">
+
+
+    <div class="container">
+        <div class="mbr-section-head">
+            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                <strong>Kliniğini Güncelle</strong>
+            </h3>
+
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 mx-auto mbr-form">
+                <form asp-controller="Nutritionist" asp-action="Edit" method="POST" class="mbr-form form-with-styler" enctype="multipart/form-data">
+                    <div class="dragArea row">
+                        <div class="col-md col-sm-12 form-group">
+                            <center>
+                                @if (profileImage == null || profileImage.Length <= 0)
+                                {
+                                    <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" id="Article_Image_Preview">
+                                }
+                                else
+                                {
+                                    <img src="data:image/jpg;base64, @Convert.ToBase64String(profileImage)" id="Article_Image_Preview">
+                                }
+                            </center>
+                            <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn py-4">
+                                <span class="btn btn-warning" id="Article_Image_Btn">
+                                    <span>
+                                        Profil Resmi Seç
+                                    </span>
+                                </span>
+                                <input type="file" id="Article_Image" asp-for="ProfileImage" style="visibility:hidden;">
+                                <span asp-validation-for="ProfileImage" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md col-sm-12 form-group">
+                            <label class="control-label">Bölüm</label>
+                            <input type="text" placeholder="Bölümünüz (Uzmanlık Alanı)" class="form-control"  asp-for="Departman">
+                            <span asp-validation-for="Departman" class="text-danger"></span>
+
+
+                            <input type="tel" placeholder="05431231212 (Zorunlu Değil)" pattern="[0-9]{11}" class="form-control mt-4"  asp-for="PhoneNumber">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+
+                            <textarea class="form-control  mt-4" rows="5" placeholder="Kısaca Kendinizi Tanıtınız (Max 150 Karakter)" asp-for="ShortIntroduce"></textarea>
+                            <span asp-validation-for="ShortIntroduce" class="text-danger"></span>
+
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <textarea placeholder="Kendinizi Detaylıca Tanıtınız" rows="10" class="form-control" asp-for="Introduce"></textarea>
+                            <span asp-validation-for="Introduce" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <textarea placeholder="Klinik Adresiniz" rows="2" class="form-control" asp-for="Address"></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <input type="text" placeholder="Çalışma Saatleri (Önerilen Format 08:00 / 17:30)" class="form-control" asp-for="WorkingHours">
+                            <span asp-validation-for="WorkingHours" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <input type="text" placeholder="Linked In Linkiniz (Zorunlu Değil)" class="form-control" asp-for="LinkedinLink">
+                            <span asp-validation-for="LinkedinLink" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <input type="text" placeholder="Instagram Linkiniz (Zorunlu Değil)" class="form-control" asp-for="InstagramLink">
+                            <span asp-validation-for="InstagramLink" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <input type="text" placeholder="Facebook Linkiniz (Zorunlu Değil)" class="form-control" asp-for="FacebookLink">
+                            <span asp-validation-for="FacebookLink" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-12 form-group">
+                            <input type="text" placeholder="You Tube Linkiniz (Zorunlu Değil)" class="form-control"  asp-for="YoutubeLink">
+                            <span asp-validation-for="YoutubeLink" class="text-danger"></span>
+
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn">
+                            <button type="submit" class="btn btn-primary display-4">Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

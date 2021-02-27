@@ -6,7 +6,8 @@ using System.Text;
 using ArticleListModel= Nutritionist.Core.Models.Article.List;
 using ArticleDetailModel = Nutritionist.Core.Models.Article.Detail;
 using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
-using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
+using ArticleUpdateModel = Nutritionist.Core.Models.Article.Update;
+using Nutritionist.Core.Helper;
 
 namespace Nutritionist.Services
 {
@@ -66,6 +67,19 @@ namespace Nutritionist.Services
             var articles = articleRepository.GetArticlesFromNutritionistId(nutritionistId);
             List<ArticleListModel> articleModels = ArrayMap<Article, ArticleListModel>(articles);
             return articleModels;
+        }
+        public bool EditArticle(ArticleUpdateModel articleUpdateModel)
+        {
+            var article = articleRepository.GetById(articleUpdateModel.Id);
+            if (articleUpdateModel != null && article != null)
+            {
+                article.Title = articleUpdateModel.Title;
+                article.Body= articleUpdateModel.Body;
+                article.Image = StaticFunctions.GetBytesFromFile(articleUpdateModel.Image);
+                articleRepository.Update(article);
+                return true;
+            }
+            else return false;
         }
         /*
                 private List<ArticleListModel> GetArticlesNutritionist(List<ArticleListModel> articleListModels)

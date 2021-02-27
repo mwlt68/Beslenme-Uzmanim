@@ -106,8 +106,6 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.csproj.CoreCompileInputs.cache
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Header.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Footer.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
@@ -115,7 +113,6 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\System.IO.Abstractions.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\Nutritionist.Core.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\Nutritionist.Core.pdb
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\Login.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_SimpleLayout.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Home\UserRegister.cshtml.g.cs
@@ -126,3 +123,12 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Nutritionist\AddArticle.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\ArticleListPartial.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Nutritionist\Add.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\User\Edit.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Delete.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Nutritionist\Edit.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.csproj.CoreCompileInputs.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Article\Edit.cshtml.g.cs

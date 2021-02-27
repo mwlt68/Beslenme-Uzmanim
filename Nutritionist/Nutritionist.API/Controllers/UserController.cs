@@ -9,6 +9,7 @@ using Nutritionist.Services;
 using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
+using UserUpdateModel = Nutritionist.Core.Models.User.Update;
 using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Core.StaticDatas;
 
@@ -60,7 +61,27 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
+        [HttpGet("Detail/{userId}")]
+        public ActionResult<BaseResponseModel> GetUserDetail(int userId)
+        {
+            try
+            {
+                var  userDetail = userService.GetUserDetailModel(userId);
+                if (userDetail != null)
+                {
+                    return new SuccessResponseModel<UserDetailModel>(userDetail);
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.UserNotFound);
+                }
+            }
+            catch (Exception ex)
+            {
 
+                return new BaseResponseModel(ex.Message);
+            }
+        }
         [HttpDelete("DeleteUser/{userId}")]
         public ActionResult<BaseResponseModel> DeleteUser(int userId)
         {
@@ -79,6 +100,28 @@ namespace Nutritionist.API.Controllers
             catch (Exception ex)
             {
 
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [ValidateModelState]
+        [HttpPost("Edit")]
+        public BaseResponseModel PostUserEdit([FromBody] UserUpdateModel userUpdateModel)
+        {
+            try
+            {
+                var result = userService.EditUser(userUpdateModel);
+                if (result)
+                {
+                    return new SuccessResponseModel<bool>(result);
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.UnexpectedErrorMessage);
+                }
+
+            }
+            catch (Exception ex)
+            {
                 return new BaseResponseModel(ex.Message);
             }
         }

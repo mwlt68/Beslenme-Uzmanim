@@ -13,13 +13,20 @@ using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Web.Models;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
 
 namespace Nutritionist.Web.Infrastructure
 {
     public class BaseController : Controller
     {
         public readonly string BaseUrl = "https://localhost:44304/api/";
-     
+        public readonly IMapper mapper;
+
+
+        public BaseController(IMapper mapper)
+        {
+            this.mapper = mapper;
+        }
         public IActionResult Error(params ErrorViewModel[] errorViewModels)
         {
             foreach (var error in errorViewModels)

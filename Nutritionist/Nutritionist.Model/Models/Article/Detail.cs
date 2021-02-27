@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
 
 
@@ -22,4 +20,5 @@ namespace Nutritionist.Core.Models.Article
 
         public virtual NutritionistListModel Nutritionist { get; set; }
     }
-}
+
+ }

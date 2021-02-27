@@ -9,6 +9,7 @@ using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Services;
 using NutritionistInsertModel = Nutritionist.Core.Models.Nutritionist.Insert;
 using NutritionistDetailModel = Nutritionist.Core.Models.Nutritionist.Detail;
+using NutritionistUpdateModel = Nutritionist.Core.Models.Nutritionist.Update;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
 using Nutritionist.Core.StaticDatas;
 
@@ -34,6 +35,28 @@ namespace Nutritionist.API.Controllers
             {
                 var result = nutritionistService.NutritionistRegister(nutritionistInsertModel);
                 return new SuccessResponseModel<bool>(result);
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel(ex.Message);
+            }
+        }
+        [ValidateModelState]
+        [HttpPost("Edit")]
+        public BaseResponseModel PostEdit([FromForm] NutritionistUpdateModel nutritionistUpdateModel)
+        {
+            try
+            {
+                var result = nutritionistService.EditNutritionist(nutritionistUpdateModel);
+                if (result)
+                {
+                    return new SuccessResponseModel<bool>(result);
+
+                }
+                else
+                {
+                    return new BaseResponseModel(ReadOnlyValues.NutritionistNotFound);
+                }
             }
             catch (Exception ex)
             {

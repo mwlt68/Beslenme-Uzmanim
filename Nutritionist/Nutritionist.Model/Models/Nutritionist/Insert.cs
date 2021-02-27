@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO.Abstractions;
 using System.Text;
 
 namespace Nutritionist.Core.Models.Nutritionist

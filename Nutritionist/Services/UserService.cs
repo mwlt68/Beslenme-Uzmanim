@@ -8,6 +8,7 @@ using UserInsertModel= Nutritionist.Core.Models.User.Insert;
 using UserListModel= Nutritionist.Core.Models.User.List;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
+using UserUpdateModel = Nutritionist.Core.Models.User.Update;
 
 
 namespace Nutritionist.Services
@@ -57,7 +58,19 @@ namespace Nutritionist.Services
         {
             return userRepository.GetUsersCount();
         }
-        
+        public bool EditUser(UserUpdateModel userUpdateModel)
+        {
+            var user =userRepository.GetById(userUpdateModel.Id);
+            if (userUpdateModel != null && user != null)
+            {
+                user.FirstName= userUpdateModel.FirstName;
+                user.SecondName= userUpdateModel.SecondName;
+                user.Username= userUpdateModel.Username;
+                userRepository.Update(user);
+                return true;
+            }
+            else return false;
+        }
         public bool RemoveUser(int userId)
         {
             var userEntity=userRepository.GetById(userId);

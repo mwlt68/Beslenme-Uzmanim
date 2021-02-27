@@ -1,0 +1,43 @@
+﻿@model Nutritionist.Core.Models.User.Update
+
+@{
+    ViewData["Title"] = "Bilgileri Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section class="form7 cid-smbjXohQMj" id="form7-p">
+
+
+    <div class="container">
+        <div class="mbr-section-head">
+            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                <strong>Bilgileri Güncelle</strong>
+            </h3>
+
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-8 mx-auto mbr-form">
+                <form asp-controller="User" asp-action="Edit" method="post" class="mbr-form form-with-styler mx-auto">
+                    <div class="dragArea row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <input type="text" placeholder="Kullanıcı Adınız" class="form-control"  id="name-form7-p" asp-for="Username">
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <input type="text" placeholder="Adınız" class="form-control"  id="name-form7-p" asp-for="FirstName">
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <input type="text" placeholder="Soyadınız" class="form-control"  id="name-form7-p" asp-for="SecondName">
+                            <span asp-validation-for="SecondName" class="text-danger"></span>
+                        </div>
+                        <div class="col-auto mbr-section-btn align-center">
+                            <button type="submit" class="btn btn-primary display-4">Güncelle</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

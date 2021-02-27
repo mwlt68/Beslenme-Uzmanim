@@ -37,7 +37,7 @@ namespace Nutritionist.Services.Mapper
             CreateMap<CommentEntity, CommentInsertModel>().ReverseMap();
             CreateMap<CommentEntity, CommentListModel>().ReverseMap();
             CreateMap<NutritionistEntity, NutritionistInsertModel>()
-                .ForMember(s => s.ProfileImage, opt => opt.MapFrom(d=> GetFileFromBytes(d.ProfileImage)))
+                .ForMember(s => s.ProfileImage, opt => opt.MapFrom(d => GetFileFromBytes(d.ProfileImage)))
                 .ReverseMap()
                 .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => GetBytesFromFile(src.ProfileImage)));
             CreateMap<NutritionistEntity, NutritionistDetailModel>().ReverseMap();

@@ -23,12 +23,17 @@ using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using Nutritionist.Core.Models.Other;
 using System.IO;
 using Nutritionist.Web.Models.ApiModelsCombines;
+using AutoMapper;
 
 namespace Nutritionist.Web.Controllers
 {
     public class HomeController : BaseController
     {
         private int homeArticleCount=4;
+
+        public HomeController(IMapper mapper) : base(mapper)
+        {
+        }
 
         public IActionResult Index()
         {

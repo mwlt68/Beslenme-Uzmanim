@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NutritionistInsertModel = Nutritionist.Core.Models.Nutritionist.Insert;
+using NutritionistUpdateModel = Nutritionist.Core.Models.Nutritionist.Update;
 using NutritionistDetailModel = Nutritionist.Core.Models.Nutritionist.Detail;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
 using NutritionistEntity = Nutritionist.Data.Entities.Nutritionist;
 using UserEntity = Nutritionist.Data.Entities.User;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserListModel = Nutritionist.Core.Models.User.List;
-
+using Nutritionist.Core.Helper;
 
 namespace Nutritionist.Services
 {
@@ -30,6 +31,28 @@ namespace Nutritionist.Services
             var nutritionist=nutritionistRepository.GetById(nutritionistId);
             var nutritionistDetailModel = mapper.Map<NutritionistEntity, NutritionistDetailModel>(nutritionist);
             return nutritionistDetailModel;
+        }
+        public bool EditNutritionist(NutritionistUpdateModel nutritionistUpdateModel)
+        {
+            var nutritionist = nutritionistRepository.GetById(nutritionistUpdateModel.Id);
+            if (nutritionistUpdateModel != null && nutritionist != null)
+            {
+                nutritionist.Address = nutritionistUpdateModel.Address;
+                nutritionist.Departman = nutritionistUpdateModel.Departman;
+                nutritionist.FacebookLink = nutritionistUpdateModel.FacebookLink;
+                nutritionist.InstagramLink = nutritionistUpdateModel.InstagramLink;
+                nutritionist.YoutubeLink = nutritionistUpdateModel.YoutubeLink;
+                nutritionist.LinkedinLink = nutritionistUpdateModel.LinkedinLink;
+                nutritionist.PhoneNumber = nutritionistUpdateModel.PhoneNumber;
+                nutritionist.ShortIntroduce = nutritionistUpdateModel.ShortIntroduce;
+                nutritionist.Introduce = nutritionistUpdateModel.Introduce;
+                nutritionist.WorkingHours = nutritionistUpdateModel.WorkingHours;
+                nutritionist.ProfileImage = StaticFunctions.GetBytesFromFile(nutritionistUpdateModel.ProfileImage);
+           //     nutritionist.ProfileImage = nutritionistUpdateModel.ProfileImage;
+                nutritionistRepository.Update(nutritionist);
+                return true;
+            }
+            else return false;
         }
         public List<NutritionistListModel> GetNutritionistListModels()
         {

@@ -15,7 +15,7 @@ namespace Nutritionist.Core.Models.User
 
         public override string ToString()
         {
-            return StaticMethods.DefaultUpperCase(FirstName) + " " + StaticMethods.DefaultUpperCase(SecondName);
+            return StaticFunctions.DefaultUpperCase(FirstName) + " " + StaticFunctions.DefaultUpperCase(SecondName);
         }
     }
 }
