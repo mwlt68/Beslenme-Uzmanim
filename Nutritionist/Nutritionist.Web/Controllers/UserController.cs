@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Nutritionist.Core.Models;
 using Nutritionist.Web.Infrastructure;
@@ -19,16 +20,18 @@ namespace Nutritionist.Web.Controllers
         }
 
         [HttpGet]
-
-        public IActionResult Edit(String id)
+        public IActionResult Edit()
         {
-
-            var userDetailResponse=Get<UserDetail>(MyApiRequestModel.GetUserDetail,id);
+            var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+            if (!userId.HasValue)
+            {
+                return View("~/Views/Home/Login.cshtml");
+            }
+            var userDetailResponse=Get<UserDetail>(MyApiRequestModel.GetUserDetail,false, userId.Value.ToString());
             var checkUserDetailBaseControllerError = CheckBaseControllerError(userDetailResponse);
             if (checkUserDetailBaseControllerError == null)
             {
                 var userUpdateModel = mapper.Map<UserDetail, UserUpdate>(userDetailResponse.tobject);
-
                 return View("~/Views/User/Edit.cshtml", userUpdateModel);
             }
             else
@@ -42,7 +45,7 @@ namespace Nutritionist.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var editRes = Post<bool>(MyApiRequestModel.PostEditUser, userUpdate);
+                var editRes = Post<bool>(MyApiRequestModel.PostEditUser, userUpdate, withToken: true);
                 var checkEditBaseControllerError = CheckBaseControllerError(editRes);
                 if (checkEditBaseControllerError == null)
                 {
@@ -55,11 +58,11 @@ namespace Nutritionist.Web.Controllers
             }
             else
             {
-                return Edit(userUpdate.Id.ToString());
+                return Edit();
             }
 
         }
-        [HttpGet]
+        /*
         public IActionResult Delete()
         {
             DeleteModel deleteModel = new DeleteModel() 
@@ -81,7 +84,7 @@ namespace Nutritionist.Web.Controllers
             {
                 if (userId >= 0)
                 {
-                    var userDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteUser, userId.ToString());
+                    var userDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteUser, true, userId.ToString());
                     var checkUserDeleteBaseControllerError = CheckBaseControllerError(userDeleteResponse);
                     if (checkUserDeleteBaseControllerError == null)
                     {
@@ -104,5 +107,6 @@ namespace Nutritionist.Web.Controllers
             }
 
         }
+        */
     }
 }

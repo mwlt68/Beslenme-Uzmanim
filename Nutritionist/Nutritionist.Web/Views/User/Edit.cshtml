@@ -21,19 +21,22 @@
                 <form asp-controller="User" asp-action="Edit" method="post" class="mbr-form form-with-styler mx-auto">
                     <div class="dragArea row">
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <input type="text" placeholder="Kullanıcı Adınız" class="form-control"  id="name-form7-p" asp-for="Username">
+                            <input type="text" placeholder="Kullanıcı Adınız" class="form-control" id="name-form7-p" asp-for="Username">
                             <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <input type="text" placeholder="Adınız" class="form-control"  id="name-form7-p" asp-for="FirstName">
+                            <input type="text" placeholder="Adınız" class="form-control" id="name-form7-p" asp-for="FirstName">
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                            <input type="text" placeholder="Soyadınız" class="form-control"  id="name-form7-p" asp-for="SecondName">
+                            <input type="text" placeholder="Soyadınız" class="form-control" id="name-form7-p" asp-for="SecondName">
                             <span asp-validation-for="SecondName" class="text-danger"></span>
                         </div>
+                        <div class="col-12 form-group">
+                            <input type="text" style="visibility:hidden;" asp-for="Id">
+                        </div>
                         <div class="col-auto mbr-section-btn align-center">
-                            <button type="submit" class="btn btn-primary display-4">Güncelle</button>
+                            <button type="submit" class="btn btn-primary display-4" >Güncelle</button>
                         </div>
                     </div>
                 </form>

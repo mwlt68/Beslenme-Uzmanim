@@ -8,6 +8,7 @@ using ArticleDetailModel = Nutritionist.Core.Models.Article.Detail;
 using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
 using ArticleUpdateModel = Nutritionist.Core.Models.Article.Update;
 using Nutritionist.Core.Helper;
+using System.Linq;
 
 namespace Nutritionist.Services
 {
@@ -55,7 +56,8 @@ namespace Nutritionist.Services
                 articles = articleRepository.GetAll();
             }
             articleListModels = ArrayMap<Article, ArticleListModel>(articles);
-            return articleListModels;
+            var result = articleListModels.OrderByDescending(si => si.UpdateDate).ToList(); ;
+            return result;
         }
         public int GetArticleCount()
         {
@@ -66,7 +68,8 @@ namespace Nutritionist.Services
         {
             var articles = articleRepository.GetArticlesFromNutritionistId(nutritionistId);
             List<ArticleListModel> articleModels = ArrayMap<Article, ArticleListModel>(articles);
-            return articleModels;
+            var result = articleModels.OrderByDescending(si => si.UpdateDate).ToList(); ;
+            return result;
         }
         public bool EditArticle(ArticleUpdateModel articleUpdateModel)
         {

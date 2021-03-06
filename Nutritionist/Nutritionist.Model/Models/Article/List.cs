@@ -18,6 +18,8 @@ namespace Nutritionist.Core.Models.Article
 
         public byte[] Image { get; set; }
 
+        public DateTime UpdateDate { get; set; }
+
         public virtual NutritionistListModel Nutritionist { get; set; }
 
     }

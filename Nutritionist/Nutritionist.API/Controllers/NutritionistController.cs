@@ -12,6 +12,7 @@ using NutritionistDetailModel = Nutritionist.Core.Models.Nutritionist.Detail;
 using NutritionistUpdateModel = Nutritionist.Core.Models.Nutritionist.Update;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
 using Nutritionist.Core.StaticDatas;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nutritionist.API.Controllers
 {
@@ -43,6 +44,8 @@ namespace Nutritionist.API.Controllers
         }
         [ValidateModelState]
         [HttpPost("Edit")]
+        [Authorize(Policy = "MustNutritionist")]
+
         public BaseResponseModel PostEdit([FromForm] NutritionistUpdateModel nutritionistUpdateModel)
         {
             try
@@ -87,6 +90,7 @@ namespace Nutritionist.API.Controllers
             }
         }
         [HttpGet("NutList")]
+
         public BaseResponseModel GetNutritionistsList( )
         {
             try
@@ -113,6 +117,7 @@ namespace Nutritionist.API.Controllers
             }
         }
         [HttpDelete("NutDelete/{nutritionistId}")]
+        [Authorize(Policy = "MustNutritionist")]
         public BaseResponseModel DeleteNutritionist(int nutritionistId)
         {
             try
@@ -123,6 +128,20 @@ namespace Nutritionist.API.Controllers
             catch (Exception ex)
             {
                 return new BaseResponseModel(ex.Message);
+            }
+        }
+
+        private bool ChechNutritionistAuthorize()
+        {
+            var currentUser = HttpContext.User;
+            var nutritionistId=Int32.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "NutritionistId").Value);
+            if (nutritionistId >= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Nutritionist.Web.Controllers
 
         public IActionResult Detail(int id)
         {
-            var articleDetailBaseModels = Get<ArticleDetailModel>(MyApiRequestModel.GetArticleDetail, id.ToString());
+            var articleDetailBaseModels = Get<ArticleDetailModel>(MyApiRequestModel.GetArticleDetail, false, id.ToString());
             var checkArticleBaseResponseError = CheckBaseControllerError(articleDetailBaseModels);
             if (checkArticleBaseResponseError == null)
             {
@@ -35,7 +35,7 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult List()
         {
-            var articleListBaseModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetArticlesList);
+            var articleListBaseModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetArticlesList, false);
             var checkArticlesBaseResponseError = CheckBaseControllerError(articleListBaseModels);
             if (checkArticlesBaseResponseError == null)
             {
@@ -51,7 +51,7 @@ namespace Nutritionist.Web.Controllers
         public IActionResult Edit(String id)
         {
 
-            var articleDetailResponse = Get<ArticleDetailModel>(MyApiRequestModel.GetArticleDetail, id);
+            var articleDetailResponse = Get<ArticleDetailModel>(MyApiRequestModel.GetArticleDetail, false, id);
             var checkArticleDetailBaseControllerError = CheckBaseControllerError(articleDetailResponse);
             if (checkArticleDetailBaseControllerError == null)
             {
@@ -69,7 +69,7 @@ namespace Nutritionist.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var editRes = PostMultipartForm<bool>(MyApiRequestModel.PostArticleEdit, articleUpdateModel);
+                var editRes = PostMultipartForm<bool>(MyApiRequestModel.PostArticleEdit, articleUpdateModel,true);
                 var checkEditBaseControllerError = CheckBaseControllerError(editRes);
                 if (checkEditBaseControllerError == null)
                 {
@@ -86,8 +86,7 @@ namespace Nutritionist.Web.Controllers
             }
 
         }
-
-        [HttpGet]
+        /*
         public IActionResult Delete()
         {
             DeleteModel deleteModel = new DeleteModel()
@@ -109,7 +108,7 @@ namespace Nutritionist.Web.Controllers
             {
                 if (articleId >= 0)
                 {
-                    var articleDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteArticle, articleId.ToString());
+                    var articleDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteArticle, true, articleId.ToString());
                     var checkArticleDeleteBaseControllerError = CheckBaseControllerError(articleDeleteResponse);
                     if (checkArticleDeleteBaseControllerError == null)
                     {
@@ -132,5 +131,6 @@ namespace Nutritionist.Web.Controllers
             }
 
         }
+        */
     }
 }

@@ -7,6 +7,7 @@ using UserListModel = Nutritionist.Core.Models.User.List;
 using NutritionistListModel = Nutritionist.Core.Models.Nutritionist.List;
 using CommentInsertModel = Nutritionist.Core.Models.Comment.Insert;
 using Nutritionist.Data.Entities;
+using System.Linq;
 
 namespace Nutritionist.Services
 {
@@ -36,7 +37,8 @@ namespace Nutritionist.Services
            
             List<Comment> comments = commentRepository.GetNutritionistAllComments(nutritionistId);
             List<CommentListModel> commentListModels = ArrayMap<Comment, CommentListModel>(comments);
-            return commentListModels;
+            var result= commentListModels.OrderByDescending(si => si.UpdateDate).ToList(); ;
+            return result;
         }
     }
 }

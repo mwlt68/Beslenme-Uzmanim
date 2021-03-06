@@ -57,46 +57,50 @@ namespace Nutritionist.Web.Infrastructure
             }
             return ErrorViewModel.GetDefaultException;
         }
-        public BaseControllerResponseModel<T> Get<T>(MyApiRequestModel apiRequestModel,params string[] parameters)
+        public BaseControllerResponseModel<T> Get<T>(MyApiRequestModel apiRequestModel, bool withToken ,params string[] parameters)
         {
             String uri = GetRequestUri(apiRequestModel,true, parameters);
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage response = client.GetAsync(uri).Result;
-                return CheckResponse<T>(response);
-            }
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri);
+            return SendRequest<T>(request, withToken);
         }
-        public BaseControllerResponseModel<T> PostMultipartForm<T>(MyApiRequestModel apiRequestModel, object data)
+        public BaseControllerResponseModel<T> PostMultipartForm<T>(MyApiRequestModel apiRequestModel, object data,bool withToken= false)
         {
             String uri = GetRequestUri(apiRequestModel);
-            HttpClient httpClient = new HttpClient();
             MultipartFormDataContent form = ObjectToMultipartFormDataContent(data);
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage response = client.PostAsync(uri, form).Result;
-                return CheckResponse<T>(response);
-            }
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post,uri);
+            request.Content = form;
+            return SendRequest<T>(request, withToken);
         }
-        public BaseControllerResponseModel<T> Post<T>(MyApiRequestModel apiRequestModel, object data, String mediaType = "application/json")
+
+        public BaseControllerResponseModel<T> Post<T>(MyApiRequestModel apiRequestModel, object data, bool withToken = false)
         {
             String uri = GetRequestUri(apiRequestModel);
             var requestData = JsonConvert.SerializeObject(data);
-            var content = new StringContent(requestData, Encoding.UTF8, mediaType);
-            using (var client = new HttpClient())
-            {
-                HttpResponseMessage response = client.PostAsync(uri, content).Result;
-                return CheckResponse<T>(response);
-            }
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, uri);
+            request.Content = new StringContent(requestData, Encoding.UTF8, "application/json");
+            return SendRequest<T>(request, withToken);
         }
-        public BaseControllerResponseModel<T> Delete<T>(MyApiRequestModel apiRequestModel, params string[] parameters)
+        public BaseControllerResponseModel<T> Delete<T>(MyApiRequestModel apiRequestModel, bool withToken , params string[] parameters)
         {
             String uri = GetRequestUri(apiRequestModel, true, parameters);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, uri);
+            return SendRequest<T>(request, withToken);
+        }
+
+        public BaseControllerResponseModel<T> SendRequest<T>(HttpRequestMessage request,bool withToken = false)
+        {
+            String token = HttpContext.Session.GetString(ReadOnlyValues.TokenSession);
+            if (withToken && !String.IsNullOrEmpty(token))
+            {
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(ReadOnlyValues.AuthenticationScheme, token);
+            }
             using (var client = new HttpClient())
             {
-                HttpResponseMessage response = client.DeleteAsync(uri).Result;
+                HttpResponseMessage response = client.SendAsync(request).Result;
                 return CheckResponse<T>(response);
             }
         }
+
         public BaseControllerResponseModel<T> CheckResponse<T>(HttpResponseMessage data)
         {
             ErrorViewModel errorViewModel = new ErrorViewModel();
@@ -168,22 +172,7 @@ namespace Nutritionist.Web.Infrastructure
                 }
             }
             return form;
-            /*
-                if (value is IFormFile)
-                {
-                    IFormFile file = value as IFormFile;
-                    var fileBytes = GetBytesFromFile(file);
-                    form.Add(new ByteArrayContent(fileBytes,0,fileBytes.Length),info.Name,file.FileName);
-                }
-                else if(value is String)
-                {
-                    form.Add(new StringContent(value as String),info.Name);
-                }
-                else if(value is Int32)
-                {
-                    form.Add(new StringContent(value.ToString()), info.Name);
-                }
-             */
+
         }
         private byte[] GetBytesFromFile(IFormFile formFile)
         {

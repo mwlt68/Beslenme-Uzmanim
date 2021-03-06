@@ -12,11 +12,14 @@ using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
 using ArticleUpdateModel = Nutritionist.Core.Models.Article.Update;
 using Nutritionist.Core.StaticDatas;
 using Nutritionist.Core.ActionFilters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nutritionist.API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
+    
     public class ArticleController : ControllerBase
     {
         ArticleService articleService;
@@ -30,6 +33,7 @@ namespace Nutritionist.API.Controllers
         }
         [ValidateModelState]
         [HttpPost("AddArticle")]
+        [Authorize(Policy = "MustNutritionist")]
         public ActionResult<BaseResponseModel> PostAddArticle([FromForm] ArticleInsertModel articleInsertModel)
         {
             try
@@ -53,6 +57,7 @@ namespace Nutritionist.API.Controllers
 
         [ValidateModelState]
         [HttpPost("Edit")]
+        [Authorize(Policy = "MustNutritionist")]
         public BaseResponseModel PostEdit([FromForm] ArticleUpdateModel articleUpdateModel)
         {
             try
@@ -167,6 +172,8 @@ namespace Nutritionist.API.Controllers
             }
         }
         [HttpDelete("DeleteArticle/{articleId}")]
+        [Authorize(Policy = "MustNutritionist")]
+
         public ActionResult<BaseResponseModel> DeleteArticle(int articleId)
         {
             try

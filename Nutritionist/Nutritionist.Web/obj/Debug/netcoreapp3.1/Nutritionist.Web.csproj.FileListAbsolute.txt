@@ -126,9 +126,11 @@ C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\User\Edit.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Delete.cshtml.g.cs
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Nutritionist\Edit.cshtml.g.cs
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.csproj.CoreCompileInputs.cache
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Razor\Views\Article\Edit.cshtml.g.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Redis.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\bin\Debug\netcoreapp3.1\StackExchange.Redis.StrongName.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.csproj.CoreCompileInputs.cache
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Web\obj\Debug\netcoreapp3.1\Nutritionist.Web.MvcApplicationPartsAssemblyInfo.cache

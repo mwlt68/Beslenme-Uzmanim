@@ -18,12 +18,14 @@ using ArticleListModel = Nutritionist.Core.Models.Article.List;
 using ArticleInsertModel = Nutritionist.Core.Models.Article.Insert;
 using UserListModel = Nutritionist.Core.Models.User.List;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
+using UserLoginResposeModel = Nutritionist.Core.Models.User.LoginRespose;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using Nutritionist.Core.Models.Other;
 using System.IO;
 using Nutritionist.Web.Models.ApiModelsCombines;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace Nutritionist.Web.Controllers
 {
@@ -37,11 +39,11 @@ namespace Nutritionist.Web.Controllers
 
         public IActionResult Index()
         {
-            var siteDataCountsBaseModel = Get<SiteDatasCount>(MyApiRequestModel.GetSiteDatasCount);
+            var siteDataCountsBaseModel = Get<SiteDatasCount>(MyApiRequestModel.GetSiteDatasCount, false);
             var checkSiteDatasBaseResponseError = CheckBaseControllerError(siteDataCountsBaseModel);
             if (checkSiteDatasBaseResponseError == null)
             {
-                var articleListBaseModel = Get<List<ArticleListModel>>(MyApiRequestModel.GetTakeFewArticles, homeArticleCount.ToString());
+                var articleListBaseModel = Get<List<ArticleListModel>>(MyApiRequestModel.GetTakeFewArticles, false,homeArticleCount.ToString());
                 var checkArticleListBaseResponseError = CheckBaseControllerError(articleListBaseModel);
 
                 if (checkArticleListBaseResponseError == null)
@@ -69,18 +71,23 @@ namespace Nutritionist.Web.Controllers
         [HttpPost]
         public IActionResult UserRegister(UserInsertModel userInsertModel)
         {
-            
-            var userRegister = Post<bool>(MyApiRequestModel.PostUserRegister, userInsertModel);
-            var checkUserBaseResponseError = CheckBaseControllerError(userRegister);
-
-            if (checkUserBaseResponseError == null )
+            if (ModelState.IsValid)
             {
-                return Login();
+                var userRegister = Post<bool>(MyApiRequestModel.PostUserRegister, userInsertModel);
+                var checkUserBaseResponseError = CheckBaseControllerError(userRegister);
+
+                if (checkUserBaseResponseError == null)
+                {
+                    return Login();
+                }
+                else
+                {
+                    return Error(checkUserBaseResponseError);
+                }
             }
             else
-            {
-                return Error(checkUserBaseResponseError);
-            }
+                return UserRegister();
+           
         }
         public IActionResult Login()
         {
@@ -90,14 +97,22 @@ namespace Nutritionist.Web.Controllers
         [HttpPost]
         public IActionResult Login(UserLoginModel userLoginModel)
         {
-            var userDetailModel = Post<UserDetailModel>(MyApiRequestModel.PostUserLogin,userLoginModel);
-            var checkUserDetailBaseResponseError = CheckBaseControllerError(userDetailModel);
-
-            if (checkUserDetailBaseResponseError == null)
+            if (ModelState.IsValid)
             {
-                return Index();
+                var userLoginResModel = Post<UserLoginResposeModel>(MyApiRequestModel.PostUserLogin, userLoginModel);
+                var checkUserDetailBaseResponseError = CheckBaseControllerError(userLoginResModel);
+
+                if (checkUserDetailBaseResponseError == null)
+                {
+                    HttpContext.Session.SetInt32("UserId", userLoginResModel.tobject.UserId);
+                    HttpContext.Session.SetInt32("NutId", userLoginResModel.tobject.NutritionistId);
+                    HttpContext.Session.SetString("Token", userLoginResModel.tobject.Token);
+                    return Index();
+                }
+                else return View();
             }
-            else return View();
+            else
+                return Login();
 
         }
         public IActionResult Privacy()

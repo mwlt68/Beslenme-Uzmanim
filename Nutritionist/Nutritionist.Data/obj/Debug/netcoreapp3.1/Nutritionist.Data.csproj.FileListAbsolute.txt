@@ -1,12 +1,12 @@
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.deps.json
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.runtimeconfig.json
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.runtimeconfig.dev.json
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.dll
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.pdb
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.csprojAssemblyReference.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.AssemblyInfoInputs.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.AssemblyInfo.cs
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.runtimeconfig.json
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.runtimeconfig.dev.json
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.genruntimeconfig.cache
-C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\bin\Debug\netcoreapp3.1\Nutritionist.Data.pdb
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.csproj.CoreCompileInputs.cache
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.dll
 C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.pdb
+C:\Users\VodviL\source\repos\Beslenme-Uzmanim\Nutritionist\Nutritionist.Data\obj\Debug\netcoreapp3.1\Nutritionist.Data.genruntimeconfig.cache

@@ -25,7 +25,15 @@ namespace Nutritionist.Services
             nutritionistRepository.Add(nutritionist);
             return true;
         }
-       
+        public int CheckNutritionistFromUserId(int userId)
+        {
+            var nutritionist = nutritionistRepository.GetNutritionistFromUserId(userId);
+            if (nutritionist != null)
+            {
+                return nutritionist.Id;
+            }
+            return -1;
+        }
         public NutritionistDetailModel GetNutritionistDetailModel(int  nutritionistId)
         {
             var nutritionist=nutritionistRepository.GetById(nutritionistId);
@@ -48,7 +56,6 @@ namespace Nutritionist.Services
                 nutritionist.Introduce = nutritionistUpdateModel.Introduce;
                 nutritionist.WorkingHours = nutritionistUpdateModel.WorkingHours;
                 nutritionist.ProfileImage = StaticFunctions.GetBytesFromFile(nutritionistUpdateModel.ProfileImage);
-           //     nutritionist.ProfileImage = nutritionistUpdateModel.ProfileImage;
                 nutritionistRepository.Update(nutritionist);
                 return true;
             }

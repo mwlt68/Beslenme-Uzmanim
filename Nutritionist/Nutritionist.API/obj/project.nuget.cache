@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ILJ95WhPl3o9O4BkxVW4x8F5c8YGa2j14lR53QalHHY/zEB6WE+TvNPmHbMK/f5X71zLnrz8W9TPhtity6rP3w==",
+  "dgSpecHash": "QC/1GPQDTu1OBs0/Sl4I8pxgelf84SVak9ufSchDdWL9pryMxsyJIHscAZOO6YGeObeZL2rm72ZfKVupF3LqWg==",
   "success": true,
   "projectFilePath": "C:\\Users\\VodviL\\source\\repos\\Beslenme-Uzmanim\\Nutritionist\\Nutritionist.API\\Nutritionist.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\VodviL\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\VodviL\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\VodviL\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
+    "C:\\Users\\VodviL\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.12\\microsoft.aspnetcore.authentication.jwtbearer.3.1.12.nupkg.sha512",
     "C:\\Users\\VodviL\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\VodviL\\.nuget\\packages\\microsoft.aspnetcore.authorization.policy\\2.2.0\\microsoft.aspnetcore.authorization.policy.2.2.0.nupkg.sha512",
     "C:\\Users\\VodviL\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",

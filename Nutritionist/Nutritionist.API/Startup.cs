@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Nutritionist.Core.ActionFilters;
 
 namespace Nutritionist.API
@@ -24,10 +27,35 @@ namespace Nutritionist.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MustNutritionist", policy =>
+                      policy.RequireClaim("nutritionistId"));
+            });
+
             services.AddMvc(options =>
             {
+                options.EnableEndpointRouting = false;
                 options.Filters.Add(typeof(ValidateModelStateAttribute));
             });
+
             services.AddSwaggerGen(c =>
             {
                 c.EnableAnnotations();
@@ -53,6 +81,8 @@ namespace Nutritionist.API
             {
                 c.SwaggerEndpoint("/swagger/Web/swagger.json", "Web");
             });
+            app.UseAuthentication();
+            app.UseMvc();
 
             app.UseHttpsRedirection();
 

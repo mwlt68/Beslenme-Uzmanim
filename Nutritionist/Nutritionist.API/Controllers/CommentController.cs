@@ -10,11 +10,13 @@ using CommentListModel = Nutritionist.Core.Models.Comment.List;
 using CommentInsertModel = Nutritionist.Core.Models.Comment.Insert;
 using Nutritionist.Core.StaticDatas;
 using Nutritionist.Core.ActionFilters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Nutritionist.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class CommentController : ControllerBase
     {
         private CommentService commentService;
@@ -29,6 +31,7 @@ namespace Nutritionist.API.Controllers
 
         [ValidateModelState]
         [HttpPost("AddComment")]
+        [Authorize]
         public ActionResult<BaseResponseModel> PostAddComment([FromBody] CommentInsertModel commentInsertModel)
         {
             try
@@ -78,9 +81,9 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        // UserId for security
 
         [HttpDelete("DeleteComment/{commentId}/{userId}")]
+        [Authorize]
         public ActionResult<BaseResponseModel> DeleteComment(int commentId,int userId)
         {
             try

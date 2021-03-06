@@ -22,6 +22,7 @@ using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Web.Models.ApiModelsCombines;
 using Nutritionist.Web.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace Nutritionist.Web.Controllers
 {
@@ -46,7 +47,12 @@ namespace Nutritionist.Web.Controllers
             }
             else
             {
-                nutritionistInsertModel.UserId = 11;
+                var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+                if (!userId.HasValue)
+                {
+                    return View("~/Views/Home/Login.cshtml");
+                }
+                nutritionistInsertModel.UserId = userId.Value;
                 var nutritionistInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostNutritionistRegister, nutritionistInsertModel);
                 var checkNutritionistInsertBaseResponseError = CheckBaseControllerError(nutritionistInsertModels);
                 if (checkNutritionistInsertBaseResponseError == null)
@@ -62,7 +68,7 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult List()
         {
-            var nutritionistListModels = Get<List<NutritionistListModel>>(MyApiRequestModel.GetNutritionistsList);
+            var nutritionistListModels = Get<List<NutritionistListModel>>(MyApiRequestModel.GetNutritionistsList, false);
             var checkNutBaseResponseError = CheckBaseControllerError(nutritionistListModels);
 
             if (checkNutBaseResponseError == null)
@@ -76,13 +82,13 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult Detail(int id)
         {
-            var nutDetailBaseModels = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail,id.ToString());
+            var nutDetailBaseModels = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail, false, id.ToString());
             var checkNutBaseResponseError=CheckBaseControllerError(nutDetailBaseModels);
             if (checkNutBaseResponseError == null)
             {
-                var commentListBaseModels = Get<List<CommentListModel>>(MyApiRequestModel.GetCommentList, nutDetailBaseModels.tobject.Id.ToString());
+                var commentListBaseModels = Get<List<CommentListModel>>(MyApiRequestModel.GetCommentList, false, nutDetailBaseModels.tobject.Id.ToString());
                 var checkCommentBaseResponseError = CheckBaseControllerError(nutDetailBaseModels);
-                var articleListBaseModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetNutritionistArticlesList, nutDetailBaseModels.tobject.Id.ToString());
+                var articleListBaseModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetNutritionistArticlesList, false, nutDetailBaseModels.tobject.Id.ToString());
                 var checkArticleBaseResponseError = CheckBaseControllerError(articleListBaseModels);
                 if (checkCommentBaseResponseError == null && checkArticleBaseResponseError == null)
                 {
@@ -103,33 +109,55 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult AddArticle()
         {
+            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+            if (!nutritionistId.HasValue)
+            {
+                return View("~/Views/Home/Login.cshtml");
+            }
             return View("~/Views/Nutritionist/AddArticle.cshtml");
         }
         [HttpPost]
         public IActionResult AddArticle(ArticleInsertModel articleInsertModel)
         {
-            articleInsertModel.NutritionistId = 2;
-            var articleInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostArticleAdd,articleInsertModel);
-            var checkArticleInsertBaseResponseError = CheckBaseControllerError(articleInsertModels);
+            if (ModelState.IsValid)
+            {
+                var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
+                if (!nutritionistId.HasValue)
+                {
+                    return View("~/Views/Home/Login.cshtml");
+                }
+                articleInsertModel.NutritionistId = nutritionistId.Value;
+                var articleInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostArticleAdd, articleInsertModel, true);
+                var checkArticleInsertBaseResponseError = CheckBaseControllerError(articleInsertModels);
 
-            if (checkArticleInsertBaseResponseError == null)
-            {
-                return Detail(articleInsertModel.NutritionistId);
-            }
-            else if (!ModelState.IsValid)
-            {
-                return AddArticle();
+                if (checkArticleInsertBaseResponseError == null)
+                {
+                    return Detail(articleInsertModel.NutritionistId);
+                }
+                else if (!ModelState.IsValid)
+                {
+                    return AddArticle();
+                }
+                else
+                {
+                    return Error(checkArticleInsertBaseResponseError);
+                }
             }
             else
             {
-                return Error(checkArticleInsertBaseResponseError);
+                return AddArticle();
             }
+            
         }
 
         [HttpPost]
         public IActionResult AddComment(String commentContent, String nutritionistId)
         {
-            int userId = 12;
+            var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+            if (!userId.HasValue)
+            {
+                return View("~/Views/Home/Login.cshtml");
+            }
             int nutritionistIdInt = Int32.Parse(nutritionistId);
             if (String.IsNullOrEmpty(commentContent)|| nutritionistIdInt < 0 || commentContent.Trim().Length <= 0)
             {
@@ -140,9 +168,9 @@ namespace Nutritionist.Web.Controllers
                 CommentInsertModel comment = new CommentInsertModel() {
                     CommentContent = commentContent,
                     NutritionstId = nutritionistIdInt,
-                    UserId = userId,
+                    UserId = userId.Value,
                 };
-                var commentInsertModels = Post<bool>(MyApiRequestModel.PostAddComment, comment);
+                var commentInsertModels = Post<bool>(MyApiRequestModel.PostAddComment, comment,withToken:true);
                 var checkCommentInsertBaseResponseError = CheckBaseControllerError(commentInsertModels);
                 if (checkCommentInsertBaseResponseError == null)
                 {
@@ -156,10 +184,14 @@ namespace Nutritionist.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(String id)
+        public IActionResult Edit()
         {
-
-            var nutDetailResponse = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail, id);
+            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
+            if (!nutritionistId.HasValue)
+            {
+                return View("~/Views/Home/Login.cshtml");
+            }
+            var nutDetailResponse = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail, false, nutritionistId.Value.ToString());
             var checkNutDetailBaseControllerError = CheckBaseControllerError(nutDetailResponse);
             if (checkNutDetailBaseControllerError == null)
             {
@@ -177,7 +209,7 @@ namespace Nutritionist.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var editRes = PostMultipartForm<bool>(MyApiRequestModel.PostEditNutritionist, nutritionistUpdateModel);
+                var editRes = PostMultipartForm<bool>(MyApiRequestModel.PostEditNutritionist, nutritionistUpdateModel,true);
                 var checkEditBaseControllerError = CheckBaseControllerError(editRes);
                 if (checkEditBaseControllerError == null)
                 {
@@ -190,16 +222,15 @@ namespace Nutritionist.Web.Controllers
             }
             else
             {
-                return Edit(nutritionistUpdateModel.Id.ToString());
+                return Edit();
             }
 
         }
-        [HttpGet]
+        /*
         public IActionResult Delete()
         {
             DeleteModel deleteModel = new DeleteModel()
             {
-                Id = 3,
                 Controller = "Nutritionist",
                 Action = "Delete",
                 Message = "Sanal kliniğinizi geçiçi olarak kapatılacaktır.",
@@ -208,36 +239,29 @@ namespace Nutritionist.Web.Controllers
             return View("~/Views/Shared/Delete.cshtml", deleteModel);
         }
         [HttpPost]
-        public IActionResult Delete(String id)
+        public IActionResult DeletePost()
         {
-            int nutritionistId;
-            var chechParse = Int32.TryParse(id, out nutritionistId);
-            if (chechParse)
+            int nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession).Value;
+            if (nutritionistId >= 0)
             {
-                if (nutritionistId >= 0)
+                var nutDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteNutritionist, true, nutritionistId.ToString());
+                var checkNutDeleteBaseControllerError = CheckBaseControllerError(nutDeleteResponse);
+                if (checkNutDeleteBaseControllerError == null)
                 {
-                    var nutDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteNutritionist, nutritionistId.ToString());
-                    var checkNutDeleteBaseControllerError = CheckBaseControllerError(nutDeleteResponse);
-                    if (checkNutDeleteBaseControllerError == null)
-                    {
 
-                        return View("~/Views/Home/Login.cshtml");
-                    }
-                    else
-                    {
-                        return Error(checkNutDeleteBaseControllerError);
-                    }
+                    return View("~/Views/Home/Login.cshtml");
                 }
                 else
                 {
-                    return Error(ErrorViewModel.GetDefaultException);
+                    return Error(checkNutDeleteBaseControllerError);
                 }
             }
             else
             {
                 return Error(ErrorViewModel.GetDefaultException);
             }
-
         }
+        */
+        
     }
 }

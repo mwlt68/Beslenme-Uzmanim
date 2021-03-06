@@ -113,7 +113,7 @@
                             <strong>Adres</strong>
                         </h6>
                         <p class="mbr-text mbr-fonts-style display-7">
-                            4100 Ross Street, Okawville, IL
+                            @Model.nutritionist.Address
                         </p>
                     </div>
                 </div>
@@ -204,7 +204,7 @@
             <div class="col-lg-8 mx-auto mbr-form">
                 <form asp-controller="Nutritionist" asp-action="AddComment" method="POST" class="mbr-form form-with-styler mx-auto" asp-route-nutritionistId=@Model.nutritionist.Id.ToString()>
                     <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
-                        Uyğunsuz bir yorumdan dolayı doğacak olan tüm sorumluklar size aittir.
+                        Uygunsuz bir yorumdan dolayı doğacak olan tüm sorumluklar size aittir.
                     </p>
                     <div class="col-12 form-group">
                         <textarea name="commentContent"  id="commentContent" placeholder="Message" class="form-control" rows="3"></textarea>

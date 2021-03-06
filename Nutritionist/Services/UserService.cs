@@ -42,6 +42,16 @@ namespace Nutritionist.Services
             var userDetail= mapper.Map<Data.Entities.User, UserDetailModel>(user);
             return userDetail;
         }
+        public int  GetIdFromUserLogin(UserLoginModel userLoginModel)
+        {
+            String hashedPasword = MD5Hash.getMd5Hash(userLoginModel.Password);
+            var user = userRepository.UserLogin(userLoginModel.Username, hashedPasword);
+            if (user != null)
+            {
+                return user.Id;
+            }
+            return -1;
+        }
         public UserListModel GetUserListModel(int userId)
         {
             var user = userRepository.GetById(userId);

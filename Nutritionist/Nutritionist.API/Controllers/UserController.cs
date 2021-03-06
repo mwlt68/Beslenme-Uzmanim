@@ -9,29 +9,49 @@ using Nutritionist.Services;
 using UserInsertModel = Nutritionist.Core.Models.User.Insert;
 using UserDetailModel = Nutritionist.Core.Models.User.Detail;
 using UserLoginModel = Nutritionist.Core.Models.User.Login;
+using UserLoginResponseModel = Nutritionist.Core.Models.User.LoginRespose;
 using UserUpdateModel = Nutritionist.Core.Models.User.Update;
 using Nutritionist.Core.Models.ResponseModels;
 using Nutritionist.Core.StaticDatas;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Security.Claims;
 
 namespace Nutritionist.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class UserController : ControllerBase
     {
         UserService userService;
-        public UserController()
+        NutritionistService nutritionistService;
+        private IConfiguration _config;
+        public UserController(IConfiguration config)
         {
             userService = new UserService();
+            nutritionistService = new NutritionistService();
+            _config = config;
         }
         [ValidateModelState]
         [HttpPost("Login")]
-        public BaseResponseModel PostUserLogin([FromBody] UserLoginModel userLoginModel)
+        public ActionResult <BaseResponseModel> PostUserLogin([FromBody] UserLoginModel userLoginModel)
         {
             try
             {
-                var result = userService.UserLogin(userLoginModel);
-                return new SuccessResponseModel<UserDetailModel>(result);
+                int userId = userService.GetIdFromUserLogin(userLoginModel);
+                if (userId >=0 )
+                {
+                    int nutId = nutritionistService.CheckNutritionistFromUserId(userId);
+                    var tokenString = GenerateJSONWebToken(userId, nutId);
+                    var loginResponse = new UserLoginResponseModel() {UserId=userId,NutritionistId=nutId,Token= tokenString };
+                    var responseModel= new SuccessResponseModel<UserLoginResponseModel>(loginResponse);
+                    return Ok(responseModel);
+                }
+                else return new BaseResponseModel("Kullanıcı bulunamadı !");
             }
             catch (Exception ex)
             {
@@ -62,7 +82,8 @@ namespace Nutritionist.API.Controllers
             }
         }
         [HttpGet("Detail/{userId}")]
-        public ActionResult<BaseResponseModel> GetUserDetail(int userId)
+        
+        public BaseResponseModel GetUserDetail(int userId)
         {
             try
             {
@@ -83,7 +104,8 @@ namespace Nutritionist.API.Controllers
             }
         }
         [HttpDelete("DeleteUser/{userId}")]
-        public ActionResult<BaseResponseModel> DeleteUser(int userId)
+        [Authorize]
+        public BaseResponseModel DeleteUser(int userId)
         {
             try
             {
@@ -105,6 +127,7 @@ namespace Nutritionist.API.Controllers
         }
         [ValidateModelState]
         [HttpPost("Edit")]
+        [Authorize]
         public BaseResponseModel PostUserEdit([FromBody] UserUpdateModel userUpdateModel)
         {
             try
@@ -124,6 +147,28 @@ namespace Nutritionist.API.Controllers
             {
                 return new BaseResponseModel(ex.Message);
             }
+        }
+
+        private string GenerateJSONWebToken(int userId,int nutritionistId)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim("userId", userId.ToString()));
+
+            if(nutritionistId >= 0)
+            {
+                claims.Add(new Claim("nutritionistId", nutritionistId.ToString()));
+            }
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+              _config["Jwt:Issuer"],
+              claims,
+              expires: DateTime.Now.AddMonths(1),
+              signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
