@@ -22,10 +22,10 @@ namespace Nutritionist.Services
             Comment comment = mapper.Map<CommentInsertModel, Data.Entities.Comment>(commentInsertModel);
             commentRepository.Add(comment);
         }
-        public bool RemoveComment(int commentId,int userId)
+        public bool RemoveComment(int commentId)
         {
             var comment =  commentRepository.GetById(commentId);
-            if (comment != null && comment.UserId== userId)
+            if (comment != null)
             {
                 commentRepository.Remove(comment);
                 return true;

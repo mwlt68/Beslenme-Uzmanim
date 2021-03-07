@@ -1,12 +1,23 @@
-﻿@model Nutritionist.Web.Models.ApiModelsCombines.HomeContIndexModel;
+﻿@using Microsoft.AspNetCore.Http;
+
+@model Nutritionist.Web.Models.ApiModelsCombines.HomeContIndexModel;
 @{
     ViewData["Title"] = "Ana Sayfa";
+    int userIdSession = -1, nutritionistIdSession = -1;
+    if (Context.Session.GetInt32("UserId").HasValue)
+    {
+        userIdSession = Context.Session.GetInt32("UserId").Value;
+    }
+    if (Context.Session.GetInt32("NutId").HasValue)
+    {
+        nutritionistIdSession = Context.Session.GetInt32("NutId").Value;
+    }
 }
 @functions{
 
     String ArrayToBase64(byte[] arr)
     {
-        var res =Convert.ToBase64String(arr);
+        var res = Convert.ToBase64String(arr);
         return res;
     }
 }
@@ -22,42 +33,44 @@
 
                     Mobirise Free Website Maker is perfect for non-techies and great for pro-coders for fast prototyping and small customers' projects.
                 </p>
-
             </div>
         </div>
     </div>
 </section>
 
-<section class="info2 cid-smalFs0yB6" id="info2-3">
+@if (userIdSession == -1)
+{
+    <section class="info2 cid-smalFs0yB6" id="info2-3">
 
-
-    <div class="align-center container-fluid">
-        <div class="row justify-content-center">
-            <div class="card col-12 col-lg-6">
-                <div class="wrapper">
-                    <h3 class="mbr-section-title mb-4 mbr-fonts-style display-5">
-                        <strong>Beslenme Danışmanı mısınız ?</strong>
-                    </h3>
-                    <p class="mbr-text mb-4 mbr-fonts-style display-4">
-                        Visit our Help Center to get started developing websites with Mobirise. Use Help Center to find answers to your questions. Contact us directly at info@site.com
-                    </p>
-                    <div class="mbr-section-btn"><a class="btn btn-white display-4" href="https://mobiri.se">Sanal Klinik Oluştur</a></div>
+        <div class="align-center container-fluid">
+            <div class="row justify-content-center">
+                <div class="card col-12 col-lg-6">
+                    <div class="wrapper">
+                        <h3 class="mbr-section-title mb-4 mbr-fonts-style display-5">
+                            <strong>Beslenme Danışmanı mısınız ?</strong>
+                        </h3>
+                        <p class="mbr-text mb-4 mbr-fonts-style display-4">
+                            Visit our Help Center to get started developing websites with Mobirise. Use Help Center to find answers to your questions. Contact us directly at info@site.com
+                        </p>
+                        <div class="mbr-section-btn"><a class="btn btn-white display-4" asp-action="UserRegister" asp-controller="Home" >Klinik Oluştur</a></div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <div class="wrapper">
-                    <h3 class="mbr-section-title mbr-fonts-style mb-4 display-5">
-                        <strong>Beslenme Danışmanı Arıyorum</strong>
-                    </h3>
-                    <p class="mbr-text mbr-fonts-style mb-4 display-4">
-                        Beautiful website blocks, templates and themes help you to start easily. Expand your Mobirise experience with Code Editor, Form Builder and other extensions.
-                    </p>
-                    <div class="mbr-section-btn"><a class="btn btn-white display-4" href="https://mobiri.se">Hesap Oluştur</a></div>
+                <div class="col-12 col-lg-6">
+                    <div class="wrapper">
+                        <h3 class="mbr-section-title mbr-fonts-style mb-4 display-5">
+                            <strong>Beslenme Danışmanı Arıyorum</strong>
+                        </h3>
+                        <p class="mbr-text mbr-fonts-style mb-4 display-4">
+                            Beautiful website blocks, templates and themes help you to start easily. Expand your Mobirise experience with Code Editor, Form Builder and other extensions.
+                        </p>
+                        <div class="mbr-section-btn"><a class="btn btn-white display-4"  asp-action="UserRegister" asp-controller="Home" >Hesap Oluştur</a></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+
 
 <section class="gallery3 cid-smamM4w0M4" id="gallery3-9">
 

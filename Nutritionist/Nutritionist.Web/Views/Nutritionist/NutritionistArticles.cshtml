@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Nutritionist.Core.Models.Article.List>
+
+@{
+    ViewData["Title"] = "Makalelerim";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="gallery3 cid-smamM4w0M4" id="gallery3-9">
+
+
+    <div class="container-fluid">
+        <div class="mbr-section-head">
+            <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Makalelerim</strong></h4>
+
+        </div>
+        @Html.Partial("~/Views/Shared/ArticleListPartial.cshtml", Model)
+    </div>
+</section>

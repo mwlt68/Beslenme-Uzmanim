@@ -58,6 +58,10 @@
                         </div>
                     </div>
                 </form>
+                <hr>
+                <center>
+                    <a asp-controller="Article" asp-action="Delete" asp-route-id="@Model.Id.ToString()" class="btn btn-danger" onclick="return confirm('Makalenizi kaldırmak istediginden emin misin ?',);">Makaleyi Kaldır</a>
+                </center>
             </div>
         </div>
     </div>

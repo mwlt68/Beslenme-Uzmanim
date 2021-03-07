@@ -39,7 +39,7 @@ namespace Nutritionist.Web.Controllers
                 return Error(checkUserDetailBaseControllerError);
             }
         }
-        
+
         [HttpPost]
         public IActionResult Edit(UserUpdate userUpdate) 
         {
@@ -62,29 +62,19 @@ namespace Nutritionist.Web.Controllers
             }
 
         }
-        /*
+       
         public IActionResult Delete()
         {
-            DeleteModel deleteModel = new DeleteModel() 
+            var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+            if (!userId.HasValue)
             {
-                Id=12,
-                Controller="User",
-                Action="Delete",
-                Message="Hesabının geçiçi olarak kapatılacaktır.",
-                Title="Hesabı Kapat"
-            };
-            return View("~/Views/Shared/Delete.cshtml", deleteModel);
-        }
-        [HttpPost]
-        public IActionResult Delete(String id)
-        {
-            int userId ;
-            var chechParse=Int32.TryParse(id,out userId);
-            if (chechParse)
+                return View("~/Views/Home/Login.cshtml");
+            }
+            else
             {
-                if (userId >= 0)
+                if (userId.Value >= 0)
                 {
-                    var userDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteUser, true, userId.ToString());
+                    var userDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteUser, true, userId.Value.ToString());
                     var checkUserDeleteBaseControllerError = CheckBaseControllerError(userDeleteResponse);
                     if (checkUserDeleteBaseControllerError == null)
                     {
@@ -101,12 +91,9 @@ namespace Nutritionist.Web.Controllers
                     return Error(ErrorViewModel.GetDefaultException);
                 }
             }
-            else
-            {
-                return Error(ErrorViewModel.GetDefaultException);
-            }
 
+            
         }
-        */
+        
     }
 }

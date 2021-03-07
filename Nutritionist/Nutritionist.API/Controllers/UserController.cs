@@ -51,7 +51,7 @@ namespace Nutritionist.API.Controllers
                     var responseModel= new SuccessResponseModel<UserLoginResponseModel>(loginResponse);
                     return Ok(responseModel);
                 }
-                else return new BaseResponseModel("Kullanıcı bulunamadı !");
+                else return new BaseResponseModel("Kullanıcı adı yada şifre hatalı !");
             }
             catch (Exception ex)
             {

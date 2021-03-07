@@ -35,6 +35,7 @@ namespace Nutritionist.Web.Controllers
 
         public HomeController(IMapper mapper) : base(mapper)
         {
+            
         }
 
         public IActionResult Index()
@@ -67,6 +68,14 @@ namespace Nutritionist.Web.Controllers
         {
             return View("~/Views/Home/UserRegister.cshtml");
 
+        }
+        [HttpGet]
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Remove(ReadOnlyValues.UserIdSession);
+            HttpContext.Session.Remove(ReadOnlyValues.NutritionistIdSession);
+            HttpContext.Session.Remove(ReadOnlyValues.TokenSession);
+            return Index();
         }
         [HttpPost]
         public IActionResult UserRegister(UserInsertModel userInsertModel)
@@ -104,12 +113,17 @@ namespace Nutritionist.Web.Controllers
 
                 if (checkUserDetailBaseResponseError == null)
                 {
-                    HttpContext.Session.SetInt32("UserId", userLoginResModel.tobject.UserId);
-                    HttpContext.Session.SetInt32("NutId", userLoginResModel.tobject.NutritionistId);
-                    HttpContext.Session.SetString("Token", userLoginResModel.tobject.Token);
+                    ViewData["Login_Error"] = null;
+                    HttpContext.Session.SetInt32(ReadOnlyValues.UserIdSession, userLoginResModel.tobject.UserId);
+                    HttpContext.Session.SetInt32(ReadOnlyValues.NutritionistIdSession, userLoginResModel.tobject.NutritionistId);
+                    HttpContext.Session.SetString(ReadOnlyValues.TokenSession, userLoginResModel.tobject.Token);
                     return Index();
                 }
-                else return View();
+                else 
+                {
+                    ViewData["Login_Error"] = userLoginResModel.errorViewModel.Description;
+                    return Login();
+                } 
             }
             else
                 return Login();
@@ -124,30 +138,3 @@ namespace Nutritionist.Web.Controllers
     }
 }
 
-/*
- Api Http Get Methods
-            int id = 2;
-            var data = Get<NutritionistDetailModel>(new MyApiRequestModel(Core.Models.Controllers.Nutritionist, Methods.NutDetail),id.ToString());
-            var data2 = Get<SiteDatasCount>(new MyApiRequestModel(Core.Models.Controllers.Home, Methods.SiteDatasCount));
-            var data3 = Get<List<NutritionistListModel>>(new MyApiRequestModel(Core.Models.Controllers.Nutritionist, Methods.NutList));
-            var data4 = Get<List<CommentListModel>>(new MyApiRequestModel(Core.Models.Controllers.Comment, Methods.CommentList),"8");
-            var data5 = Get<ArticleDetailModel>(new MyApiRequestModel(Core.Models.Controllers.Article, Methods.ArticleDetail),id.ToString());
-            var data6 = Get<List<ArticleListModel>>(new MyApiRequestModel(Core.Models.Controllers.Article, Methods.ArticleList));
-            var data7 = Get<List<ArticleListModel>>(new MyApiRequestModel(Core.Models.Controllers.Article, Methods.TakeFewArticles),id.ToString());
- Api Http Get Methods
-            var data = Post<UserDetailModel>(new MyApiRequestModel(Core.Models.Controllers.User, Methods.Login),new UserLoginModel() { Username= "ahmet1234",Password= "ahmet123" });
-            var data = Post<bool>(new MyApiRequestModel(Core.Models.Controllers.User, Methods.Register), new UserInsertModel() {  FirstName="Mehmet ALi" ,SecondName="Erbilen",ConfirmPassword= "mehmet6923", Username = "mehmet123", Password = "mehmet6923"});
-            var data = Post<bool>(new MyApiRequestModel(Core.Models.Controllers.Comment, Methods.AddComment), new CommentInsertModel() 
-            {
-                UserId=12,
-                NutritionstId=2,
-                CommentContent= "Yaygın inancın tersine, Lorem Ipsum rastgele sözcüklerden oluşmaz. Kökleri M.Ö. 45 tarihinden bu yana klasik Latin edebiyatına kadar uzanan 2000 yıllık bir geçmişi vardır. Virginia'daki Hampden-Sydney College'dan Latince profesörü Richard McClintock, bir Lorem Ipsum pasajında geçen ve anlaşılması en güç sözcüklerden biri olan 'consectetur' sözcüğünün klasik edebiyattaki örneklerini incelediğinde kesin bir kaynağa ulaşmıştır"
-
-            });
- Api Http Delete Methods
-            var data = Delete<bool>(new MyApiRequestModel(Core.Models.Controllers.Comment, Methods.DeleteComment),"4","9");
-            var data1 = Delete<bool>(new MyApiRequestModel(Core.Models.Controllers.Nutritionist, Methods.NutDelete),"3");
-            var data = Delete<bool>(new MyApiRequestModel(Core.Models.Controllers.User, Methods.DeleteUser),"11");
-            var data2 = Delete<bool>(new MyApiRequestModel(Core.Models.Controllers.Article, Methods.DeleteArticle),"2");
-            
- */

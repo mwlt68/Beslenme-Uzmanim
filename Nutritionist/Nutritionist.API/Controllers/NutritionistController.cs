@@ -131,11 +131,11 @@ namespace Nutritionist.API.Controllers
             }
         }
 
-        private bool ChechNutritionistAuthorize()
+        private bool ChechNutritionistAuthorize(int nutritionistId)
         {
             var currentUser = HttpContext.User;
-            var nutritionistId=Int32.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "NutritionistId").Value);
-            if (nutritionistId >= 0)
+            var nutritionistIdClaim=Int32.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "NutritionistId").Value);
+            if (nutritionistIdClaim == nutritionistId)
             {
                 return true;
             }

@@ -11,6 +11,7 @@ using Nutritionist.Core.Models;
 using Nutritionist.Core.Models.ResponseModels;
 using AutoMapper;
 using Nutritionist.Web.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Nutritionist.Web.Controllers
 {
@@ -33,6 +34,20 @@ namespace Nutritionist.Web.Controllers
                 return Error(checkArticleBaseResponseError);
             }
         }
+        public IActionResult NutritionistArticleList(String nutritionistId)
+        {
+            var nutritionistArticleListModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetNutritionistArticlesList, false, nutritionistId);
+            var checkNutArticleListBaseResponseError = CheckBaseControllerError(nutritionistArticleListModels);
+
+            if (checkNutArticleListBaseResponseError == null)
+            {
+                return View("~/Views/Nutritionist/NutritionistArticles.cshtml", nutritionistArticleListModels.tobject);
+            }
+            else
+            {
+                return Error(checkNutArticleListBaseResponseError);
+            }
+        }
         public IActionResult List()
         {
             var articleListBaseModels = Get<List<ArticleListModel>>(MyApiRequestModel.GetArticlesList, false);
@@ -50,7 +65,11 @@ namespace Nutritionist.Web.Controllers
         [HttpGet]
         public IActionResult Edit(String id)
         {
-
+            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
+            if (!nutritionistId.HasValue)
+            {
+                return View("~/Views/Home/Login.cshtml");
+            }
             var articleDetailResponse = Get<ArticleDetailModel>(MyApiRequestModel.GetArticleDetail, false, id);
             var checkArticleDetailBaseControllerError = CheckBaseControllerError(articleDetailResponse);
             if (checkArticleDetailBaseControllerError == null)
@@ -86,51 +105,28 @@ namespace Nutritionist.Web.Controllers
             }
 
         }
-        /*
-        public IActionResult Delete()
-        {
-            DeleteModel deleteModel = new DeleteModel()
-            {
-                Id = 3,
-                Controller = "Article",
-                Action = "Delete",
-                Message = "Makaleniz geçici olarak silinecektir.",
-                Title = "Makaleyi Kaldır"
-            };
-            return View("~/Views/Shared/Delete.cshtml", deleteModel);
-        }
-        [HttpPost]
         public IActionResult Delete(String id)
         {
-            int articleId;
-            var chechParse = Int32.TryParse(id, out articleId);
-            if (chechParse)
+            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
+            if (!nutritionistId.HasValue)
             {
-                if (articleId >= 0)
-                {
-                    var articleDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteArticle, true, articleId.ToString());
-                    var checkArticleDeleteBaseControllerError = CheckBaseControllerError(articleDeleteResponse);
-                    if (checkArticleDeleteBaseControllerError == null)
-                    {
-
-                        return List();
-                    }
-                    else
-                    {
-                        return Error(checkArticleDeleteBaseControllerError);
-                    }
-                }
-                else
-                {
-                    return Error(ErrorViewModel.GetDefaultException);
-                }
+                return View("~/Views/Home/Login.cshtml");
             }
             else
             {
-                return Error(ErrorViewModel.GetDefaultException);
+                var articleDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteArticle, true, id);
+                var checkArticleDeleteBaseControllerError = CheckBaseControllerError(articleDeleteResponse);
+                if (checkArticleDeleteBaseControllerError == null)
+                {
+
+                    return NutritionistArticleList(nutritionistId.Value.ToString());
+                }
+                else
+                {
+                    return Error(checkArticleDeleteBaseControllerError);
+                }
             }
 
         }
-        */
     }
 }

@@ -26,6 +26,7 @@ namespace Nutritionist.Web.Infrastructure
         public BaseController(IMapper mapper)
         {
             this.mapper = mapper;
+
         }
         public IActionResult Error(params ErrorViewModel[] errorViewModels)
         {
@@ -117,7 +118,8 @@ namespace Nutritionist.Web.Infrastructure
                         return new BaseControllerResponseModel<T>(successResponse.responseObj);
                     }
                     else{
-                        errorViewModel = ErrorViewModel.GetServerError;
+                        errorViewModel = new ErrorViewModel(500, description:result.responseMessageModel.message); 
+                        //ErrorViewModel.GetServerError;
                     }
                }
                else

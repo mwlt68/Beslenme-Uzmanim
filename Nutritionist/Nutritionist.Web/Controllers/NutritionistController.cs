@@ -80,6 +80,7 @@ namespace Nutritionist.Web.Controllers
             }
                 return Error(checkNutBaseResponseError);
         }
+
         public IActionResult Detail(int id)
         {
             var nutDetailBaseModels = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail, false, id.ToString());
@@ -109,7 +110,7 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult AddArticle()
         {
-            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
             if (!nutritionistId.HasValue)
             {
                 return View("~/Views/Home/Login.cshtml");
@@ -226,25 +227,16 @@ namespace Nutritionist.Web.Controllers
             }
 
         }
-        /*
         public IActionResult Delete()
         {
-            DeleteModel deleteModel = new DeleteModel()
+            var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
+            if (!nutritionistId.HasValue)
             {
-                Controller = "Nutritionist",
-                Action = "Delete",
-                Message = "Sanal kliniğinizi geçiçi olarak kapatılacaktır.",
-                Title = "Kliniği Kapat"
-            };
-            return View("~/Views/Shared/Delete.cshtml", deleteModel);
-        }
-        [HttpPost]
-        public IActionResult DeletePost()
-        {
-            int nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession).Value;
-            if (nutritionistId >= 0)
+                return View("~/Views/Home/Login.cshtml");
+            }
+            if (nutritionistId.Value >= 0)
             {
-                var nutDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteNutritionist, true, nutritionistId.ToString());
+                var nutDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteNutritionist, true, nutritionistId.Value.ToString());
                 var checkNutDeleteBaseControllerError = CheckBaseControllerError(nutDeleteResponse);
                 if (checkNutDeleteBaseControllerError == null)
                 {
@@ -261,7 +253,33 @@ namespace Nutritionist.Web.Controllers
                 return Error(ErrorViewModel.GetDefaultException);
             }
         }
-        */
-        
+        public IActionResult CommentDelete(String id)
+        {
+            var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
+            if (!userId.HasValue)
+            {
+                return View("~/Views/Home/Login.cshtml");
+            }
+            if (userId.Value >= 0)
+            {
+                var nutDeleteResponse = Delete<bool>(MyApiRequestModel.DeleteComment, true, id);
+                var checkNutDeleteBaseControllerError = CheckBaseControllerError(nutDeleteResponse);
+                if (checkNutDeleteBaseControllerError == null)
+                {
+
+                    return Detail(userId.Value);
+                }
+                else
+                {
+                    return Error(checkNutDeleteBaseControllerError);
+                }
+            }
+            else
+            {
+                return Error(ErrorViewModel.GetDefaultException);
+            }
+        }
+
+
     }
 }

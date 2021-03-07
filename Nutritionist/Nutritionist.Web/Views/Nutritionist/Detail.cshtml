@@ -1,7 +1,18 @@
 ﻿@model Nutritionist.Web.Models.ApiModelsCombines.NutritionistContDetailModel
+@using Microsoft.AspNetCore.Http;
+
 @{
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int userIdSession = -1, nutritionistIdSession = -1;
+    if (Context.Session.GetInt32("UserId").HasValue)
+    {
+        userIdSession = Context.Session.GetInt32("UserId").Value;
+    }
+    if (Context.Session.GetInt32("NutId").HasValue)
+    {
+        nutritionistIdSession = Context.Session.GetInt32("NutId").Value;
+    }
 }
 @functions{
 
@@ -190,33 +201,37 @@
     </section>
 }
 
-<section class="form5 cid-smbjZuFWDN" id="form5-q">
+@if (userIdSession != -1 && nutritionistIdSession != Model.nutritionist.Id)
+{
+    <section class="form5 cid-smbjZuFWDN" id="form5-q">
 
 
-    <div class="container" style="background-color: rgb(240, 240, 240);">
-        <div class="mbr-section-head  pb-4" >
-            <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-                <strong>Yorumunuz Ekleyin</strong>
-            </h3>
+        <div class="container" style="background-color: rgb(240, 240, 240);">
+            <div class="mbr-section-head  p-4">
+                <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
+                    <strong>Yorumunuz Ekleyin</strong>
+                </h3>
 
-        </div>
-        <div class="row justify-content-center mt-4">
-            <div class="col-lg-8 mx-auto mbr-form">
-                <form asp-controller="Nutritionist" asp-action="AddComment" method="POST" class="mbr-form form-with-styler mx-auto" asp-route-nutritionistId=@Model.nutritionist.Id.ToString()>
-                    <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
-                        Uygunsuz bir yorumdan dolayı doğacak olan tüm sorumluklar size aittir.
-                    </p>
-                    <div class="col-12 form-group">
-                        <textarea name="commentContent"  id="commentContent" placeholder="Message" class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="col-auto mbr-section-btn align-center pb-4 submit_btn_show_hide">
-                        <button type="submit" class="btn btn-primary display-4">Gönder</button>
-                    </div>
-                </form>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-8 mx-auto mbr-form">
+                    <form asp-controller="Nutritionist" asp-action="AddComment" method="POST" class="mbr-form form-with-styler mx-auto" asp-route-nutritionistId=@Model.nutritionist.Id.ToString()>
+                        <p class="mbr-text mbr-fonts-style align-center mb-4 display-7">
+                            Uygunsuz bir yorumdan dolayı doğacak olan tüm sorumluklar size aittir.
+                        </p>
+                        <div class="col-12 form-group">
+                            <textarea name="commentContent" id="commentContent" placeholder="Message" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-auto mbr-section-btn align-center pb-4 submit_btn_show_hide">
+                            <button type="submit" class="btn btn-primary display-4">Gönder</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+
 
 
 
@@ -233,26 +248,36 @@
                 </h3>
 
             </div>
-            @foreach (var comment in Model.comments)
-            {
-                <div class="row mt-4">
+            <div class="row mt-4">
+                @foreach (var comment in Model.comments)
+                {
                     <div class="card col-12">
                         <div class="card-wrapper">
                             <div class="top-line row">
                                 <div class="col">
                                     <h4 class="card-title mbr-fonts-style display-5"><strong>@comment.User.ToString()</strong></h4>
                                 </div>
-
+                                <div class="col-auto">
+                                    <i>@comment.UpdateDate.Date.ToString("dd MMMM yyyy")</i>
+                                </div>
                             </div>
                             <div class="bottom-line">
                                 <p class="mbr-text mbr-fonts-style display-7">
                                     @comment.CommentContent
                                 </p>
                             </div>
+                            @if (userIdSession == comment.UserId)
+                            {
+                                <div class=" " style="position: absolute; bottom: 0;right: 0;">
+                                    <a asp-controller="Nutritionist" asp-action="CommentDelete" asp-route-id=@comment.Id.ToString() 
+                                       class="btn btn-danger" onclick="return confirm('Yorumunuzu kaldırmak istediginden emin misin ?',);">Yorumu Kaldır</a>
+
+                                </div>
+                            }
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </section>
 }

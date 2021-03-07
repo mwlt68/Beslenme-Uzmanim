@@ -82,13 +82,13 @@ namespace Nutritionist.API.Controllers
             }
         }
 
-        [HttpDelete("DeleteComment/{commentId}/{userId}")]
+        [HttpDelete("DeleteComment/{commentId}")]
         [Authorize]
-        public ActionResult<BaseResponseModel> DeleteComment(int commentId,int userId)
+        public ActionResult<BaseResponseModel> DeleteComment(int commentId)
         {
             try
             {
-                bool res = commentService.RemoveComment(commentId, userId);
+                bool res = commentService.RemoveComment(commentId);
                 if (res)
                 {
                     return new SuccessResponseModel<bool>(res);
