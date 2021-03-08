@@ -8,17 +8,17 @@ $(document).ready(function () {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#Article_Image_Preview').attr('src', e.target.result);
+                $('#Image_Preview').attr('src', e.target.result);
             }
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    $('#Article_Image_Btn').click(function () {
-        $('#Article_Image').click();
+    $('#Image_Btn').click(function () {
+        $('#Image').click();
     });
 
-    $('#Article_Image').change(function () {
+    $('#Image').change(function () {
         PreviewImage(this);
     })
 

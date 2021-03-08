@@ -81,6 +81,7 @@
                             {
                                 <a class="dropdown-item" asp-action="Detail" asp-controller="Nutritionist" asp-route-id=@nutritionistIdSession.ToString()>Profil</a>
                                 <a class="dropdown-item" asp-action="NutritionistArticleList" asp-controller="Article" asp-route-nutritionistId=@nutritionistIdSession.ToString()>Makalelerim</a>
+                                <a class="dropdown-item" asp-action="AddArticle" asp-controller="Nutritionist">Makaleni Oluştur</a>
                                 <a class="dropdown-item" asp-action="Edit" asp-controller="Nutritionist">Klinik Güncelle</a>
                             }
                             <a class="dropdown-item" asp-action="Edit" asp-controller="User">Bilgilerimi Güncelle</a>

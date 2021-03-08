@@ -30,7 +30,7 @@ namespace Nutritionist.API.Controllers
         }
 
         [ValidateModelState]
-        [HttpPost("AddComment")]
+        [HttpPost("Add")]
         [Authorize]
         public ActionResult<BaseResponseModel> PostAddComment([FromBody] CommentInsertModel commentInsertModel)
         {
@@ -45,7 +45,7 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("CommentList/{nutritionistId}")]
+        [HttpGet("List/{nutritionistId}")]
         public ActionResult<BaseResponseModel> GetCommentsList(int nutritionistId)
         {
             try
@@ -82,7 +82,7 @@ namespace Nutritionist.API.Controllers
             }
         }
 
-        [HttpDelete("DeleteComment/{commentId}")]
+        [HttpDelete("Delete/{commentId}")]
         [Authorize]
         public ActionResult<BaseResponseModel> DeleteComment(int commentId)
         {

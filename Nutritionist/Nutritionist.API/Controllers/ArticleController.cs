@@ -32,7 +32,7 @@ namespace Nutritionist.API.Controllers
             userService = new UserService();
         }
         [ValidateModelState]
-        [HttpPost("AddArticle")]
+        [HttpPost("Add")]
         [Authorize(Policy = "MustNutritionist")]
         public ActionResult<BaseResponseModel> PostAddArticle([FromForm] ArticleInsertModel articleInsertModel)
         {
@@ -79,7 +79,7 @@ namespace Nutritionist.API.Controllers
             }
         }
 
-        [HttpGet("ArticleDetail/{id}")]
+        [HttpGet("Detail/{id}")]
         public ActionResult<BaseResponseModel> GetArticleDetail(int id)
         {
             try
@@ -105,7 +105,7 @@ namespace Nutritionist.API.Controllers
             }
         }
        
-       [HttpGet("ArticleList")]
+       [HttpGet("List")]
        public ActionResult<BaseResponseModel> GetArticlesList()
        {
            try
@@ -171,7 +171,7 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpDelete("DeleteArticle/{articleId}")]
+        [HttpDelete("Delete/{articleId}")]
         [Authorize(Policy = "MustNutritionist")]
 
         public ActionResult<BaseResponseModel> DeleteArticle(int articleId)

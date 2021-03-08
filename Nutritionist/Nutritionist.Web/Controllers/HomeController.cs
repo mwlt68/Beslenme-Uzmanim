@@ -50,7 +50,7 @@ namespace Nutritionist.Web.Controllers
                 if (checkArticleListBaseResponseError == null)
                 {
                     HomeContIndexModel homeContIndexModel = new HomeContIndexModel(articleListBaseModel.tobject, siteDataCountsBaseModel.tobject);
-                    return View("~/Views/Home/Index.cshtml",homeContIndexModel);
+                    return View(ReadOnlyValues.HomeIndexViewPath, homeContIndexModel);
                 }
                 else
                 {
@@ -66,7 +66,7 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult UserRegister()
         {
-            return View("~/Views/Home/UserRegister.cshtml");
+            return View(ReadOnlyValues.HomeUserRegisterViewPath);
 
         }
         [HttpGet]
@@ -100,7 +100,7 @@ namespace Nutritionist.Web.Controllers
         }
         public IActionResult Login()
         {
-            return View("~/Views/Home/Login.cshtml");
+            return View(ReadOnlyValues.HomeLoginViewPath);
 
         }
         [HttpPost]
@@ -113,7 +113,7 @@ namespace Nutritionist.Web.Controllers
 
                 if (checkUserDetailBaseResponseError == null)
                 {
-                    ViewData["Login_Error"] = null;
+                    ViewData[ReadOnlyValues.LoginError] = null;
                     HttpContext.Session.SetInt32(ReadOnlyValues.UserIdSession, userLoginResModel.tobject.UserId);
                     HttpContext.Session.SetInt32(ReadOnlyValues.NutritionistIdSession, userLoginResModel.tobject.NutritionistId);
                     HttpContext.Session.SetString(ReadOnlyValues.TokenSession, userLoginResModel.tobject.Token);
@@ -121,7 +121,7 @@ namespace Nutritionist.Web.Controllers
                 }
                 else 
                 {
-                    ViewData["Login_Error"] = userLoginResModel.errorViewModel.Description;
+                    ViewData[ReadOnlyValues.LoginError] = userLoginResModel.errorViewModel.Description;
                     return Login();
                 } 
             }

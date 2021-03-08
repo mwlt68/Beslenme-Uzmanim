@@ -7,22 +7,24 @@ namespace Nutritionist.Core.StaticDatas
     public static class ReadOnlyValues
     {
         #region ResponseModel
-        public static readonly String SuccessMessage = "Request worked successfully.";
-        public static readonly String ErrorMessage = "Request not worked successfully.";
+        public static readonly String SuccessMessage = "Başarılı bir şekilde çalıştı.";
+        public static readonly String ErrorMessage = "Çalışma sırasında hata meydana geldi.";
         public static readonly String UnexpectedErrorMessage = "Beklenmedik bir hata meydana geldi.";
         #endregion
         #region ResponseMessage
-        public static readonly String NutritionistNotFound = "Nutritionist detail does not found !";
-        public static readonly String NutritionistsNotFound = "Nutritionists do not found !";
-        public static readonly String ArticleNotFound = "Article does not found !";
-        public static readonly String ArticlesNotFound = "Articles do not found !";
-        public static readonly String ArticleNotAdd = "Article do not add !";
-        public static readonly String CommentNotFound = "Comment does not found !";
-        public static readonly String CommentsNotFound = "Comments do not found !";
-        public static readonly String UserNotFound = "User does not found !";
-        public static readonly String UsersNotFound = "Users do not found !";
+        public static readonly String NutritionistNotFound = "Beslenme uzmanı bulunamadı !";
+        public static readonly String NutritionistsNotFound = "Beslenme uzmanları bulunamadı !";
+        public static readonly String ArticleNotFound = "Makale bulunamadı !";
+        public static readonly String ArticlesNotFound = "Makaleler bulunamadı !";
+        public static readonly String ArticleNotAdd = "Makale eklenemedi !";
+        public static readonly String CommentNotFound = "Yorum bulunamadı !";
+        public static readonly String CommentsNotFound = "Yorumlar bulunamadı !";
+        public static readonly String UserNotFound = "Kullanıcı bulunamadı!";
+        public static readonly String UsersNotFound = "Kullanıcılar bulunamadı !";
+        public static readonly String UsernameOrPasswordError = "Kullanıcı adı yada şifre hatalı !";
         #endregion
+
     }
-    
-    
+
+
 }

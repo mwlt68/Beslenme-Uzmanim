@@ -1,6 +1,6 @@
 ﻿@model Nutritionist.Core.Models.Nutritionist.Update
 @{
-    ViewData["Title"] = "Kliniğik Güncelleme";
+    ViewData["Title"] = "Klinik Güncelleme";
     Layout = "~/Views/Shared/_Layout.cshtml";
     byte[] profileImage = Nutritionist.Web.Infrastructure.StaticFunctions.GetBytesFromFile(Model.ProfileImage);
 
@@ -24,75 +24,92 @@
                             <center>
                                 @if (profileImage == null || profileImage.Length <= 0)
                                 {
-                                    <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" id="Article_Image_Preview">
+                                    <img src="https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg" id="Image_Preview">
                                 }
                                 else
                                 {
-                                    <img src="data:image/jpg;base64, @Convert.ToBase64String(profileImage)" id="Article_Image_Preview">
+                                    <img src="data:image/jpg;base64, @Convert.ToBase64String(profileImage)" id="Image_Preview">
                                 }
                             </center>
                             <div class="col-lg-12 col-md-12 col-sm-12 align-center mbr-section-btn py-4">
-                                <span class="btn btn-warning" id="Article_Image_Btn">
+                                <span class="btn btn-warning" id="Image_Btn">
                                     <span>
                                         Profil Resmi Seç
                                     </span>
                                 </span>
-                                <input type="file" id="Article_Image" asp-for="ProfileImage" style="visibility:hidden;">
+                                <input type="file" id="Image" asp-for="ProfileImage" style="visibility:hidden;">
                                 <span asp-validation-for="ProfileImage" class="text-danger"></span>
 
                             </div>
                         </div>
                         <div class="col-md col-sm-12 form-group">
                             <label class="control-label">Bölüm</label>
-                            <input type="text" placeholder="Bölümünüz (Uzmanlık Alanı)" class="form-control" asp-for="Departman">
+                            <input type="text" placeholder="Bölümünüz" class="form-control" asp-for="Departman">
+                            <small class="form-text text-muted">Uzmanlık alanınız da olabilir.</small>
                             <span asp-validation-for="Departman" class="text-danger"></span>
 
-
-                            <input type="tel" placeholder="05431231212 (Zorunlu Değil)" pattern="[0-9]{11}" class="form-control mt-4" asp-for="PhoneNumber">
+                            <label class="control-label mt-3">Telefon Numarası</label>
+                            <input type="tel" placeholder="05431231212" pattern="[0-9]{11}" class="form-control" asp-for="PhoneNumber">
+                            <small class="form-text text-muted">Zorunlu Değildir.</small>
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
 
-
-                            <textarea class="form-control  mt-4" rows="5" placeholder="Kısaca Kendinizi Tanıtınız (Max 150 Karakter)" asp-for="ShortIntroduce"></textarea>
+                            <label class="control-label mt-3">Kısa Tanıtım</label>
+                            <textarea class="form-control" rows="5" placeholder="Kısaca Kendinizi Tanıtınız" asp-for="ShortIntroduce"></textarea>
+                            <small class="form-text text-muted">En fazla 150 karakterden oluşmalıdır.</small>
                             <span asp-validation-for="ShortIntroduce" class="text-danger"></span>
 
 
                         </div>
-                        <div class="col-12 form-group">
+                        <div class="col-12 form-group mt-3">
+                            <label class="control-label">Detaylı Tanıtım</label>
                             <textarea placeholder="Kendinizi Detaylıca Tanıtınız" rows="10" class="form-control" asp-for="Introduce"></textarea>
                             <span asp-validation-for="Introduce" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
+                        <div class="col-12 form-group mt-3">
+                            <label class="control-label">Klinik Adresi</label>
                             <textarea placeholder="Klinik Adresiniz" rows="2" class="form-control" asp-for="Address"></textarea>
                             <span asp-validation-for="Address" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
-                            <input type="text" placeholder="Çalışma Saatleri (Önerilen Format 08:00 / 17:30)" class="form-control" asp-for="WorkingHours">
+                        <div class="col-12 form-group mt-3 ">
+                            <label class="control-label">Çalışma Saatleri</label>
+                            <input type="text" placeholder="Çalışma Saatleri" class="form-control" asp-for="WorkingHours">
+                            <small class="form-text text-muted">Önerilen Format 08:00 / 17:30 biçiminderdir.</small>
                             <span asp-validation-for="WorkingHours" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
+                        <div class="col-12 form-group mt-3">
+                            <label class="control-label">Linked In Linki</label>
                             <input type="text" placeholder="Linked In Linkiniz (Zorunlu Değil)" class="form-control" asp-for="LinkedinLink">
+                            <small class="form-text text-muted">Zorunlu Değildir.</small>
+
                             <span asp-validation-for="LinkedinLink" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
-                            <input type="text" placeholder="Instagram Linkiniz (Zorunlu Değil)" class="form-control" asp-for="InstagramLink">
+                        <div class="col-12 form-group mt-3">
+                            <label class="control-label">Instagram Linki</label>
+                            <input type="text" placeholder="Instagram Linkiniz" class="form-control" asp-for="InstagramLink">
+                            <small class="form-text text-muted">Zorunlu Değildir.</small>
+
                             <span asp-validation-for="InstagramLink" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
-                            <input type="text" placeholder="Facebook Linkiniz (Zorunlu Değil)" class="form-control" asp-for="FacebookLink">
+                        <div class="col-12 form-group mt-3">
+                            <label class="control-label">Facebook Linki</label>
+                            <input type="text" placeholder="Facebook Linkiniz" class="form-control" asp-for="FacebookLink">
+                            <small class="form-text text-muted">Zorunlu Değildir.</small>
                             <span asp-validation-for="FacebookLink" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
-                            <input type="text" placeholder="You Tube Linkiniz (Zorunlu Değil)" class="form-control" asp-for="YoutubeLink">
+                        <div class="col-12 form-group mt-3">
+                            <label class="control-label">You Tube Linki</label>
+                            <input type="text" placeholder="You Tube Linkiniz" class="form-control" asp-for="YoutubeLink">
+                            <small class="form-text text-muted">Zorunlu Değildir.</small>
                             <span asp-validation-for="YoutubeLink" class="text-danger"></span>
 
                         </div>
-                        <div class="col-12 form-group">
+                        <div class="col-12 form-group mt-3 ">
                             <input type="text" style="visibility:hidden;" asp-for="Id">
                             <input type="text" style="visibility:hidden;" asp-for="UserId">
                         </div>

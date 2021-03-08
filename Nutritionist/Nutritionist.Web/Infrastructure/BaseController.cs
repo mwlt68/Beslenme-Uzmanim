@@ -34,11 +34,11 @@ namespace Nutritionist.Web.Infrastructure
             {
                 if (error != null )
                 {
-                    return View("~/Views/Shared/Error.cshtml", error);
+                    return View(ReadOnlyValues.SharedErrorViewPath, error);
                 }
 
             }
-            return View("~/Views/Shared/Error.cshtml", ErrorViewModel.GetDefaultException);
+            return View(ReadOnlyValues.SharedErrorViewPath, ErrorViewModel.GetDefaultException);
         }
 
         // If there is an error method will return errorviewmodel else return null.

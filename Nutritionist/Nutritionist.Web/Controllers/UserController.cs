@@ -25,14 +25,14 @@ namespace Nutritionist.Web.Controllers
             var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
             if (!userId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             var userDetailResponse=Get<UserDetail>(MyApiRequestModel.GetUserDetail,false, userId.Value.ToString());
             var checkUserDetailBaseControllerError = CheckBaseControllerError(userDetailResponse);
             if (checkUserDetailBaseControllerError == null)
             {
                 var userUpdateModel = mapper.Map<UserDetail, UserUpdate>(userDetailResponse.tobject);
-                return View("~/Views/User/Edit.cshtml", userUpdateModel);
+                return View(ReadOnlyValues.UserEditViewPath, userUpdateModel);
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Nutritionist.Web.Controllers
                 var checkEditBaseControllerError = CheckBaseControllerError(editRes);
                 if (checkEditBaseControllerError == null)
                 {
-                    return View("~/Views/Home/Login.cshtml");
+                    return View(ReadOnlyValues.HomeLoginViewPath);
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace Nutritionist.Web.Controllers
             var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
             if (!userId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             else
             {
@@ -79,7 +79,7 @@ namespace Nutritionist.Web.Controllers
                     if (checkUserDeleteBaseControllerError == null)
                     {
 
-                        return View("~/Views/Home/Login.cshtml");
+                        return View(ReadOnlyValues.HomeLoginViewPath);
                     }
                     else
                     {

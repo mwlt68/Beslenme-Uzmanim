@@ -51,7 +51,7 @@ namespace Nutritionist.API.Controllers
                     var responseModel= new SuccessResponseModel<UserLoginResponseModel>(loginResponse);
                     return Ok(responseModel);
                 }
-                else return new BaseResponseModel("Kullanıcı adı yada şifre hatalı !");
+                else return new BaseResponseModel(ReadOnlyValues.UsernameOrPasswordError);
             }
             catch (Exception ex)
             {
@@ -103,7 +103,8 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpDelete("DeleteUser/{userId}")]
+
+        [HttpDelete("Delete/{userId}")]
         [Authorize]
         public BaseResponseModel DeleteUser(int userId)
         {

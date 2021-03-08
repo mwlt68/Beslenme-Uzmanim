@@ -26,7 +26,6 @@ using Microsoft.AspNetCore.Http;
 
 namespace Nutritionist.Web.Controllers
 {
-    // <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     public class NutritionistController : BaseController
     {
         public NutritionistController(IMapper mapper) : base(mapper)
@@ -35,7 +34,7 @@ namespace Nutritionist.Web.Controllers
 
         public IActionResult Add()
         {
-            return View("~/Views/Nutritionist/Add.cshtml");
+            return View(ReadOnlyValues.NutritionistAddViewPath);
         }
         [HttpPost]
         public IActionResult Add(NutritionistInsertModel nutritionistInsertModel)
@@ -50,14 +49,14 @@ namespace Nutritionist.Web.Controllers
                 var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
                 if (!userId.HasValue)
                 {
-                    return View("~/Views/Home/Login.cshtml");
+                    return View(ReadOnlyValues.HomeLoginViewPath);
                 }
                 nutritionistInsertModel.UserId = userId.Value;
                 var nutritionistInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostNutritionistRegister, nutritionistInsertModel);
                 var checkNutritionistInsertBaseResponseError = CheckBaseControllerError(nutritionistInsertModels);
                 if (checkNutritionistInsertBaseResponseError == null)
                 {
-                    return View("~/Views/Home/Login.cshtml");
+                    return View(ReadOnlyValues.HomeLoginViewPath);
                 }
                 else
                 {
@@ -73,7 +72,7 @@ namespace Nutritionist.Web.Controllers
 
             if (checkNutBaseResponseError == null)
             {
-                return View("~/Views/Nutritionist/List.cshtml",nutritionistListModels.tobject);
+                return View(ReadOnlyValues.NutritionistListViewPath, nutritionistListModels.tobject);
             }
             else
             {
@@ -95,7 +94,7 @@ namespace Nutritionist.Web.Controllers
                 {
                     NutritionistContDetailModel nutritionistContDetailModel = 
                         new NutritionistContDetailModel(commentListBaseModels.tobject,articleListBaseModels.tobject,nutDetailBaseModels.tobject);
-                    return View("~/Views/Nutritionist/Detail.cshtml", nutritionistContDetailModel);
+                    return View(ReadOnlyValues.NutritionistDetailViewPath, nutritionistContDetailModel);
                 }
                 else
                 {
@@ -113,9 +112,9 @@ namespace Nutritionist.Web.Controllers
             var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
             if (!nutritionistId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
-            return View("~/Views/Nutritionist/AddArticle.cshtml");
+            return View(ReadOnlyValues.NutritionistAddArticleViewPath);
         }
         [HttpPost]
         public IActionResult AddArticle(ArticleInsertModel articleInsertModel)
@@ -125,7 +124,7 @@ namespace Nutritionist.Web.Controllers
                 var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
                 if (!nutritionistId.HasValue)
                 {
-                    return View("~/Views/Home/Login.cshtml");
+                    return View(ReadOnlyValues.HomeLoginViewPath);
                 }
                 articleInsertModel.NutritionistId = nutritionistId.Value;
                 var articleInsertModels = PostMultipartForm<bool>(MyApiRequestModel.PostArticleAdd, articleInsertModel, true);
@@ -157,7 +156,7 @@ namespace Nutritionist.Web.Controllers
             var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
             if (!userId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             int nutritionistIdInt = Int32.Parse(nutritionistId);
             if (String.IsNullOrEmpty(commentContent)|| nutritionistIdInt < 0 || commentContent.Trim().Length <= 0)
@@ -190,7 +189,7 @@ namespace Nutritionist.Web.Controllers
             var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
             if (!nutritionistId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             var nutDetailResponse = Get<NutritionistDetailModel>(MyApiRequestModel.GetNutritionistDetail, false, nutritionistId.Value.ToString());
             var checkNutDetailBaseControllerError = CheckBaseControllerError(nutDetailResponse);
@@ -232,7 +231,7 @@ namespace Nutritionist.Web.Controllers
             var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
             if (!nutritionistId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             if (nutritionistId.Value >= 0)
             {
@@ -241,7 +240,7 @@ namespace Nutritionist.Web.Controllers
                 if (checkNutDeleteBaseControllerError == null)
                 {
 
-                    return View("~/Views/Home/Login.cshtml");
+                    return View(ReadOnlyValues.HomeLoginViewPath);
                 }
                 else
                 {
@@ -258,7 +257,7 @@ namespace Nutritionist.Web.Controllers
             var userId = HttpContext.Session.GetInt32(ReadOnlyValues.UserIdSession);
             if (!userId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             if (userId.Value >= 0)
             {

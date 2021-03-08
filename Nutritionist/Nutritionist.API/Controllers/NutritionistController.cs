@@ -66,7 +66,7 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("NutDetail/{id}")]
+        [HttpGet("Detail/{id}")]
         public BaseResponseModel GetNutritionistDetail(int id)
         {
             try
@@ -89,7 +89,8 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpGet("NutList")]
+
+        [HttpGet("List")]
 
         public BaseResponseModel GetNutritionistsList( )
         {
@@ -116,7 +117,7 @@ namespace Nutritionist.API.Controllers
                 return new BaseResponseModel(ex.Message);
             }
         }
-        [HttpDelete("NutDelete/{nutritionistId}")]
+        [HttpDelete("Delete/{nutritionistId}")]
         [Authorize(Policy = "MustNutritionist")]
         public BaseResponseModel DeleteNutritionist(int nutritionistId)
         {
@@ -131,6 +132,7 @@ namespace Nutritionist.API.Controllers
             }
         }
 
+        /*
         private bool ChechNutritionistAuthorize(int nutritionistId)
         {
             var currentUser = HttpContext.User;
@@ -144,5 +146,6 @@ namespace Nutritionist.API.Controllers
                 return false;
             }
         }
+        */
     }
 }

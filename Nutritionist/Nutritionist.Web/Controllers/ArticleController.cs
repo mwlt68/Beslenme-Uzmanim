@@ -27,7 +27,7 @@ namespace Nutritionist.Web.Controllers
             var checkArticleBaseResponseError = CheckBaseControllerError(articleDetailBaseModels);
             if (checkArticleBaseResponseError == null)
             {
-                return View("~/Views/Article/Detail.cshtml",articleDetailBaseModels.tobject);
+                return View(ReadOnlyValues.ArticleDetailViewPath, articleDetailBaseModels.tobject);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace Nutritionist.Web.Controllers
 
             if (checkNutArticleListBaseResponseError == null)
             {
-                return View("~/Views/Nutritionist/NutritionistArticles.cshtml", nutritionistArticleListModels.tobject);
+                return View(ReadOnlyValues.NutritionistArticlesViewPath, nutritionistArticleListModels.tobject);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace Nutritionist.Web.Controllers
             var checkArticlesBaseResponseError = CheckBaseControllerError(articleListBaseModels);
             if (checkArticlesBaseResponseError == null)
             {
-                return View("~/Views/Article/List.cshtml", articleListBaseModels.tobject);
+                return View(ReadOnlyValues.ArticleListViewPath, articleListBaseModels.tobject);
             }
             else
             {
@@ -68,14 +68,14 @@ namespace Nutritionist.Web.Controllers
             var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
             if (!nutritionistId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             var articleDetailResponse = Get<ArticleDetailModel>(MyApiRequestModel.GetArticleDetail, false, id);
             var checkArticleDetailBaseControllerError = CheckBaseControllerError(articleDetailResponse);
             if (checkArticleDetailBaseControllerError == null)
             {
                 var articleUpdateModel = mapper.Map<ArticleDetailModel, ArticleUpdateModel>(articleDetailResponse.tobject);
-                return View("~/Views/Article/Edit.cshtml", articleUpdateModel);
+                return View(ReadOnlyValues.ArticleEditViewPath, articleUpdateModel);
             }
             else
             {
@@ -110,7 +110,7 @@ namespace Nutritionist.Web.Controllers
             var nutritionistId = HttpContext.Session.GetInt32(ReadOnlyValues.NutritionistIdSession);
             if (!nutritionistId.HasValue)
             {
-                return View("~/Views/Home/Login.cshtml");
+                return View(ReadOnlyValues.HomeLoginViewPath);
             }
             else
             {
