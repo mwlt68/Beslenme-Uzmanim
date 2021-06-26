@@ -84,61 +84,6 @@ namespace Nutritionist.Services
             }
             else return false;
         }
-        /*
-                private List<ArticleListModel> GetArticlesNutritionist(List<ArticleListModel> articleListModels)
-        {
-            List<ArticleListModel> articlesResult = new List<ArticleListModel>();
-            foreach (var articleModel in articleListModels)
-            {
-                var nutritionistEntity = nutritionistRepository.GetById(articleModel.NutritionistId);
-                if (nutritionistEntity != null)
-                {
-                    NutritionistListModel nutritionistListModel = mapper.Map<Data.Entities.Nutritionist, NutritionistListModel>(nutritionistEntity);
-                    ArticleListModel articleListModel = articleModel;
-                    articleListModel.Nutritionist = nutritionistListModel;
-                    articlesResult.Add(articleListModel);
-                }
-            }
-            return articleListModels;
-        }
-
-        // This method will return nutritionist articles.
-        public List<ArticleListModel> GetNutritionistArticles(int nutritionistId)
-        {
-            var articles= articleRepository.GetArticlesFromNutritionistId(nutritionistId);
-            List<ArticleListModel> articleModels = ArrayMap<Article, ArticleListModel>(articles);
-            return GetArticlesNutritionist(articleModels);
-        }
-        
-
-
-        //If forNutritionist is true method will return count of   nutritionist`s articles.Else return all articles count.
-        public int GetArticlesCount(bool forNutritionist,int nutritionistId=-1)
-        {
-            if (forNutritionist && nutritionistId > 0)
-            {
-                return articleRepository.TakeArticlesCount(nutritionistId);
-            }
-            else
-            {
-                return articleRepository.GetCount();
-            }
-        }
-
-
-        public int GetArticleCount()
-        {
-            return articleRepository.GetCount();
-        }
-        public bool RemoveArticle(int articleId, int nuritionistId)
-        {
-            var article = articleRepository.GetById(articleId);
-            if (article != null && article.NutritionistId == nuritionistId)
-            {
-                articleRepository.Remove(article);
-                return true;
-            }
-            else return false;
-        }*/
+       
     }
 }

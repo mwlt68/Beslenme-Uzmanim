@@ -5,12 +5,7 @@ using System.Linq;
 
 namespace Nutritionist.Data.Repository
 {
-    /*
-                     var query =
-                    from article in context.Articles.Where(x => !x.DidDelete && x.IsActive.Value && x.Id == id)
-                    from nutritionist in context.Nutritionists.Where(x => !x.DidDelete && x.IsActive.Value && x.Id == article.NutritionistId)
-                    select article;
-     */
+  
     public class ArticleRepository : Repository<Article, NutritionistDBContext>
     {
         public Article GetById(int id)
